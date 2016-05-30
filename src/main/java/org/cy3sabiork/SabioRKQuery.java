@@ -16,9 +16,6 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-
-import cytoscape.util.ProxyHandler;
-
 import org.cy3sbml.SBMLReader;
 
 /**

@@ -1,4 +1,4 @@
-package main.java.org.cy3sabiork;
+package org.cy3sabiork;
 
 
 import java.io.ByteArrayInputStream;

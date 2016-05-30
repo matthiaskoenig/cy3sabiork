@@ -1,4 +1,4 @@
-package main.java.org.cy3sabiork;
+package org.cy3sabiork.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -14,12 +14,12 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.event.ListSelectionListener;
 
+import org.cy3sabiork.SabioRKQuery;
+
 import javax.swing.event.ListSelectionEvent;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-import main.java.org.cy3sabiork.SabioRKQuery;
 
 @SuppressWarnings("serial")
 public class SabioRKDialog extends JDialog {

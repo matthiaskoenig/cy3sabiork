@@ -1,10 +1,11 @@
-package main.java.org.cy3sabiork;
+package org.cy3sabiork;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import org.cy3sabiork.gui.SabioRKDialog;
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.application.swing.CySwingApplication;
 

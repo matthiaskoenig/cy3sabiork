@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<properties>
-		<bundle.symbolicName>cy3fluxviz</bundle.symbolicName>
-		<bundle.namespace>org.cy3fluxviz</bundle.namespace>
+		<bundle.symbolicName>cy3sabiork</bundle.symbolicName>
+		<bundle.namespace>org.cy3sabiork</bundle.namespace>
 		
 		<maven-bundle-plugin.version>2.3.4</maven-bundle-plugin.version>
 		<osgi.api.version>4.2.0</osgi.api.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<cytoscape.api.version>3.2.1</cytoscape.api.version>
-		<Cytoscape-App-Dependencies>cy3sbml;0.1.7</Cytoscape-App-Dependencies>
+		<Cytoscape-App-Dependencies>cy3sbml;0.1.8</Cytoscape-App-Dependencies>
 	</properties>
 
 	<groupId>org.cy3sabiork</groupId>
@@ -212,6 +212,11 @@
 		    <groupId>com.sun.jersey</groupId>
 		    <artifactId>jersey-client</artifactId>
 		    <version>1.19.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
 		</dependency>
 		    	
 		<!-- JSBML CORE dependency -->

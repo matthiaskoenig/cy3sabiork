@@ -1,4 +1,4 @@
-package main.java.org.cy3sabiork;
+package org.cy3sabiork;
 
 import java.io.File;
 import java.util.Properties;
@@ -8,10 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.cytoscape.application.CyApplicationConfiguration;
 import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.application.swing.CySwingApplication;
-
+import org.cytoscape.application.swing.CytoPanelComponent;
 import org.cytoscape.service.util.AbstractCyActivator;
-
+import org.cytoscape.util.swing.OpenBrowser;
+import org.cy3sabiork.gui.SabioPanel;
 import org.cy3sbml.BundleInformation;
+import org.cy3sbml.gui.ResultsPanel;
 
 /**
  * cy3sabiork activator. 
@@ -49,10 +51,17 @@ public class CyActivator extends AbstractCyActivator {
 			logger.info("logfile = " + logFile.getAbsolutePath());
 								
 			CySwingApplication cySwingApplication = getService(bc, CySwingApplication.class);
-	
+			OpenBrowser openBrowser = getService(bc, OpenBrowser.class);
+			
+			
 			// init actions
 			SabioRKAction action = new SabioRKAction(cySwingApplication);
 			registerService(bc, action, CyAction.class, new Properties());
+			
+			// Sabio Panel
+			SabioPanel sabioPanel = SabioPanel.getInstance(cySwingApplication, openBrowser);
+			registerService(bc, sabioPanel, CytoPanelComponent.class, new Properties());
+			SabioPanel.getInstance().activate();
 			
 			logger.info("----------------------------");
 		} catch (Throwable e){

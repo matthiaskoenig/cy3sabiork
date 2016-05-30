@@ -1,4 +1,4 @@
-package cysabiork.searchdata;
+package main.java.org.cy3sabiork;
 
 /** Provides interface class to store and handle SabioRK database
  * searches.

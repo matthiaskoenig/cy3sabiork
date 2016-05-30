@@ -1,14 +1,19 @@
-package cysabiork.restful;
+package main.java.org.cy3sabiork;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+
+/**
+ * Testing the SabioRK restful interface for queries.
+ */
 public class TestRestful {
 
 

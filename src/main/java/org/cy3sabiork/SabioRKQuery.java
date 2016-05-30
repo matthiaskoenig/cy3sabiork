@@ -1,4 +1,4 @@
-package cysabiork.restful;
+package main.java.org.cy3sabiork;
 
 
 import java.io.ByteArrayInputStream;
@@ -9,17 +9,25 @@ import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-import cytoscape.Cytoscape;
-import cytoscape.CytoscapeInit;
-import cytoscape.util.ProxyHandler;
-import cysabiork.CySabioRKPlugin;
-import cysbml.SBMLGraphReader;
 
+import cytoscape.util.ProxyHandler;
+
+import org.cy3sbml.SBMLReader;
+
+/**
+ * Performing SabioRK queries.
+ *
+ * TODO: proxy settings for the query
+ */
 public class SabioRKQuery {
+	private static final Logger logger = LoggerFactory.getLogger(SabioRKQuery.class);
 	public static final String SABIORK_RESTFUL_URL = "http://sabiork.h-its.org/sabioRestWebServices";
 
 	public String performQuery(String queryURL, Boolean proxySet, String proxyHost, 
@@ -33,8 +41,9 @@ public class SabioRKQuery {
 			Properties newprops = new Properties(props);
 			System.setProperties(newprops);
 		}
-		String output = null;
+		
 		// Do the query
+		String output = null;
 		try {
 			// Create the client
 			Client client = new Client();
@@ -70,23 +79,17 @@ public class SabioRKQuery {
 	}
 	
 	public void loadNetworkFromSBML(String sbml){
-		CySabioRKPlugin.LOGGER.info("Load SBML for kinetic information");
+		logger.info("Load SBML for kinetic information");
 		InputStream instream;
 		try {
 			instream = new ByteArrayInputStream(sbml.getBytes("UTF-8"));
-			Cytoscape.createNetwork(new SBMLGraphReader(instream),true, null);
+			
+			// TODO: load the SBML as a network with cy3sbml
+			// Cytoscape.createNetwork(new SBMLGraphReader(instream),true, null);
+			System.out.println("READ SBML Results");
+			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	///////// PROXY SETTINGS ////////////
-	public String getCytoscapeProxyPort(){
-		return CytoscapeInit.getProperties().getProperty(
-				ProxyHandler.PROXY_PORT_PROPERTY_NAME,null);
-	}
-	public String getCytoscapeProxyHost(){
-		return CytoscapeInit.getProperties().getProperty(
-				ProxyHandler.PROXY_HOST_PROPERTY_NAME,null);
 	}
 }

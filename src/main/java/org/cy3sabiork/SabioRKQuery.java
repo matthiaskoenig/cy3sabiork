@@ -50,7 +50,8 @@ public class SabioRKQuery {
 			//		ClientResponse.class);
 			
 			if (response.getStatus() != 200) {
-				JOptionPane.showMessageDialog((JFrame) Cytoscape.getDesktop(),
+				// first argument the Cytpscape application
+				JOptionPane.showMessageDialog(null,
 					queryURL + "\n" +
 					"SabioRK REST Failed : HTTP error code : "
 								+ response.getStatus(), "SabioRK REST Error",

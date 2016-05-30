@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
@@ -22,6 +21,7 @@ import org.cy3sbml.SBMLReader;
  * Performing SabioRK queries.
  *
  * TODO: proxy settings for the query
+ * TODO: use SBMLReader
  */
 public class SabioRKQuery {
 	private static final Logger logger = LoggerFactory.getLogger(SabioRKQuery.class);
@@ -29,6 +29,10 @@ public class SabioRKQuery {
 
 	public String performQuery(String queryURL, Boolean proxySet, String proxyHost, 
 					Integer proxyPort) {
+		System.out.println("******************************************");
+		System.out.println("Perform Sabio-RK query");
+		System.out.println("******************************************");
+		
     	// Set the proxy properties - handled by CySBML
 		if (proxySet==true && proxyHost!=null && proxyPort!=null){ 
 			Properties props= new Properties(System.getProperties());

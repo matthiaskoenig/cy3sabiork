@@ -19,10 +19,12 @@ public class SabioRKAction extends AbstractCyAction{
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(SabioRKAction.class);
 	private CySwingApplication cySwingApplication;
+	private SabioSBMLReader sbmlReader;
 	
-	public SabioRKAction(CySwingApplication cySwingApplication){
+	public SabioRKAction(CySwingApplication cySwingApplication, SabioSBMLReader sbmlReader){
 		super("SabioRKAction");
 		this.cySwingApplication = cySwingApplication;
+		this.sbmlReader = sbmlReader;
 		
 		ImageIcon icon = new ImageIcon(getClass().getResource("/images/logo-sabiork.png"));
 		putValue(LARGE_ICON_KEY, icon);
@@ -47,7 +49,7 @@ public class SabioRKAction extends AbstractCyAction{
 		
 		// Open the dialog
 		JFrame frame = this.cySwingApplication.getJFrame();
-		SabioRKDialog sabioRKDialog = new SabioRKDialog(frame);
+		SabioRKDialog sabioRKDialog = new SabioRKDialog(frame, sbmlReader);
 	    sabioRKDialog.setVisible(true);
 	}
 }

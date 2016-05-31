@@ -15,17 +15,25 @@ import javax.swing.AbstractListModel;
 import javax.swing.event.ListSelectionListener;
 
 import org.cy3sabiork.SabioRKQuery;
+import org.cy3sabiork.SabioSBMLReader;
+import org.cy3sbml.SBMLReaderTask;
+import org.cytoscape.model.CyNetworkManager;
+import org.cytoscape.work.TaskIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.event.ListSelectionEvent;
 
 import java.awt.event.ActionListener;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class SabioRKDialog extends JDialog {
 	private static final Logger logger = LoggerFactory.getLogger(SabioRKDialog.class);
+	private SabioSBMLReader sbmlReader; 
 	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField serverField;
@@ -35,18 +43,12 @@ public class SabioRKDialog extends JDialog {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		try {
-			SabioRKDialog dialog = new SabioRKDialog(null);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		openDialog();
 	}
 
 	public static void openDialog() {
 		try {
-			SabioRKDialog dialog = new SabioRKDialog(null);
+			SabioRKDialog dialog = new SabioRKDialog(null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -57,10 +59,13 @@ public class SabioRKDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public SabioRKDialog(JFrame pParent) {
+	public SabioRKDialog(JFrame pParent, SabioSBMLReader sbmlReader) {
 		
 		// General settings
 		super(pParent, true);
+		this.sbmlReader = sbmlReader;
+		
+		
 		this.setSize(600, 400);
 		this.setResizable(false);
 		this.setLocationRelativeTo(pParent);
@@ -153,15 +158,16 @@ public class SabioRKDialog extends JDialog {
 		}
 	}
 	
-	public String getQueryURL(){
-		String queryURL = serverField.getText() + queryField.getText();
-		return queryURL;
-	}
 	
 	public void performSabioRKQuery(){
-		String queryURL = getQueryURL();
-		logger.info("Perform query: GET "+ queryURL);
+		String queryString = queryField.getText();;
+		logger.info("Perform query: GET "+ queryString);
 		SabioRKQuery query = new SabioRKQuery();
-		String xml = query.performQuery(queryURL);
+		String xml = query.performQuery(queryString);
+		sbmlReader.loadNetworkFromSBML(xml);
 	}
+	
+	
+	
+
 }

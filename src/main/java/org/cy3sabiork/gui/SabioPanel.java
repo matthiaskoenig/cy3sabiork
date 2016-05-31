@@ -3,7 +3,6 @@ package org.cy3sabiork.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.net.URL;
-import org.cy3sabiork.SabioRKAction;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -13,12 +12,15 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
+
 import org.cytoscape.application.swing.CySwingApplication;
 import org.cytoscape.application.swing.CytoPanel;
 import org.cytoscape.application.swing.CytoPanelComponent;
 import org.cytoscape.application.swing.CytoPanelName;
 import org.cytoscape.application.swing.CytoPanelState;
 import org.cytoscape.util.swing.OpenBrowser;
+
+import org.cy3sabiork.SabioRKAction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +45,10 @@ public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkL
 	private OpenBrowser openBrowser;
 	private CytoPanel cytoPanelEast;
 	private JEditorPaneSabio textPane;
+	private SabioRKAction sabioAction;
 
 	/** Singleton. */
-	public static synchronized SabioPanel getInstance(CySwingApplication cySwingApplication, OpenBrowser openBrowser){
+	public static synchronized SabioPanel getInstance(CySwingApplication cySwingApplication, OpenBrowser openBrowser, SabioRKAction sabioAction){
 		if (uniqueInstance == null){
 			logger.debug("ResultsPanel created");
 			uniqueInstance = new SabioPanel(cySwingApplication, openBrowser);

@@ -4,16 +4,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
-// import org.glassfish.jersey.core
-// import org.glassfish.jersey
-
-
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 
 /**
@@ -25,64 +21,29 @@ public class TestRestful {
 	/** Create the client and perform a query with a given URL to test
 	 * the SabioRK RESTful connection.
 	 */
-	public static int test() {
+	public static int testQuery(String query) {
 		try {
-			// Create the client
-			ClientConfig clientConfig = new DefaultClientConfig();
-			Client client = Client.create(clientConfig);
+			// Create client
+			Client client = ClientBuilder.newClient();
+			WebTarget resourceTarget = client.target(SabioRKQuery.SABIORK_RESTFUL_URL);
 
-			// Get the properties & set() properties if necessary
-			Map<String, Object> clientProperties = client.getProperties();
-
-			// Get Webresource
-			WebResource resource = client.resource(SabioRKQuery.SABIORK_RESTFUL_URL);
-
-			ClientResponse response = resource.accept("application/xml").get(ClientResponse.class);
+			// Add the path to the target
+			WebTarget requestTarget = resourceTarget.path(query);
+			
+			// invocation of request
+			Invocation.Builder invocationBuilder = requestTarget.request(MediaType.TEXT_XML_TYPE);
+			Response response = invocationBuilder.get();
 
 			if (response.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
 			}
-			String output = response.getEntity(String.class);
-			System.out.println("Server connection SabioRK established");
 			
-			// System.out.println("Output from Server .... \n");
-			// System.out.println(output);
-			return 0;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return 1;
-		}
-	}
+			String output = response.readEntity(String.class);
+			System.out.println("--------------------------------------------");
+			System.out.println(output);
+			System.out.println("--------------------------------------------");
 
-	public static int testQuery() {
-		try {
-			// Create the client
-			ClientConfig clientConfig = new DefaultClientConfig();
-			Client client = Client.create(clientConfig);
-
-			// Get the properties & set() properties if necessary
-			Map<String, Object> clientProperties = client.getProperties();
-
-			// Get Webresource
-			WebResource resource = client.resource(SabioRKQuery.SABIORK_RESTFUL_URL);
-
-			ClientResponse response = resource.accept("application/xml").get(ClientResponse.class);
-			if (response.getStatus() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : "
-						+ response.getStatus());
-			}
-			
-			// Example query 
-			String query = "kineticLaws/123";
-			String xml = resource.path(query).get(String.class);
-			System.out.println("Query:" + query);
-			System.out.println(xml);
-		
-			System.out.println("Server connection SabioRK established");
-			
-			// System.out.println("Output from Server .... \n");
-			// System.out.println(output);
 			return 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -109,7 +70,6 @@ public class TestRestful {
 	/* Test the Restful API */
 	public static void main(String[] args) {
 		System.out.println("CySabioRK[INFO]: TestRESTful SabioRK Connection");
-		test();
-		testQuery();
+		testQuery("kineticLaws/123");
 	}
 }

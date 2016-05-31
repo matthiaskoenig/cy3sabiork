@@ -4,16 +4,21 @@ package org.cy3sabiork;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
 
 import org.cy3sbml.SBMLReader;
 
@@ -46,24 +51,26 @@ public class SabioRKQuery {
 		// Do the query
 		String output = null;
 		try {
-			// Create the client
-			Client client = new Client();
-			WebResource resource = client.resource(queryURL);			
-			ClientResponse response = resource.get(ClientResponse.class);
-			//ClientResponse response = resource.accept(MediaType.APPLICATION_XML).get(
-			//		ClientResponse.class);
+			// Example query 
+			String query = "kineticLaws/123";
 			
+			// Create client
+			Client client = ClientBuilder.newClient();
+			WebTarget resourceTarget = client.target(SabioRKQuery.SABIORK_RESTFUL_URL);
+
+			// Add the path to the target
+			WebTarget requestTarget = resourceTarget.path(query);
+			
+			// invocation of request
+			Invocation.Builder invocationBuilder = requestTarget.request(MediaType.TEXT_XML_TYPE);
+			Response response = invocationBuilder.get();
 			if (response.getStatus() != 200) {
-				// first argument the Cytpscape application
-				JOptionPane.showMessageDialog(null,
-					queryURL + "\n" +
-					"SabioRK REST Failed : HTTP error code : "
-								+ response.getStatus(), "SabioRK REST Error",
-				    JOptionPane.ERROR_MESSAGE);
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
 			}
-			output = response.getEntity(String.class);
+			output = response.readEntity(String.class);
+			
+
 			System.out.println("******************************************");
 			System.out.println(output);
 			System.out.println("******************************************");

@@ -15,6 +15,8 @@ import javax.swing.AbstractListModel;
 import javax.swing.event.ListSelectionListener;
 
 import org.cy3sabiork.SabioRKQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.event.ListSelectionEvent;
 
@@ -23,7 +25,8 @@ import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class SabioRKDialog extends JDialog {
-
+	private static final Logger logger = LoggerFactory.getLogger(SabioRKDialog.class);
+	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField serverField;
 	private JTextField queryField;
@@ -61,7 +64,7 @@ public class SabioRKDialog extends JDialog {
 		this.setSize(600, 400);
 		this.setResizable(false);
 		this.setLocationRelativeTo(pParent);
-		setTitle("SabioRK Restful Interface");
+		setTitle("SABIO-RK RESTful Queries");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -74,7 +77,7 @@ public class SabioRKDialog extends JDialog {
 			serverField.setColumns(10);
 		}
 		
-		JLabel lblSabioRestfulServer = new JLabel("SabioRK REST Server");
+		JLabel lblSabioRestfulServer = new JLabel("SABIO-RK REST Server");
 		lblSabioRestfulServer.setBounds(26, 12, 157, 15);
 		contentPanel.add(lblSabioRestfulServer);
 		
@@ -100,7 +103,6 @@ public class SabioRKDialog extends JDialog {
 					"/kineticLaws?kinlawids=18974,18976,18975,22516",
 					"/searchKineticLaws/sbml?q=Tissue:liver%20AND%20Organism:Homo%20sapiens%20AND%20Substrate:Glucose",
 					"/searchKineticLaws/sbml?q=ReactantChebi:17925"
-					
 			};
 			public int getSize() {
 				return values.length;
@@ -158,7 +160,7 @@ public class SabioRKDialog extends JDialog {
 	
 	public void performSabioRKQuery(){
 		String queryURL = getQueryURL();
-		System.out.println("CySabioRK[INFO] > GET " + queryURL);
+		logger.info("Perform query: GET "+ queryURL);
 		SabioRKQuery query = new SabioRKQuery();
 		String xml = query.performQuery(queryURL);
 	}

@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Performing SabioRK queries.
  */
-public class SabioRKQuery {
-	private static final Logger logger = LoggerFactory.getLogger(SabioRKQuery.class);
+public class SabioQuery {
+	private static final Logger logger = LoggerFactory.getLogger(SabioQuery.class);
 	public static final String SABIORK_RESTFUL_URL = "http://sabiork.h-its.org/sabioRestWebServices";
 
 	
@@ -28,7 +28,7 @@ public class SabioRKQuery {
 		try {			
 			// Create client
 			Client client = ClientBuilder.newClient();
-			WebTarget resourceTarget = client.target(SabioRKQuery.SABIORK_RESTFUL_URL);
+			WebTarget resourceTarget = client.target(SabioQuery.SABIORK_RESTFUL_URL);
 
 			// Add the path to the target
 			WebTarget requestTarget = resourceTarget.path(query);

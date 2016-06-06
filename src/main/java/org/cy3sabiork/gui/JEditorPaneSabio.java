@@ -13,6 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * Main information pain for cy3sabiork.
+ * The pain is the main part of the SabioPanel.
+ */
 public class JEditorPaneSabio extends JEditorPane{
 	private static final Logger logger = LoggerFactory.getLogger(JEditorPaneSabio.class);
 	private static final long serialVersionUID = 1L;
@@ -31,9 +35,7 @@ public class JEditorPaneSabio extends JEditorPane{
 		setHTMLResource("/info.html");
 	}
 
-	/**
-	 * Set given URL in the ResultsPanel.
-	 */
+	/** Set given URL in the ResultsPanel. */
 	private void setHTMLResource(String resource){	
 		try {
 			// here static HTML is set 
@@ -69,9 +71,7 @@ public class JEditorPaneSabio extends JEditorPane{
 		});
 	}
 	
-   /**
-    * set text
-    */
+   /** Set given text in the pane. */
 	public void setText(String text){
 		// Necessary to use invokeLater to handle the Swing GUI update
 		SwingUtilities.invokeLater(new Runnable(){

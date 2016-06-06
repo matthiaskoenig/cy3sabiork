@@ -1,8 +1,5 @@
 package org.cy3sabiork;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
@@ -12,19 +9,18 @@ import javax.ws.rs.core.Response;
 
 
 /**
- * Testing the SabioRK restful interface for queries.
+ * Querying the SABIO-RK web service.
  */
 public class TestRestful {
 
-
-	/** Create the client and perform a query with a given URL to test
-	 * the SabioRK RESTful connection.
+	/** 
+	 * Create client and perform query.
 	 */
 	public static int testQuery(String query) {
 		try {
 			// Create client
 			Client client = ClientBuilder.newClient();
-			WebTarget resourceTarget = client.target(SabioRKQuery.SABIORK_RESTFUL_URL);
+			WebTarget resourceTarget = client.target(SabioQuery.SABIORK_RESTFUL_URL);
 
 			// Add the path to the target
 			WebTarget requestTarget = resourceTarget.path(query);
@@ -49,23 +45,7 @@ public class TestRestful {
 			return 1;
 		}
 	}
-	
-	/** Get list of available fields for querying. 
-	 * FIXME: not implemented
-	 * */
-	public static List<String> getQueryFields(){
-		SabioRKQuery sQuery = new SabioRKQuery();
-		java.lang.String queryURL = SabioRKQuery.SABIORK_RESTFUL_URL + "/searchKineticLaws";
-		String res = sQuery.performQuery(queryURL);
 		
-		// get the possible query fields for the Sabio RESTful
-		// webservice
-		List<String> fields = new LinkedList<String>();
-		// TODO: do the magic
-	
-		return fields;
-	}
-	
 	/* Test the Restful API */
 	public static void main(String[] args) {
 		System.out.println("CySabioRK[INFO]: TestRESTful SabioRK Connection");

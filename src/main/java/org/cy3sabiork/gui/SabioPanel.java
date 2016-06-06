@@ -20,7 +20,7 @@ import org.cytoscape.application.swing.CytoPanelName;
 import org.cytoscape.application.swing.CytoPanelState;
 import org.cytoscape.util.swing.OpenBrowser;
 
-import org.cy3sabiork.SabioRKAction;
+import org.cy3sabiork.SabioAction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,10 +45,10 @@ public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkL
 	private OpenBrowser openBrowser;
 	private CytoPanel cytoPanelEast;
 	private JEditorPaneSabio textPane;
-	private SabioRKAction sabioAction;
+	private SabioAction sabioAction;
 
 	/** Singleton. */
-	public static synchronized SabioPanel getInstance(CySwingApplication cySwingApplication, OpenBrowser openBrowser, SabioRKAction sabioAction){
+	public static synchronized SabioPanel getInstance(CySwingApplication cySwingApplication, OpenBrowser openBrowser, SabioAction sabioAction){
 		if (uniqueInstance == null){
 			logger.debug("ResultsPanel created");
 			uniqueInstance = new SabioPanel(cySwingApplication, openBrowser);
@@ -161,7 +161,7 @@ public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkL
 				
 				// Search SabioRK webservice
 				if (s.equals("http://sabiork-query")){
-					SabioRKAction sabioAction = new SabioRKAction(this.cySwingApplication);
+					SabioAction sabioAction = new SabioAction(this.cySwingApplication);
 					sabioAction.actionPerformed(null);
 				}
 				// HTML links	

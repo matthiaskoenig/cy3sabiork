@@ -14,7 +14,7 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.event.ListSelectionListener;
 
-import org.cy3sabiork.SabioRKQuery;
+import org.cy3sabiork.SabioQuery;
 import org.cy3sabiork.SabioSBMLReader;
 import org.cy3sbml.SBMLReaderTask;
 import org.cytoscape.model.CyNetworkManager;
@@ -31,8 +31,8 @@ import java.io.UnsupportedEncodingException;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class SabioRKDialog extends JDialog {
-	private static final Logger logger = LoggerFactory.getLogger(SabioRKDialog.class);
+public class SabioDialog extends JDialog {
+	private static final Logger logger = LoggerFactory.getLogger(SabioDialog.class);
 	private SabioSBMLReader sbmlReader; 
 	
 	private final JPanel contentPanel = new JPanel();
@@ -48,7 +48,7 @@ public class SabioRKDialog extends JDialog {
 
 	public static void openDialog() {
 		try {
-			SabioRKDialog dialog = new SabioRKDialog(null, null);
+			SabioDialog dialog = new SabioDialog(null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -59,7 +59,7 @@ public class SabioRKDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public SabioRKDialog(JFrame pParent, SabioSBMLReader sbmlReader) {
+	public SabioDialog(JFrame pParent, SabioSBMLReader sbmlReader) {
 		
 		// General settings
 		super(pParent, true);
@@ -76,7 +76,7 @@ public class SabioRKDialog extends JDialog {
 		contentPanel.setLayout(null);
 		{
 			serverField = new JTextField();
-			serverField.setText(SabioRKQuery.SABIORK_RESTFUL_URL);
+			serverField.setText(SabioQuery.SABIORK_RESTFUL_URL);
 			serverField.setBounds(26, 32, 306, 30);
 			contentPanel.add(serverField);
 			serverField.setColumns(10);
@@ -162,7 +162,7 @@ public class SabioRKDialog extends JDialog {
 	public void performSabioRKQuery(){
 		String queryString = queryField.getText();;
 		logger.info("Perform query: GET "+ queryString);
-		SabioRKQuery query = new SabioRKQuery();
+		SabioQuery query = new SabioQuery();
 		String xml = query.performQuery(queryString);
 		sbmlReader.loadNetworkFromSBML(xml);
 	}

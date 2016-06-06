@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import org.cy3sabiork.gui.SabioRKDialog;
+import org.cy3sabiork.gui.SabioDialog;
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.application.swing.CySwingApplication;
 
@@ -15,16 +15,16 @@ import org.slf4j.LoggerFactory;
 /**
  * Test access to the cy3sbml instance information.
  */
-public class SabioRKAction extends AbstractCyAction{
+public class SabioAction extends AbstractCyAction{
 	private static final long serialVersionUID = 1L;
-	private static final Logger logger = LoggerFactory.getLogger(SabioRKAction.class);
+	private static final Logger logger = LoggerFactory.getLogger(SabioAction.class);
 	private CySwingApplication cySwingApplication;
-	private SabioSBMLReader sbmlReader;
 	
-	public SabioRKAction(CySwingApplication cySwingApplication, SabioSBMLReader sbmlReader){
+	private static SabioSBMLReader sbmlReader;
+	
+	public SabioAction(CySwingApplication cySwingApplication){
 		super("SabioRKAction");
 		this.cySwingApplication = cySwingApplication;
-		this.sbmlReader = sbmlReader;
 		
 		ImageIcon icon = new ImageIcon(getClass().getResource("/images/logo-sabiork.png"));
 		putValue(LARGE_ICON_KEY, icon);
@@ -46,10 +46,15 @@ public class SabioRKAction extends AbstractCyAction{
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		
+		logger.debug("SabioAction performed.");
 		// Open the dialog
 		JFrame frame = this.cySwingApplication.getJFrame();
-		SabioRKDialog sabioRKDialog = new SabioRKDialog(frame, sbmlReader);
+		SabioDialog sabioRKDialog = new SabioDialog(frame, sbmlReader);
 	    sabioRKDialog.setVisible(true);
+	    
+	}
+	
+	public static void setSabioSBMLReader(SabioSBMLReader sbmlReader){
+		SabioAction.sbmlReader = sbmlReader;
 	}
 }

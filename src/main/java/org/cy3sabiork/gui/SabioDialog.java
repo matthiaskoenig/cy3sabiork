@@ -16,19 +16,12 @@ import javax.swing.event.ListSelectionListener;
 
 import org.cy3sabiork.SabioQuery;
 import org.cy3sabiork.SabioSBMLReader;
-import org.cy3sbml.SBMLReaderTask;
-import org.cytoscape.model.CyNetworkManager;
-import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
-import org.cytoscape.work.TaskIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.event.ListSelectionEvent;
 
 import java.awt.event.ActionListener;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
@@ -58,9 +51,7 @@ public class SabioDialog extends JDialog {
 		}
 	}
 	
-	/**
-	 * Create the dialog.
-	 */
+	/** Constructor. */
 	public SabioDialog(JFrame pParent, SabioSBMLReader sbmlReader) {
 		
 		// General settings
@@ -71,7 +62,7 @@ public class SabioDialog extends JDialog {
 		this.setSize(600, 400);
 		this.setResizable(false);
 		this.setLocationRelativeTo(pParent);
-		setTitle("SABIO-RK RESTful Queries");
+		setTitle("SABIO-RK Query");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -162,13 +153,22 @@ public class SabioDialog extends JDialog {
 	
 	
 	public void performSabioRKQuery(){
-		String queryString = queryField.getText();;
-		logger.info("Perform query: GET "+ queryString);
-		SabioQuery query = new SabioQuery();
-		String xml = query.performQuery(queryString);
-		logger.info("\n" + xml + "\n");
+		String queryString = queryField.getText();
 		
-		sbmlReader.loadNetworkFromSBML(xml);
+		// find the query base and the query parameters
+		
+		
+		logger.info("Perform query: GET "+ queryString);
+		try {
+			SabioQuery query = new SabioQuery();
+			String xml = query.performQuery(queryString);
+			logger.info("\n" + xml + "\n");
+			sbmlReader.loadNetworkFromSBML(xml);
+		} catch(RuntimeException e) {
+			throw e;
+		} finally {
+			dispose();
+		}
 	}
 	
 }

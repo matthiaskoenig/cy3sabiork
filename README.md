@@ -33,11 +33,11 @@ in the Cytoscape app folder
 cy3sabiork was developed by [Matthias König](https://www.livermetabolism.com/contact.html) within the Virtual Liver Network (VLN) and the Systems Medicine of the Liver (LiSyM).  
 This work was supported by the Federal Ministry of Education and Research (BMBF, Germany) within the research network Systems Medicine of the Liver (LiSyM) [grant number 031L0054].
 
-<a href="http://sabio.villa-bosch.de/"><img src="docs/images/logo-sabiork.png" height="80"/></a>
-<a href="http://network.virtual-liver.de/en/"><img src="docs/images/logo-lisym.png" height="80"/></a>
-<a href="http://network.virtual-liver.de/en/"><img src="docs/images/logo-vln.png" height="80"/></a>
-<a href="http://www.cytoscape.org/"><img src="docs/images/logo-cytoscape.png" height="80""/></a>
-<a href="http://sbml.org/Main_Page"><img src="docs/images/logo-sbml.png" height="80""/></a>
+<a href="http://sabio.villa-bosch.de/"><img src="docs/images/logo-sabiork.png" height="40"/></a>
+<a href="http://network.virtual-liver.de/en/"><img src="docs/images/logo-lisym.png" height="40"/></a>
+<a href="http://network.virtual-liver.de/en/"><img src="docs/images/logo-vln.png" height="40"/></a>
+<a href="http://www.cytoscape.org/"><img src="docs/images/logo-cytoscape.png" height="40""/></a>
+<a href="http://sbml.org/Main_Page"><img src="docs/images/logo-sbml.png" height="40""/></a>
 
 We thank the SABIO-RK team for their support. We thank the SBML and Cytoscape community for their support and help.
 

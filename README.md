@@ -29,6 +29,10 @@ Alternatively
 in the Cytoscape app folder
 `CytoscapeConfiguration/3/apps/installed/`
 
+## Screenshot
+![alt tag](docs/images/cy3sabiork-v0.1-screenshot.png)]  
+**Figure 1 - Import dialog** Generation of reaction kinetic networks based on SABIO-RK RESTful queries. cy3sbml provides access to annotation information.
+
 ## Acknowledgments
 cy3sabiork was developed by [Matthias König](https://www.livermetabolism.com/contact.html) within the Virtual Liver Network (VLN) and the Systems Medicine of the Liver (LiSyM).  
 This work was supported by the Federal Ministry of Education and Research (BMBF, Germany) within the research network Systems Medicine of the Liver (LiSyM) [grant number 031L0054] and the Virtual Liver Network VLN [grant number 0315741].

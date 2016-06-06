@@ -7,7 +7,6 @@
   
 [![alt tag](docs/images/logo-sabiork.png)](http://sabio.villa-bosch.de/)  
 
-[![Download](docs/images/icon-download.png) Download](https://github.com/matthiaskoenig/cy3sabiork/releases/latest)  
 **Support & Forum**: https://groups.google.com/forum/#!forum/cysbml-cyfluxviz  
 **Bug Tracker**: https://github.com/matthiaskoenig/cy3sabiork/issues  
 
@@ -44,7 +43,7 @@ git checkout -b develop --track origin/develop
 git checkout -b gh-pages --track origin/gh-pages
 ```
 
-# Change Log
+## Change Log
 **v0.3.0** [?]
 - ported to Cytoscape 3
 - updated documentation

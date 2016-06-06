@@ -2,7 +2,7 @@ package org.cy3sabiork;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import org.cy3sbml.CyActivator;
 import org.cy3sbml.SBMLReaderTask;
@@ -23,7 +23,7 @@ public class SabioSBMLReader {
 	private SynchronousTaskManager taskManager;
 	
 	
-	/* Heler class to read SBML models from given stream. */
+	/* Helper class to read SBML graphs. */
 	public SabioSBMLReader(CyNetworkFactory networkFactory, CyNetworkViewFactory viewFactory, 
 			CyNetworkViewManager viewManager, SynchronousTaskManager taskManager){
 		this.networkFactory = networkFactory;
@@ -32,24 +32,14 @@ public class SabioSBMLReader {
 		this.taskManager = taskManager;
 	}
 	
-	/** Create the graph from the given SBML. */
+	/** Create Cytoscape graphs from SBML string. */
 	public void loadNetworkFromSBML(String sbml){
 		logger.info("Load SBML for kinetic information");
-		InputStream instream;
-		try {
-			instream = new ByteArrayInputStream(sbml.getBytes("UTF-8"));
+		InputStream instream = new ByteArrayInputStream(sbml.getBytes(StandardCharsets.UTF_8));
 			
-			// TODO: load the SBML as a network with cy3sbml
-			// Cytoscape.createNetwork(new SBMLGraphReader(instream),true, null);
-			System.out.println("READ SBML Results");
-			
-			// Creates a task to read the SBML file
-			SBMLReaderTask sbmlReaderTask = new SBMLReaderTask(instream, null, networkFactory, viewFactory, viewManager);
-			TaskIterator taskIterator = new TaskIterator(sbmlReaderTask);
-			taskManager.execute(taskIterator);
-			
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		// Creates a task to read the SBML file
+		SBMLReaderTask sbmlReaderTask = new SBMLReaderTask(instream, null, networkFactory, viewFactory, viewManager);
+		TaskIterator taskIterator = new TaskIterator(sbmlReaderTask);
+		taskManager.execute(taskIterator);
 	}
 }

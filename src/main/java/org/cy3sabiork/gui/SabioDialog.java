@@ -164,6 +164,7 @@ public class SabioDialog extends JDialog {
 		logger.info("Perform query: GET "+ queryString);
 		SabioQuery query = new SabioQuery();
 		String xml = query.performQuery(queryString);
+		logger.info("\n" + xml + "\n");
 		sbmlReader.loadNetworkFromSBML(xml);
 	}
 	

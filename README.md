@@ -23,7 +23,7 @@
 `Apps -> App Manager`
 
 Alternatively
-* download latest versions of [cy3sbml](https://github.com/matthiaskoenig/cy3sbml/releases/latest) and [cy3sabiork](https://github.com/matthiaskoenig/cy3sbml/releases/latest) and move the downloaded jar files  
+* download latest versions of [cy3sbml](https://github.com/matthiaskoenig/cy3sbml/releases/latest) and [cy3sabiork](https://github.com/matthiaskoenig/cy3sabiork/releases/latest) and move the downloaded jar files  
 `cy3sbml-vx.x.x.jar`  
 `cy3sabiork-vx.x.x.jar`  
 in the Cytoscape app folder
@@ -38,7 +38,7 @@ This work was supported by the Federal Ministry of Education and Research (BMBF,
 <a href="http://network.virtual-liver.de/en/"><img src="docs/images/logo-vln.png" height="40"/></a>&nbsp;&nbsp;
 <a href="http://www.cytoscape.org/"><img src="docs/images/logo-cytoscape.png" height="40""/></a>&nbsp;&nbsp;
 <a href="http://sbml.org/Main_Page"><img src="docs/images/logo-sbml.png" height="40""/></a>&nbsp;&nbsp;
-<a href="http://www.bmbf.de/"><img src="docs/images/logo-bmbf.png" height="40""/></a>&nbsp;&nbsp;
+<a href="http://www.bmbf.de/"><img src="docs/images/logo-bmbf.png" height="80""/></a>&nbsp;&nbsp;
 
 We thank the SABIO-RK team for their support. We thank the SBML and Cytoscape community for their support and help.
 

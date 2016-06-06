@@ -18,6 +18,7 @@ import org.cy3sabiork.SabioQuery;
 import org.cy3sabiork.SabioSBMLReader;
 import org.cy3sbml.SBMLReaderTask;
 import org.cytoscape.model.CyNetworkManager;
+import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
 import org.cytoscape.work.TaskIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,8 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class SabioDialog extends JDialog {
 	private static final Logger logger = LoggerFactory.getLogger(SabioDialog.class);
-	private SabioSBMLReader sbmlReader; 
+	// private SabioSBMLReader sbmlReader; 
+	private SabioSBMLReader sbmlReader;
 	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField serverField;
@@ -165,10 +167,8 @@ public class SabioDialog extends JDialog {
 		SabioQuery query = new SabioQuery();
 		String xml = query.performQuery(queryString);
 		logger.info("\n" + xml + "\n");
+		
 		sbmlReader.loadNetworkFromSBML(xml);
 	}
 	
-	
-	
-
 }

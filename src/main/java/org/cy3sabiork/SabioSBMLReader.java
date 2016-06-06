@@ -1,14 +1,12 @@
 package org.cy3sabiork;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-import org.cy3sbml.CyActivator;
-import org.cy3sbml.SBMLReaderTask;
-import org.cytoscape.model.CyNetworkFactory;
-import org.cytoscape.view.model.CyNetworkViewFactory;
-import org.cytoscape.view.model.CyNetworkViewManager;
+
+import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
 import org.cytoscape.work.SynchronousTaskManager;
 import org.cytoscape.work.TaskIterator;
 import org.slf4j.Logger;
@@ -17,29 +15,39 @@ import org.slf4j.LoggerFactory;
 public class SabioSBMLReader {
 	private static final Logger logger = LoggerFactory.getLogger(CyActivator.class);
 	
-	private CyNetworkFactory networkFactory;
-	private CyNetworkViewFactory viewFactory;
-	private CyNetworkViewManager viewManager;
+	private LoadNetworkFileTaskFactory factory;
 	private SynchronousTaskManager taskManager;
 	
-	
 	/* Helper class to read SBML graphs. */
-	public SabioSBMLReader(CyNetworkFactory networkFactory, CyNetworkViewFactory viewFactory, 
-			CyNetworkViewManager viewManager, SynchronousTaskManager taskManager){
-		this.networkFactory = networkFactory;
-		this.viewFactory = viewFactory;
-		this.viewManager = viewManager;
+	public SabioSBMLReader(LoadNetworkFileTaskFactory factory, SynchronousTaskManager taskManager){
+		this.factory = factory;
 		this.taskManager = taskManager;
 	}
 	
 	/** Create Cytoscape graphs from SBML string. */
 	public void loadNetworkFromSBML(String sbml){
 		logger.info("Load SBML for kinetic information");
-		InputStream instream = new ByteArrayInputStream(sbml.getBytes(StandardCharsets.UTF_8));
-			
-		// Creates a task to read the SBML file
-		SBMLReaderTask sbmlReaderTask = new SBMLReaderTask(instream, null, networkFactory, viewFactory, viewManager);
-		TaskIterator taskIterator = new TaskIterator(sbmlReaderTask);
-		taskManager.execute(taskIterator);
+		// InputStream instream = new ByteArrayInputStream(sbml.getBytes(StandardCharsets.UTF_8));
+		
+		// Load the network via a LoadNetworkFileTaskFactory
+		try{
+			// temp file
+    	    File temp = File.createTempFile("sabiork-temp", ".xml"); 
+    	    BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
+    	    bw.write(sbml);
+    	    bw.close();
+    	    
+    	    // execute task
+    		TaskIterator taskIterator = factory.createTaskIterator(temp);
+    		taskManager.execute(taskIterator);
+    		
+    		// Creates a task to read the SBML file
+    		
+    		// SBMLReaderTask sbmlReaderTask = new SBMLReaderTask(instream, null, networkFactory, viewFactory, viewManager);
+    		// TaskIterator taskIterator = new TaskIterator(sbmlReaderTask);
+    		
+    	}catch(IOException e){
+    	    e.printStackTrace();
+    	}
 	}
 }

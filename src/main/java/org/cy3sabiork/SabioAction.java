@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import org.cy3sabiork.gui.SabioDialog;
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.application.swing.CySwingApplication;
-
+import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +20,7 @@ public class SabioAction extends AbstractCyAction{
 	private static final Logger logger = LoggerFactory.getLogger(SabioAction.class);
 	private CySwingApplication cySwingApplication;
 	
-	private static SabioSBMLReader sbmlReader;
+	public static SabioSBMLReader sbmlReader;
 	
 	public SabioAction(CySwingApplication cySwingApplication){
 		super("SabioRKAction");
@@ -53,6 +53,7 @@ public class SabioAction extends AbstractCyAction{
 	    sabioRKDialog.setVisible(true);
 	    
 	}
+	
 	
 	public static void setSabioSBMLReader(SabioSBMLReader sbmlReader){
 		SabioAction.sbmlReader = sbmlReader;

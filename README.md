@@ -29,6 +29,16 @@ Alternatively
 in the Cytoscape app folder
 `CytoscapeConfiguration/3/apps/installed/`
 
+## Acknowledgments
+cy3sabiork was developed by [Matthias König](https://www.livermetabolism.com/contact.html) within the Virtual Liver Network (VLN) and the Systems Medicine of the Liver (LiSyM). We thank the SABIO-RK team for their support.
+
+[![alt tag](docs/images/logo-sabiork.png)](http://sabio.villa-bosch.de/)
+[![alt tag](docs/images/logo-lisym.png)](http://network.virtual-liver.de/en/)
+[![alt tag](docs/images/logo-vln.png)](http://network.virtual-liver.de/en/)
+[![alt tag](docs/images/logo-cytoscape.png)](http://www.cytoscape.org/)
+[![alt tag](docs/images/logo-sbml.png)](http://sbml.org/Main_Page)
+
+This work was supported by the Federal Ministry of Education and Research (BMBF, Germany) within the research network Systems Medicine of the Liver (LiSyM) [grant number 031L0054].
 
 ## Build instructions
 Clone the repository and build with `maven`

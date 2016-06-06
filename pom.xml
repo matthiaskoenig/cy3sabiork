@@ -16,7 +16,7 @@
 	<groupId>org.cy3sabiork</groupId>
 	<artifactId>cy3sabiork</artifactId>
 	<packaging>bundle</packaging>
-	<version>0.1.0</version>
+	<version>0.2.5</version>
 	<name>cy3sabiork</name>
 
 	<repositories>

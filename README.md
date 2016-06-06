@@ -1,15 +1,13 @@
-# cy2sabiork: SabioRK integration in Cytoscape 2
+# cy3sabiork: SABIO-RK integration with Cytoscape 3
 <div align="right>
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=RYHNRJFBMWD5N" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-yellow.svg" alt="PayPal donate button" /></a>
 </div>
 
-**cy2sabiork** is a [Cytoscape 2](http://www.cytoscape.org) plugin for the for accessing kinetic information from
-[SABIO-RK](http://sabio.villa-bosch.de/) via the RESTful web service.  
+**cy3sabiork** is a [Cytoscape 3](http://www.cytoscape.org) app for accessing kinetic information from [SABIO-RK](http://sabio.villa-bosch.de/) via the RESTful web service.  
 
 [![Download](docs/images/icon-download.png) Download](https://github.com/matthiaskoenig/cy2sabiork/releases/latest)  
-**Documentation**: http://matthiaskoenig.github.io/cy2sabiork/  
 **Support & Forum**: https://groups.google.com/forum/#!forum/cysbml-cyfluxviz  
-**Bug Tracker**: https://github.com/matthiaskoenig/cy2sabiork/issues  
+**Bug Tracker**: https://github.com/matthiaskoenig/cy3sabiork/issues  
 
 ## Features
 - Accessing SABIO-RK data via search interface in Cytoscape
@@ -21,29 +19,24 @@
 * Documentation: [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/)
 
 ## Install
-* install Cytoscape v2.8.3  
+* install Cytoscape v3.4.0 or higher  
   http://www.cytoscape.org/download.html
-* download latest versions of cy2sbml and cy2sabiork from  
-https://github.com/matthiaskoenig/cy2sbml/releases/latest  
-https://github.com/matthiaskoenig/cy2sabiork/releases/latest
-* move the downloaded jar files  
-`cy2sbml-vx.xx.jar`  
-`cy2sabiork-vx.xx.jar`  
-in the Cytoscape plugin folder
-`Cytoscape_v2.8.*/plugins/`
-* remove `sbml-reader-2.8.3-jar-with-dependencies.jar` from the plugin folder.
+* install cy3sbml and cy3sabiork via the Cytoscape app store
 
-**cy2sabiork** is installed and available in Cytoscape under plugins after the next startup of Cytoscape.
+Alternatively
+* download latest versions of [cy3sbml](https://github.com/matthiaskoenig/cy3sbml/releases/latest) and [cy3sabiork](https://github.com/matthiaskoenig/cy3sbml/releases/latest) and move the downloaded jar files  
+`cy3sbml-vx.x.x.jar`  
+`cy3sabiork-vx.x.x.jar`  
+in the Cytoscape app folder
+`CytoscapeConfiguration/3/apps/installed/`
 
-## Uninstall
-* remove `cy2sabiork-vx.xx.jar` from the plugin folder
 
 ## Build instructions
-Clone the repository and build with `ant`
+Clone the repository and build with `maven`
 ```
-git clone https://github.com/matthiaskoenig/cy2sabiork.git cy2sabiork
-cd cy2sabiork
-ant cy2sabiork
+git clone https://github.com/matthiaskoenig/cy3sabiork.git
+cd cy3sabiork
+mvn clean install cy3sabiork
 ```
 Development is done in `develop` branch, documentation in `gh-pages`
 ```
@@ -52,6 +45,10 @@ git checkout -b gh-pages --track origin/gh-pages
 ```
 
 # Change Log
+**v0.3.0** [?]
+- ported to Cytoscape 3
+- updated documentation
+
 **v0.2.0** [2015-10-27]
 - migration to github
 - cy2sbml-v1.4.0

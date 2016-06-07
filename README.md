@@ -46,26 +46,8 @@ git checkout -b develop --track origin/develop
 git checkout -b gh-pages --track origin/gh-pages
 ```
 
-## Change Log
-**v0.3.0** [2016-06-07]
-- ported to Cytoscape 3
-- updated documentation
-
-**v0.2.0** [2015-10-27]
-- migration to github
-- cy2sbml-v1.4.0
-
-**v0.17**
-- logger updated 
-
-**v0.16**
-- update library dependecies -> jersey-1.17.1
-
-**v0.15**
-- first working version
-
 ## Acknowledgments
-cy3sabiork was developed by [Matthias König](https://www.livermetabolism.com/contact.html) within the Virtual Liver Network (VLN) and the Systems Medicine of the Liver (LiSyM).  
+**cy3sabiork** was developed by [Matthias König](https://www.livermetabolism.com/contact.html) within the Virtual Liver Network (VLN) and the Systems Medicine of the Liver (LiSyM).  
 This work was supported by the Federal Ministry of Education and Research (BMBF, Germany) within the research network Systems Medicine of the Liver (LiSyM) [grant number 031L0054] and the Virtual Liver Network VLN [grant number 0315741].
 
 <a href="http://sabio.villa-bosch.de/"><img src="docs/images/logo-sabiork.png" height="40"/></a>&nbsp;&nbsp;
@@ -77,3 +59,25 @@ This work was supported by the Federal Ministry of Education and Research (BMBF,
 
 We thank the SABIO-RK team for their support. We thank the SBML and Cytoscape community for their support and help.
 
+## Change Log
+**v0.3.0** [2016-06-07]
+
+- ported to Cytoscape 3
+- updated documentation
+
+**v0.2.0** [2015-10-27]
+
+- migration to github
+- cy2sbml-v1.4.0
+
+**v0.17**
+
+- logger updated 
+
+**v0.16**
+
+- update library dependecies -> jersey-1.17.1
+
+**v0.15**
+
+- first working version

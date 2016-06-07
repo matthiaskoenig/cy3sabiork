@@ -29,7 +29,7 @@ echo BUILD CY3SBML  = "${BUILD_CY3SBML}"
 if [ "$BUILD_CY3SBML" == "" ]; then
 	# Build cy3sbml latest develop from source
 	: "${CY3SBML?Need to set CY3SBML}"
-	CY3SBML_VERSION="0.1.8"
+	CY3SBML_VERSION="0.1.9"
 	cd $CY3SBML
 	mvn install -DskipTests
 

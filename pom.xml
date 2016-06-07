@@ -16,7 +16,7 @@
 	<groupId>org.cy3sabiork</groupId>
 	<artifactId>cy3sabiork</artifactId>
 	<packaging>bundle</packaging>
-	<version>0.3.0</version>
+	<version>0.3.1</version>
 	<name>cy3sabiork</name>
 
 	<repositories>
@@ -228,7 +228,7 @@
   		<dependency>
 			<groupId>cy3sbml-dep</groupId>
 			<artifactId>cy3sbml</artifactId>
-			<version>0.1.8</version>
+			<version>0.1.9</version>
 		</dependency> 
   		
   		<dependency>

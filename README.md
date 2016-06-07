@@ -30,8 +30,8 @@ in the Cytoscape app folder
 `CytoscapeConfiguration/3/apps/installed/`
 
 ## Screenshot
-![alt tag](docs/images/cy3sabiork-v0.1-screenshot.png)  
-**Figure 1 - Import dialog** Generation of reaction kinetic networks based on SABIO-RK RESTful queries. cy3sbml provides access to annotation information.
+![alt tag](docs/images/cy3sabiork-v0.3.0-screenshot.png)  
+**Figure 1** Reaction kinetic networks based on SABIO-RK RESTful queries. cy3sbml provides access to annotation information.
 
 ## Build instructions
 Clone the repository and build with `maven`
@@ -47,7 +47,7 @@ git checkout -b gh-pages --track origin/gh-pages
 ```
 
 ## Change Log
-**v0.3.0** [?]
+**v0.3.0** [2016-06-07]
 - ported to Cytoscape 3
 - updated documentation
 

@@ -9,20 +9,18 @@ import org.cytoscape.application.CyApplicationConfiguration;
 import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.application.swing.CySwingApplication;
 import org.cytoscape.application.swing.CytoPanelComponent;
-import org.cytoscape.model.CyNetworkFactory;
+
 import org.cytoscape.service.util.AbstractCyActivator;
+import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
 import org.cytoscape.util.swing.OpenBrowser;
-import org.cytoscape.view.model.CyNetworkViewFactory;
-import org.cytoscape.view.model.CyNetworkViewManager;
 import org.cytoscape.work.SynchronousTaskManager;
 
 import org.cy3sbml.BundleInformation;
 import org.cy3sabiork.gui.SabioPanel;
-import org.cy3sabiork.SabioRKAction;
+import org.cy3sabiork.SabioAction;
 
 /**
- * cy3sabiork activator. 
- * Display reaction kinetics information via WebServices in Cytoscape. 
+ * Main entry point for OSGI.
  */
 public class CyActivator extends AbstractCyActivator {
 	private static Logger logger;
@@ -35,16 +33,14 @@ public class CyActivator extends AbstractCyActivator {
 		try {
 			BundleInformation bundleInfo = new BundleInformation(bc);
 			
-			// Default configuration directory used for all cy3sbml files 
-			// Used for retrieving
+			// app directory 
 			CyApplicationConfiguration configuration = getService(bc, CyApplicationConfiguration.class);
 			File cyDirectory = configuration.getConfigurationDirectoryLocation();
 			File appDirectory = new File(cyDirectory, bundleInfo.getName());
-			
 			if(appDirectory.exists() == false) {
 				appDirectory.mkdir();
 			}
-			// store bundle information (for display of dependencies, versions, ...)
+			// log file
 			File logFile = new File(appDirectory, bundleInfo.getInfo() + ".log");
 			System.setProperty("logfile.name", logFile.getAbsolutePath());
 			logger = LoggerFactory.getLogger(CyActivator.class);
@@ -58,22 +54,16 @@ public class CyActivator extends AbstractCyActivator {
 			CySwingApplication cySwingApplication = getService(bc, CySwingApplication.class);
 			OpenBrowser openBrowser = getService(bc, OpenBrowser.class);
 			
-
-			
 			// SBML reader
 			SynchronousTaskManager synchronousTaskManager = getService(bc, SynchronousTaskManager.class);
-			CyNetworkFactory cyNetworkFactory = getService(bc, CyNetworkFactory.class);
-			CyNetworkViewFactory cyNetworkViewFactory = getService(bc, CyNetworkViewFactory.class);
-			CyNetworkViewManager cyNetworkViewManger = getService(bc, CyNetworkViewManager.class);
-			
-			SabioSBMLReader sbmlReader = new SabioSBMLReader(cyNetworkFactory, cyNetworkViewFactory, 
-					cyNetworkViewManger, synchronousTaskManager);
-					
+			LoadNetworkFileTaskFactory loadNetworkFileTaskFactory = getService(bc, LoadNetworkFileTaskFactory.class);
+			SabioSBMLReader sbmlReader = new SabioSBMLReader(loadNetworkFileTaskFactory, synchronousTaskManager);
+		
 			// init actions
-			SabioRKAction sabioAction = new SabioRKAction(cySwingApplication, sbmlReader);
+			SabioAction sabioAction = new SabioAction(cySwingApplication);	
+			SabioAction.setSabioSBMLReader(sbmlReader);
 			registerService(bc, sabioAction, CyAction.class, new Properties());
 		
-			
 			// Sabio Panel
 			SabioPanel sabioPanel = SabioPanel.getInstance(cySwingApplication, openBrowser, sabioAction);
 			registerService(bc, sabioPanel, CytoPanelComponent.class, new Properties());

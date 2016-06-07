@@ -1,33 +1,42 @@
 package org.cy3sabiork;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 
 /**
- * Testing the SabioRK restful interface for queries.
+ * Querying the SABIO-RK web service.
  */
 public class TestRestful {
 
-
-	/** Create the client and perform a query with a given URL to test
-	 * the SabioRK RESTful connection.
+	/** 
+	 * Create client and perform query.
 	 */
-	public static int testQuery(String query) {
+	public static int testQuery(String query, Map<String, String> parameters) {
 		try {
 			// Create client
 			Client client = ClientBuilder.newClient();
-			WebTarget resourceTarget = client.target(SabioRKQuery.SABIORK_RESTFUL_URL);
+			WebTarget resourceTarget = client.target(SabioQuery.SABIORK_RESTFUL_URL);
 
 			// Add the path to the target
 			WebTarget requestTarget = resourceTarget.path(query);
+			
+			// add query parameters
+			for (String key: parameters.keySet()){
+				requestTarget = requestTarget.queryParam(key, parameters.get(key));
+			}
+			System.out.println("URI: " + requestTarget.getUri());			
 			
 			// invocation of request
 			Invocation.Builder invocationBuilder = requestTarget.request(MediaType.TEXT_XML_TYPE);
@@ -50,25 +59,32 @@ public class TestRestful {
 		}
 	}
 	
-	/** Get list of available fields for querying. 
-	 * FIXME: not implemented
-	 * */
-	public static List<String> getQueryFields(){
-		SabioRKQuery sQuery = new SabioRKQuery();
-		java.lang.String queryURL = SabioRKQuery.SABIORK_RESTFUL_URL + "/searchKineticLaws";
-		String res = sQuery.performQuery(queryURL);
-		
-		// get the possible query fields for the Sabio RESTful
-		// webservice
-		List<String> fields = new LinkedList<String>();
-		// TODO: do the magic
-	
-		return fields;
+	public static int testQuery(String query){
+		return testQuery(query, new HashMap<String, String>());
 	}
 	
+		
 	/* Test the Restful API */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnsupportedEncodingException {
 		System.out.println("CySabioRK[INFO]: TestRESTful SabioRK Connection");
+		
+		// single kinetic law
 		testQuery("kineticLaws/123");
+		
+		// multiple kinetic laws
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("kinlawids", "18974,18976,18975,22516");
+		testQuery("kineticLaws", parameters);
+
+		// liver homo sapiens substrate glucose
+		parameters = new HashMap<String, String>();
+		parameters.put("q", "Tissue:liver%20AND%20Organism:Homo%20sapiens%20AND%20Substrate:Glucose");
+		testQuery("searchKineticLaws/sbml", parameters);
+			
+		// search kinetic laws for chebi compound
+		parameters = new HashMap<String, String>();
+		parameters.put("q", URLEncoder.encode("ReactantChebi:17925", "UTF-8"));
+		testQuery("searchKineticLaws/sbml", parameters);
+
 	}
 }

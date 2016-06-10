@@ -26,13 +26,12 @@ public class SabioAction extends AbstractCyAction{
 		super("SabioRKAction");
 		this.cySwingApplication = cySwingApplication;
 		
-		/*
 		ImageIcon icon = new ImageIcon(getClass().getResource("/images/logo-sabiork.png"));
 		putValue(LARGE_ICON_KEY, icon);
 		
-		this.putValue(SHORT_DESCRIPTION, "cyfluxviz action");
+		this.putValue(SHORT_DESCRIPTION, "SABIO-RK web services");
 		setToolbarGravity((float) 500.0);
-		*/
+	
 	}
 	
 	public boolean insertSeparatorBefore(){

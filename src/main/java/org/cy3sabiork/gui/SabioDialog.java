@@ -1,6 +1,7 @@
 package org.cy3sabiork.gui;
 
 import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -24,10 +25,15 @@ import javax.swing.event.ListSelectionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
+/** TODO: better search fields & support
+ *
+ */
+
+
 @SuppressWarnings("serial")
 public class SabioDialog extends JDialog {
-	private static final Logger logger = LoggerFactory.getLogger(SabioDialog.class);
-	// private SabioSBMLReader sbmlReader; 
+	private static final Logger logger = LoggerFactory.getLogger(SabioDialog.class); 
 	private SabioSBMLReader sbmlReader;
 	
 	private final JPanel contentPanel = new JPanel();
@@ -67,17 +73,7 @@ public class SabioDialog extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		{
-			serverField = new JTextField();
-			serverField.setText(SabioQuery.SABIORK_RESTFUL_URL);
-			serverField.setBounds(26, 32, 306, 30);
-			contentPanel.add(serverField);
-			serverField.setColumns(10);
-		}
 		
-		JLabel lblSabioRestfulServer = new JLabel("SABIO-RK REST Server");
-		lblSabioRestfulServer.setBounds(26, 12, 157, 15);
-		contentPanel.add(lblSabioRestfulServer);
 		
 		JLabel lblExamples = new JLabel("Examples");
 		lblExamples.setBounds(26, 132, 70, 15);
@@ -97,10 +93,13 @@ public class SabioDialog extends JDialog {
 		
 		exampleList.setModel(new AbstractListModel() {
 			String[] values = new String[] {
-					"/kineticLaws/18974", 
-					"/kineticLaws?kinlawids=18974,18976,18975,22516",
-					"/searchKineticLaws/sbml?q=Tissue:liver%20AND%20Organism:Homo%20sapiens%20AND%20Substrate:Glucose",
-					"/searchKineticLaws/sbml?q=ReactantChebi:17925"
+					"kineticLaws/14792", 
+					"kineticLaws?kinlawids=18974,18976,18975,22516",
+					"searchKineticLaws/sbml?q=Pathway:\"galactose metabolim\"",  // galactose
+					"searchKineticLaws/sbml?q=Tissue:\"liver\" AND Organism:\"Homo sapiens\" AND Substrate:\"Glucose\"",
+					"searchKineticLaws/sbml?q=AnyRole:\"galactose\"",  // galactose
+					"searchKineticLaws/sbml?q=ChebiID:\"28260\"",  // galactose
+					"searchKineticLaws/sbml?q=KeggID:\"C00124\""  // D-galactose
 			};
 			public int getSize() {
 				return values.length;
@@ -117,7 +116,7 @@ public class SabioDialog extends JDialog {
 		contentPanel.add(lblSabioRestQuery);
 		
 		queryField = new JTextField();
-		queryField.setText("/kineticLaws/18974");
+		queryField.setText("kineticLaws/14792");
 		queryField.setColumns(10);
 		queryField.setBounds(26, 90, 531, 30);
 		contentPanel.add(queryField);
@@ -162,7 +161,6 @@ public class SabioDialog extends JDialog {
 		try {
 			SabioQuery query = new SabioQuery();
 			String xml = query.performQuery(queryString);
-			logger.info("\n" + xml + "\n");
 			sbmlReader.loadNetworkFromSBML(xml);
 		} catch(RuntimeException e) {
 			throw e;

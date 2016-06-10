@@ -1,7 +1,6 @@
 package org.cy3sabiork;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URI;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -24,7 +23,53 @@ public class SabioQuery {
 	
 	/**
 	 * Parses the path and the parameters from the query string.
+	 * 
+	 * Query strings are of the form:
+	 * 		kineticLaws/123
+	 * 		searchKineticLaws/sbml?q=Tissue:spleen AND Organism:\"Homo sapiens\"
+	 * 		searchKineticLaws/sbml?q=Tissue:spleen%20AND%20Organism:%22homo%20sapiens%22
 	 */
+	public String performQuery(String query){
+		logger.info("Perform Sabio-RK query");
+
+		String output = null;
+		try {	
+			// Create URI after required replacements (as long as SABIO-RK has no proper encoding)
+			query = query.replace(" ", "%20");
+			query = query.replace("\"", "%22");
+			URI uri = new java.net.URI(SabioQuery.SABIORK_RESTFUL_URL + "/" + query);
+	
+			// Create client
+			Client client = ClientBuilder.newClient();
+			WebTarget requestTarget = client.target(uri);
+			
+			// WebTarget requestTarget = resourceTarget.path(path);
+			System.out.println("URI: " + requestTarget.getUri());			
+			
+			// invocation of request
+			Invocation.Builder invocationBuilder = requestTarget.request(MediaType.TEXT_XML_TYPE);
+			Response response = invocationBuilder.get();
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+			
+			output = response.readEntity(String.class);
+			System.out.println("--------------------------------------------");
+			System.out.println(output);
+			System.out.println("--------------------------------------------");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return output;
+	}
+
+	
+	
+	/**
+	 * Parses the path and the parameters from the query string.
+	 
 	public String performQuery(String query){
 		HashMap<String, String> parameters = new HashMap<String, String>();
 		String[] parts = query.split("\\?");
@@ -37,9 +82,14 @@ public class SabioQuery {
 		}
 		return performQuery(path, parameters);
 	}
+	*/
 	
-	
-	/* Create the client and perform a query with a given URL. */
+	/* Create the client and perform a query with a given URL. 
+	 * 
+	 * This is the correct way to handle the query parameters, 
+	 * but due to URL encoding problems in SABIO-RK this can currently not
+	 * be used.
+	 
 	public String performQuery(String path, Map<String, String> parameters) {
 		logger.info("Perform Sabio-RK query");
 
@@ -78,7 +128,7 @@ public class SabioQuery {
 		}
 		return output;
 	}
-	
+	*/
 	
 
 }

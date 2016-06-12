@@ -56,7 +56,7 @@ public class WebViewSwing {
     }
 	
     
-    public static void  launch(JFrame parentFrame){
+    public static void launch(JFrame parentFrame){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

@@ -1,5 +1,10 @@
 package org.cy3sabiork.gui;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
@@ -21,11 +26,37 @@ class Browser extends Region {
 		//apply the styles
 		getStyleClass().add("browser");
 		// load the web page
-		webEngine.load("http://sabiork.h-its.org/newSearch/index");
+		//webEngine.load("http://sabiork.h-its.org/newSearch/index");
+		
+		
+		URL queryURL = getClass().getResource("/query.html");
+		System.out.println(queryURL);
+        // webEngine.load(queryURL.toString());
+        
+        loadPage(queryURL.toString());
+        
+        // System.out.println(webEngine.getLocation());
+        // webEngine.loadContent("<html><h1>Hello world</h1></html>");
+		
 		//add the web view to the scene
 		getChildren().add(browser);
 
 	}
+	
+	private void loadPage(String url) {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+                webEngine.load(url);
+
+            }
+        });
+
+    }
+	
+	
 	private Node createSpacer() {
 		Region spacer = new Region();
 		HBox.setHgrow(spacer, Priority.ALWAYS);

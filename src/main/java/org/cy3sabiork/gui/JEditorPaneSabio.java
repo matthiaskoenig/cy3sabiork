@@ -62,6 +62,7 @@ public class JEditorPaneSabio extends JEditorPane{
 			    // call the super of outer class
 				try {
 					JEditorPaneSabio.super.setPage(page);
+					System.out.println(page);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

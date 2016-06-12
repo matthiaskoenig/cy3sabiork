@@ -9,8 +9,8 @@ import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.application.swing.CySwingApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.cy3sabiork.gui.SabioDialog;
+import org.cy3sabiork.gui.WebViewSwing;
 
 /**
  * Test access to the cy3sbml instance information.
@@ -48,10 +48,13 @@ public class SabioAction extends AbstractCyAction{
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		logger.debug("SabioAction performed.");
-		// Open the dialog
 		JFrame frame = this.cySwingApplication.getJFrame();
-		SabioDialog sabioRKDialog = new SabioDialog(frame, sbmlReader);
-	    sabioRKDialog.setVisible(true);
+		
+		// Open JavaFX
+		WebViewSwing.launch(frame);
+		
+		// Open dialog
+		// SabioDialog.launch(frame, sbmlReader);
 	}
 	
 	public static void setSabioSBMLReader(SabioSBMLReader sbmlReader){

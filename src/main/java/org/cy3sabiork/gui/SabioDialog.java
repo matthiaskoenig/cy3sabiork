@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
@@ -56,6 +57,17 @@ public class SabioDialog extends JDialog {
 			e.printStackTrace();
 		}
 	}
+	
+    public static void launch(JFrame parentFrame, SabioSBMLReader sbmlReader){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+            	SabioDialog sabioRKDialog = new SabioDialog(parentFrame, sbmlReader);
+            	sabioRKDialog.setVisible(true);
+            }
+        });
+    }
+	
 	
 	/** Constructor. */
 	public SabioDialog(JFrame pParent, SabioSBMLReader sbmlReader) {

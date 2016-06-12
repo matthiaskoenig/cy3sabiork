@@ -11,6 +11,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<cytoscape.api.version>3.2.1</cytoscape.api.version>
 		<Cytoscape-App-Dependencies>cy3sbml;0.1.8</Cytoscape-App-Dependencies>
+		
+		<org.osgi.framework.system.packages.extra>javafx.animation,javafx.application,javafx.collections,javafx.embed.swing,javafx.geometry,javafx.scene,javafx.scene.layout,javafx.scene.transform,javax.swing,javax.swing.border,org.osgi.framework</org.osgi.framework.system.packages.extra>
+		
 	</properties>
 
 	<groupId>org.cy3sabiork</groupId>
@@ -18,6 +21,7 @@
 	<packaging>bundle</packaging>
 	<version>0.3.1</version>
 	<name>cy3sabiork</name>
+	<description>A Cytoscape app to visualize kinetic data from SABIO-RK.</description>
 
 	<repositories>
 		<repository>

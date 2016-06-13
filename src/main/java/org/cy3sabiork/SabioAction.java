@@ -9,7 +9,6 @@ import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.application.swing.CySwingApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.cy3sabiork.gui.SabioDialog;
 import org.cy3sabiork.gui.WebViewSwing;
 
 /**
@@ -26,7 +25,7 @@ public class SabioAction extends AbstractCyAction{
 		super("SabioRKAction");
 		this.cySwingApplication = cySwingApplication;
 		
-		ImageIcon icon = new ImageIcon(getClass().getResource("/images/logo-sabiork.png"));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/gui/images/logo-sabiork.png"));
 		putValue(LARGE_ICON_KEY, icon);
 		
 		this.putValue(SHORT_DESCRIPTION, "SABIO-RK web services");

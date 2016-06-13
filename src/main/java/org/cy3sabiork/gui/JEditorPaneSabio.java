@@ -32,7 +32,7 @@ public class JEditorPaneSabio extends JEditorPane{
 	}
 	
 	public void setHelp(){
-		setHTMLResource("/info.html");
+		setHTMLResource("/gui/info.html");
 	}
 
 	/** Set given URL in the ResultsPanel. */

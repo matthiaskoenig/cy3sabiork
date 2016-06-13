@@ -1,7 +1,17 @@
 package org.cy3sabiork;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Enumeration;
 import java.util.Properties;
+
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +43,7 @@ public class CyActivator extends AbstractCyActivator {
 		try {
 			BundleInformation bundleInfo = new BundleInformation(bc);
 			
+
 			// app directory 
 			CyApplicationConfiguration configuration = getService(bc, CyApplicationConfiguration.class);
 			File cyDirectory = configuration.getConfigurationDirectoryLocation();
@@ -50,7 +61,56 @@ public class CyActivator extends AbstractCyActivator {
 			logger.info("----------------------------");
 			logger.info("directory = " + appDirectory.getAbsolutePath());
 			logger.info("logfile = " + logFile.getAbsolutePath());
-								
+			
+
+			File ftest = bc.getDataFile("gui/info.html");
+			System.out.println(ftest.getAbsolutePath());
+			System.out.println("File exists: " + ftest.exists());
+			
+			
+			// copying the file does not work
+			// Files.copy(ftest.toPath(), new File(appDirectory + "/" + "info.html").toPath(), 
+			//		StandardCopyOption.REPLACE_EXISTING);
+			
+			
+			URL infoURL = getClass().getResource("/gui/info.html");
+			System.out.println(infoURL);
+			InputStream inputStream = infoURL.openStream();
+			OutputStream outputStream = new FileOutputStream(new File(appDirectory + "/" + "info.html"));
+
+			
+			int read = 0;
+			byte[] bytes = new byte[1024];
+	
+			while ((read = inputStream.read(bytes)) != -1) {
+				outputStream.write(bytes, 0, read);
+			}
+			
+			
+			/*
+			Bundle bundle = bc.getBundle();
+			@SuppressWarnings("unchecked")
+			Enumeration<String> e = bundle.getEntryPaths("/gui/");
+			while(e.hasMoreElements()){
+				String path = e.nextElement();
+				System.out.println(path);
+				
+				// skip directories
+				if (path.endsWith("/")){
+					continue;
+				}
+				File file = bc.getDataFile(path);
+				System.out.println(file.getAbsolutePath());
+				
+				// copy to app folder
+				Path src = file.toPath();	
+				Path des = new File(appDirectory.toPath() + "/" + path).toPath();
+				System.out.println(src + " -> " + des);
+				Files.copy(file.toPath(), des, StandardCopyOption.REPLACE_EXISTING);	
+			}
+			*/
+			
+			
 			CySwingApplication cySwingApplication = getService(bc, CySwingApplication.class);
 			OpenBrowser openBrowser = getService(bc, OpenBrowser.class);
 			

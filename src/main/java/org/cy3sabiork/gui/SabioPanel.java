@@ -89,7 +89,7 @@ public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkL
 
 	@Override
 	public Icon getIcon() {
-		return new ImageIcon(getClass().getResource("/images/icon-sabiork.png"));
+		return new ImageIcon(getClass().getResource("/gui/images/icon-sabiork.png"));
 	}
 
 	@Override

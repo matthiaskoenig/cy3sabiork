@@ -69,6 +69,9 @@ public class WebViewSwing {
         // Set GUI
         ScrollPane root;
 		try {
+			
+			// see : http://blog.admadic.com/2013/03/javafx-fxmlloader-with-osgi.html
+			FXMLLoader.setDefaultClassLoader(WebViewSwing.class.getClassLoader());
 			root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/query.fxml"));
 		    Scene scene = new Scene(root);
 		    fxPanel.setScene(scene);

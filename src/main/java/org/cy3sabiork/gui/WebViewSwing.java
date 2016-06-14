@@ -1,12 +1,13 @@
 package org.cy3sabiork.gui;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-
+import javafx.fxml.FXMLLoader;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.application.Application;
@@ -17,12 +18,15 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.control.SplitPane;
+
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 
+@SuppressWarnings("restriction")
 public class WebViewSwing {
 	public static File appDirectory;
 	
@@ -52,8 +56,21 @@ public class WebViewSwing {
 
     private static void initFX(JFXPanel fxPanel, final int width, final int height) {
         // This method is invoked on the JavaFX thread
-        Scene scene = new Scene(new Browser(appDirectory),1200, 800, Color.web("#666970"));
-        fxPanel.setScene(scene);
+        // Scene scene = new Scene(new Browser(appDirectory),1200, 800, Color.web("#666970"));
+        // fxPanel.setScene(scene);
+        
+        
+        SplitPane root;
+		try {
+			root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/test.fxml"));
+		    Scene scene = new Scene(root);
+		    fxPanel.setScene(scene);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+  
+        
     }
 	
     

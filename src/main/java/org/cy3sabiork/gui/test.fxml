@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="453.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: white;">
+         <children>
+            <TextArea layoutX="193.0" layoutY="124.0" prefHeight="30.0" prefWidth="143.0" />
+            <Button layoutX="348.0" layoutY="126.0" mnemonicParsing="false" text="Add" />
+            <TextField layoutX="37.0" layoutY="67.0" prefHeight="25.0" prefWidth="424.0" />
+            <Label layoutX="33.0" layoutY="103.0" text="Add term">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="33.0" layoutY="6.0" text="Query Builder">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="52.0" fitWidth="192.0" layoutX="483.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../resources/gui/images/logo-sabiork.png" />
+               </image>
+            </ImageView>
+            <ComboBox layoutX="19.0" layoutY="126.0" prefWidth="150.0" />
+            <Label layoutX="33.0" layoutY="41.0" text="Query Preview">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+  </items>
+</SplitPane>

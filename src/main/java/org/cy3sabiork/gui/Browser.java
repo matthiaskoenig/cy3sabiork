@@ -36,10 +36,11 @@ public class Browser extends Region {
         // webEngine.loadContent("<html><h1>Hello world</h1></html>");
 		
 		// Resource content does not work
-		URL queryURL = getClass().getResource("/gui/query.html");
-		System.out.println(queryURL);    
-        loadPage(queryURL.toString());
+		// URL queryURL = getClass().getResource("/gui/query.html");
+		// System.out.println(queryURL);    
+        // loadPage(queryURL.toString());
         
+		/*
         // load local resource
         File file = new File(appDirectory + "/gui/query.html");
 		URI fileURI = file.toURI();
@@ -47,7 +48,9 @@ public class Browser extends Region {
         loadPage(fileURI.toString());
         
         System.out.println("app directory: " + appDirectory.getAbsolutePath());
-    
+    	*/
+        
+        webEngine.load("http://sabiork.h-its.org/kineticLawEntry.jsp?viewData=true&kinlawid=14792");
 		
 		//add the web view to the scene
 		getChildren().add(browser);

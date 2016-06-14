@@ -53,7 +53,6 @@ public class WebViewSwing {
     private static void initFX(JFXPanel fxPanel, final int width, final int height) {
         // This method is invoked on the JavaFX thread
         Scene scene = new Scene(new Browser(appDirectory),1200, 800, Color.web("#666970"));
-        scene.getStylesheets().add("webviewsample/BrowserToolbar.css"); 
         fxPanel.setScene(scene);
     }
 	
@@ -69,6 +68,8 @@ public class WebViewSwing {
     }
     
     public static void main(String[] args) {
-    	launch(null, null);
+    	File appDirectory = new File("src/main/resources");
+    	System.out.println(appDirectory.getAbsolutePath());
+    	launch(null, appDirectory);
     }
 }

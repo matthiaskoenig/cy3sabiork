@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 // TODO: add terms to query
 // TODO: Feedback about query status code, i.e. 404, ...
 // TODO: execute query
+// TODO: add example queries
 
 
 
@@ -28,12 +29,19 @@ public class QueryFXMLController implements Initializable{
 	@FXML
 	private ListView termsListView;
 	
-    @FXML 
-    private TextField queryTextField;
+    @FXML private TextField queryTextField;
+    @FXML private TextField termTextField;
     
-    @FXML 
-    protected void handleQueryButtonAction(ActionEvent event) {
+    @FXML protected void handleQueryButtonAction(ActionEvent event) {
     	System.out.println("Perform query: " +  queryTextField.getText());
+        queryTextField.setText("Query button pressed");
+        termsListView.getItems();
+    }
+    
+    @FXML protected void handleTermButtonAction(ActionEvent event) {
+    	String selectedItem = (String) termsListView.getSelectionModel().getSelectedItem();
+    	String term = termTextField.getText();
+    	System.out.println("Add query term: " + selectedItem + ":" + term);
         queryTextField.setText("Query button pressed");
         termsListView.getItems();
     }
@@ -44,9 +52,22 @@ public class QueryFXMLController implements Initializable{
 		
 		// ListView<String> termsListView = new ListView<String>();
 		ObservableList<String> items = FXCollections.observableArrayList (
-		    "Single", "Double", "Suite", "Family App",
-		    "Single", "Double", "Suite", "Family App",
-		    "Single", "Double", "Suite", "Family App");
+		    "EntryID", "Pathway", 
+		    "Tissue", "Organism", "CellularLocation",
+		    "AnyRole", "Substrate", "Product", "Inhibitor", "Catalyst", "Cofactor", "Activator", "OtherModifier",
+		    "Enzymename", "ECNumber", 
+		    "Parametertype", "KineticMechanismType", "AssociatedSpecies",
+		    "SabioReactionID", "SabioCompoundID", "InChI", "KeggReactionID", "PubChemID",
+		    "KeggCompoundID", "ChebiID", "UniProtKB_AC", "GOTerm", "SBOTerm",
+		    "Title", "Author", "Year", "Organization", "PubMedID", "DataIdentifier",
+		    "SignallingEvent", "SignallingModification");
 		termsListView.setItems(items);
 	}
+	    
+	
+	/** Adds term to existing query. */
+	private void addTerm(){
+		
+	}
+	
 }

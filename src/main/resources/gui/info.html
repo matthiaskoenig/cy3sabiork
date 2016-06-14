@@ -9,6 +9,69 @@
 	</tr>
 </table>
 
+
+<h1>SABIO-RK search</h1>
+     <select name="searchterms" size="1" id="searchterms" >
+      <optgroup label="Entry">
+      	<option label="EntryID">EntryID</option>
+      <optgroup label="Reaction/Pathway">
+        <option label="Pathway">Pathway</option>        
+        <option label="SabioReactionID">SabioReactionID</option>
+        <option label="SignallingModification">Signalling Modification</option>
+        <option label="SignallingEvent">Signalling Event</option>
+        <!--<option label="Specific Signalling Process">Specific Signalling Process</option>
+        <option label="Signalling Process Type">Signalling Process Type</option>-->
+      </optgroup>
+      <optgroup label="Compound">
+        <option label="AnyRole">AnyRole</option>
+        <option label="Substrate">Substrate</option>
+        <option label="Product">Product</option>
+        <option label="Inhibitor">Inhibitor</option>
+        <option label="Catalyst">Catalyst</option>
+        <option label="Cofactor">Cofactor</option>
+        <option label="Activator">Activator</option>
+        <option label="OtherModifier">OtherModifier</option>       
+        <option label="SabioCompoundID">SabioCompoundID</option>
+        <option label="InChI">InChI</option>
+      </optgroup>
+      <optgroup label="Enzyme">
+        <option label="Enzymename">Enzymename</option>
+        <option label="ECNumber">ECNumber</option>        
+      </optgroup>
+      <optgroup label="Biological Source">
+        <option label="Tissue">Tissue</option>
+        <option label="Organism">Organism</option>
+        <option label="CellularLocation">CellularLocation</option>
+      </optgroup>
+      <optgroup label="Kinetic Data">
+        <option label="Parametertype">Parametertype</option>
+        <option label="KineticMechanismType">KineticMechanismType</option>
+        <option label="AssociatedSpecies">AssociatedSpecies</option>
+      </optgroup>
+      <optgroup label="Publication">
+        <option label="Title">Title</option>
+        <option label="Author">Author</option>
+        <option label="Year">Year</option>
+        <option label="Organization">Organization</option>
+        <option label="PubMedID">PubMedID</option>
+        <option label="DataIdentifier">DataIdentifier</option>
+      </optgroup>
+      <optgroup label="External Identifiers">
+      	<option label="KeggReactionID">KeggReactionID</option>
+     	<option label="PubChemID">PubChemID</option>
+        <option label="KeggCompoundID">KeggCompoundID</option>
+        <option label="ChebiID">ChebiID</option>
+        <option label="UniProtKB_AC">UniProtKB_AC</option>
+        <option label="GOTerm">GO-Term</option>
+        <option label="SBOTerm">SBO-Term</option>
+      </optgroup>
+    </select>
+        
+    <input type="text" name="searchtermField" id="searchtermField"/>
+
+
+
+
 <h2>Web Services Search Keywords</h2>
 <p> The following vocabulary may be used to form queries to search for entries. 
 	These terms are identical to those used in the web interface for forming queries.

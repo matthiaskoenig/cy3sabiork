@@ -161,7 +161,7 @@ public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkL
 				
 				// Search SabioRK webservice
 				if (s.equals("http://sabiork-query")){
-					SabioAction sabioAction = new SabioAction(this.cySwingApplication);
+					//SabioAction sabioAction = new SabioAction(this.cySwingApplication, this.appDirectory);
 					sabioAction.actionPerformed(null);
 				}
 				// HTML links	

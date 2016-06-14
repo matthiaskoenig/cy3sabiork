@@ -1,5 +1,7 @@
 package org.cy3sabiork.gui;
 
+import java.io.File;
+
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -22,10 +24,10 @@ import javafx.stage.Stage;
 
 
 public class WebViewSwing {
+	public static File appDirectory;
 	
-	private static void initAndShowGUI(JFrame parentFrame) {
+	private static void initAndShowGUI(final JFrame parentFrame) {
         // This method is invoked on the EDT thread
-		
 		
         JFrame frame = new JFrame("Swing and JavaFX");
         JDialog dialog = new JDialog(parentFrame);
@@ -48,15 +50,16 @@ public class WebViewSwing {
        });
     }
 
-    private static void initFX(JFXPanel fxPanel, int width, int height) {
+    private static void initFX(JFXPanel fxPanel, final int width, final int height) {
         // This method is invoked on the JavaFX thread
-        Scene scene = new Scene(new Browser(),1200, 800, Color.web("#666970"));
+        Scene scene = new Scene(new Browser(appDirectory),1200, 800, Color.web("#666970"));
         scene.getStylesheets().add("webviewsample/BrowserToolbar.css"); 
         fxPanel.setScene(scene);
     }
 	
     
-    public static void launch(JFrame parentFrame){
+    public static void launch(JFrame parentFrame, File appDirectory){
+    	WebViewSwing.appDirectory = appDirectory;
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -66,6 +69,6 @@ public class WebViewSwing {
     }
     
     public static void main(String[] args) {
-    	launch(null);
+    	launch(null, null);
     }
 }

@@ -1,6 +1,7 @@
 package org.cy3sabiork;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -18,12 +19,14 @@ public class SabioAction extends AbstractCyAction{
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(SabioAction.class);
 	private CySwingApplication cySwingApplication;
+	private File appDirectory;
 	
 	public static SabioSBMLReader sbmlReader;
 	
-	public SabioAction(CySwingApplication cySwingApplication){
+	public SabioAction(CySwingApplication cySwingApplication, File appDirectory){
 		super("SabioRKAction");
 		this.cySwingApplication = cySwingApplication;
+		this.appDirectory = appDirectory;
 		
 		ImageIcon icon = new ImageIcon(getClass().getResource("/gui/images/logo-sabiork.png"));
 		putValue(LARGE_ICON_KEY, icon);
@@ -50,7 +53,7 @@ public class SabioAction extends AbstractCyAction{
 		JFrame frame = this.cySwingApplication.getJFrame();
 		
 		// Open JavaFX
-		WebViewSwing.launch(frame);
+		WebViewSwing.launch(frame, appDirectory);
 		
 		// Open dialog
 		// SabioDialog.launch(frame, sbmlReader);

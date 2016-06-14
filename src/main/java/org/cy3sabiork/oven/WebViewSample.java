@@ -1,4 +1,6 @@
-package org.cy3sabiork.gui;
+package org.cy3sabiork.oven;
+
+import org.cy3sabiork.gui.Browser;
 
 import javafx.application.Application;
 import javafx.geometry.HPos;
@@ -19,7 +21,7 @@ public class WebViewSample extends Application {
 	@Override public void start(Stage stage) {
 		// create the scene
 		stage.setTitle("Web View");
-		scene = new Scene(new Browser(),900,600, Color.web("#666970"));
+		scene = new Scene(new Browser(null),900,600, Color.web("#666970"));
 		stage.setScene(scene);
 		scene.getStylesheets().add("webviewsample/BrowserToolbar.css");        
 		stage.show();
@@ -29,4 +31,3 @@ public class WebViewSample extends Application {
 		launch(args);
 	}
 }
-

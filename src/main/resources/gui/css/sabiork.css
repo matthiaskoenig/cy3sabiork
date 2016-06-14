@@ -1,0 +1,675 @@
+/* 
+    Document   : main
+    Created on : 18.08.2011, 16:39:14
+    Author     : wetschea
+    Description:
+        The main screen css for sabio, including the styles for the header, navigation and the footer
+*/
+
+
+*{
+    font-size:1em;
+}
+
+html, body {
+    background-color:#FAFAFA;
+    height: 100%;
+    margin:0px;
+}
+
+iframe{
+    background-color: #fafafa;
+}
+
+body{
+    font-family:'Tahoma', 'Helvetica',sans-serif;
+    font-size: 85%;
+}
+
+/*Opera Fix*/
+body:before {
+    content:"";
+    float:left;
+    height:100%;
+    margin-top:-32767px;
+    width:0;
+}
+
+#wrapper {
+    min-height: 100%;
+}
+
+/*##HEADER*/
+#header{
+    background: url("../images/header-grey.png") repeat-x scroll 0 0 transparent;
+    height: 150px;
+    min-width: 960px;
+    margin:0px auto;
+
+
+}
+
+/*#headerwidth{
+    width:960px;
+    margin:0px auto;
+}*/
+
+#logocenter{
+    margin: 0em auto;
+    width: 960px;
+}
+
+#logo{
+    float: left;
+    margin-top: 20px;
+}
+
+#header ul{
+    color:#D0C6C3;
+    float: right;
+    list-style: none;
+    height: 10px;
+    font-size: 0.9em;
+}
+
+#header li{
+    float:left;
+
+}
+
+
+#header li a{
+    color: #0081D8;
+}
+
+#header li a:hover{
+    color:#059aff;
+}
+
+.shoppingcart{
+    color: #666666;
+    font-size: 0.9em;
+    width: 131px;
+    position: fixed;
+    left: 50%;
+    margin-left: 349px;
+    margin-top: 43px;
+    z-index: 300;
+    background:url("../images/bgShoppingCart.png") repeat ;
+    padding:10px;
+}
+
+@media screen and (max-width: 1140px) { 
+    body .shoppingcart  { 
+        margin-left: 30%;
+    }   
+}
+
+* html .shoppingcart{
+    background-color:#fafafa;
+}
+    
+
+#selectedEntriesNumber{
+    font-weight: bold;
+    color:#0181D8;
+}
+
+#visible{
+    display: block;
+}
+#unvisible{
+    display: none;
+}
+
+.shoppingcart div{
+    margin-right: 38px;
+    margin-top: -11px;
+    text-align: right;
+}
+
+.shoppingcart a{
+    color: #666; 
+    text-decoration: none;
+    text-align: center;
+}
+
+#shoppingcart img{
+    /*    padding-top: 10px;*/
+    text-align: center;
+}
+
+/*TOOLTIP*/
+
+* .meta-info{
+}
+
+* .meta-info:hover{
+    color: #666666;;
+
+}
+* #tooltip {
+	position: absolute;
+	z-index: 3000;
+	background:#EAE5E3;
+	-moz-border-radius:3px;
+	-khtml-border-radius:3px;
+	border-radius:3px;
+	-moz-box-shadow:0 1px 3px #222;
+	padding: 5px;
+	opacity: 0.93;
+        color:#666666;
+        font-family: Tahoma;
+        font-size:0.9em;
+}
+* #tooltip h3, #tooltip div {
+    margin: 0px;
+}
+/*#selectedEntries{
+   background: url("../images/export_sml.png")no-repeat scroll left bottom transparent;
+    padding-left: 22px;
+    padding-right: 4px; 
+}*/
+
+#login{
+    background: url("../images/loginicon.png")no-repeat scroll left bottom transparent;
+    padding-left: 22px;
+    padding-right: 4px;
+}
+
+#name{
+    color:#666;
+    background: url("../images/loginicon.png")no-repeat scroll left bottom transparent;
+    padding-left: 22px;
+    padding-right: 4px;
+}
+
+#close{
+    color: #D0C6C3;
+    cursor: pointer;
+    float: right;
+    margin-right: -32px;
+    font-weight:normal;
+}
+
+#close:hover{
+    color:#666666;
+}
+
+
+div#navigation {
+    clear:both;
+    margin:-31px auto 1em auto; /*elle*/
+    width: 960px;
+}
+
+#navigation ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+}
+
+#navigation ul ul {
+    width: 160px; /* Sub Menu Width */
+    margin: -1px 0 0 0; /*elle*/
+    list-style: none;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index:1000;
+}
+
+#navigation ul li ul a{
+    width:142px;
+}
+#navigation ul li ul a{
+    border:none;
+}
+#navigation ul ul ul,#navigation ul ul ul ul {
+    top: 0;
+    left: 100%;
+}
+#navigation ul li {
+    float: left;
+    display: inline;
+    position: relative;
+}
+#navigation ul ul li {
+    width: 100%;
+    display: block;
+}
+
+
+
+/* Root Menu */
+#navigation ul a {
+    padding: 6px;
+    float: left;
+    display: block;
+    color: #666;
+    text-decoration: none;
+    height: 1%;
+    width: 5.8em;
+    border-top: 3px solid #D0C7C4;
+    text-align: center;
+
+}
+
+/* Root Menu Hover Persistence */
+#navigation ul a:hover, #navigation ul li:hover a, #navigation ul li.iehover a {
+    border-top: 3px solid #0080D8;
+    color: #FFFFFF;
+    /*    margin-top: -1px; elle*/
+}
+#navigation ul a:hover {
+    /*    margin-top: -1px; elle*/
+}
+/* 2nd Menu */
+#navigation ul li:hover li a,#navigation ul li.iehover li a {
+    float: none;
+    background: #D0C7C4;
+    border:none;
+}
+
+/* 2nd Menu Hover Persistence */
+#navigation ul li:hover li a:hover,#navigation ul li:hover li:hover a,#navigation ul li.iehover li a:hover,#navigation ul li.iehover li.iehover a {
+    background: #E8E4E2;
+
+}
+
+/* 3rd Menu */
+/*#navigation ul li:hover li:hover li a,#navigation ul li.iehover li.iehover li a {
+    background: #999;
+}*/
+
+/* 3rd Menu Hover Persistence */
+/*#navigation ul li:hover li:hover li a:hover,#navigation ul li:hover li:hover li:hover a,#navigation ul li.iehover li.iehover li a:hover,#navigation ul li.iehover li.iehover li.iehover a {
+    background: #666;
+}*/
+
+/* 4th Menu */
+/*#navigation ul li:hover li:hover li:hover li a,#navigation ul li.iehover li.iehover li.iehover li a {
+    background: #666;
+}*/
+
+/* 4th Menu Hover */
+/*#navigation ul li:hover li:hover li:hover li a:hover,#navigation ul li.iehover li.iehover li.iehover li a:hover {
+    background: #333;
+}*/
+
+/* Hover Function - Do Not Move */
+#navigation ul li:hover ul ul,#navigation ul li:hover ul ul ul,#navigation ul li.iehover ul ul,#navigation ul li.iehover ul ul ul {
+    display: none;
+}
+
+#navigation ul li:hover ul,#navigation ul ul li:hover ul,#navigation ul ul ul li:hover ul,#navigation ul li.iehover ul,#navigation ul ul li.iehover ul,#navigation ul ul ul li.iehover ul {
+    display: block;
+}
+
+#navigation ul li a.aktuell  {
+    /*    margin-top: -1px; elle*/
+    border-top: 3px solid #0080D8;
+}
+#navigation #documents a{
+    width: 100px;
+}
+
+/*##ACTIVE MENU CSS SPRITES##*/
+
+/*only top level is shown as activated, deeper level of documents NOT*/
+html body#documents #navigation ul #documents  ul li a{
+    border-style: none;
+}
+
+li#documents_none a{
+    border-style: none;
+}
+#home li#home a, /*--Home Page > Home Link--*/
+#searchpage li#searchpage a,
+#webservicepage li#webservicepage a,
+#newsarchive li#newsarchive a,
+#documents li#documents a,
+#statistics li#statistics a,
+#links li#links a,
+#about li#about a,
+#publication li#publication a
+{
+    border-top: 3px solid #0080D8;
+}
+
+
+/*###NAVIGATION END####*/
+img {
+    border-style:none;
+    border: none;
+}
+/*Main*/
+#main {
+    margin: 0px auto 20px auto;
+    overflow:auto;
+    padding-bottom: 150px;/* must be same height as the footer */
+    width: 960px;
+    clear:both;
+    padding-top: 10px;
+}
+h1{
+    color: #0181D8;
+    font-size: 1.2em;
+}
+
+h2{
+    color: #0181D8;
+    font-size: 1.2em;
+    line-height: 1px;
+
+}
+
+h3{
+    color: #0181D8;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+h4{
+    color: #666666;
+    font-size: 0.7em;
+    font-style: normal;
+    font-weight: normal;
+    line-height:0.2em;
+    padding-left:1.5em;
+}
+
+.warning{
+    font-weight: bold;
+    color:#ff7e00;
+}
+
+#contentLeft{
+    float: left;
+    width:315px;
+}
+
+#contentRight{
+    float: right;
+    width:315px;
+}
+
+#content{
+    width:630px;
+}
+
+#content p{
+    line-height: 22px;
+}
+#main h2{
+    margin-top: 0;
+    /*    padding-bottom:1em;*/
+    padding-top: 1em;
+}
+
+
+#main div p, #main div h3 {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#main a{
+    color: #0181D8;
+}
+
+#main a:hover{
+    color:#059aff;
+}
+
+#main img {
+    float: right;
+    padding: 15px;
+
+}
+.new{
+    color:red;
+}
+
+.fontConsole{
+    font-family: courier;
+}
+
+#main li{
+   /* background: url("../images/liGrey.png") no-repeat scroll left 4px transparent;*/
+    padding-left:23px;
+    margin-left: -23px;
+    list-style: none;
+}
+/*Datatypes*/
+a[href$='.pdf']{
+    background: url("../images/icons/pdf.png") no-repeat scroll right center transparent;
+    padding-right: 19px;
+    color: black;
+    line-height: 21px;
+    padding-right: 19px;
+    text-decoration: none;
+}
+
+a[href$='.mp4']{
+    background:url("../images/icons/video.png")no-repeat scroll right center transparent;
+    padding-right: 19px;
+}
+
+a[href$='.doc']{
+    background:url("../images/icons/doc.png")no-repeat scroll right center transparent;
+    padding-right: 19px;
+}
+
+body #sidebar a[href$='wsdl']{
+    background:url("../images/icons/wsdl.png")no-repeat scroll right center transparent;
+    padding-right: 19px;
+}
+
+a[href$='.txt']{
+    background:url("../images/icons/file.png")no-repeat scroll right center transparent;
+    padding-right: 19px;
+}
+
+a[href$='.jpg']{
+    background:url("../images/icons/jpg.png")no-repeat scroll right center transparent;
+    padding-right: 19px;
+}
+
+a[href$='.png']{
+    background:url("../images/icons/png.png")no-repeat scroll right center transparent;
+    padding-right: 19px;
+}
+
+a[href$='.ppt']{
+    background:url("../images/icons/ppt.png")no-repeat scroll right center transparent;
+    padding-right: 19px;
+}
+
+a[href$='.zip']{
+    background:url("../images/icons/zip.png")no-repeat scroll right center transparent;
+    padding-right: 19px;
+}
+
+a[href$='.xls']{
+    background:url("../images/icons/xls.png")no-repeat scroll right center transparent;
+    padding-right: 19px;
+}
+
+/*external Link*/
+#main a[href^="http:"]  {
+    background:url("../images/icons/externalLink.png")no-repeat scroll right center transparent;
+    padding-right: 14px;
+    padding-top: 2px;
+}
+#main a[href^="https:"]  {
+    background:url("../images/icons/externalLink.png")no-repeat scroll right center transparent;
+    padding-right: 14px;
+    padding-top: 2px;
+}
+
+#main a[href^="http://sabio"]  {
+    background-image:none;
+    padding-right: 0px;
+}
+
+#main .paginateButtons{
+    float:right;
+    font-size:0.9em;
+    color:#D0C6C3;
+    font-weight: bold;
+}
+
+.paginateButtons .currentStep{
+    color:#666;
+    margin-right:2px;
+}
+
+#main .paginateButtons a{
+    text-decoration: none;
+    color:#D0C6C3;
+    margin-right:2px;
+}
+
+#main .paginateButtons a:hover{
+    color:#666;
+    margin-right:2px;
+}
+/*MAIN END*/
+
+/*footer*/
+#footer {
+    border-top: 3px solid #D0C7C4;
+    clear: both;
+    height: 147px;
+    margin-top: -150px; /* negative value of footer height */
+    min-width: 960px;
+    position: relative;
+}
+
+#footerNavigation{
+    margin: 0 auto;
+    padding: 30px 0px 30px;
+    width: 368px;
+}
+
+#footerNavigation li{
+    float: left;
+    font-size:12px;
+    list-style: none;
+}
+
+#footerNavigation li a{
+    color: #808080;
+    margin: 0 1px;
+}
+
+#footerNavigation li a:hover{
+    color: #adadad;
+}
+
+#funding{
+    margin: 0px auto;
+    width: 730px;
+}
+
+/*each funding img has a height of 40px*/
+#funding img{
+    float: left;
+    margin: 0 2px;
+    padding: 0 ;
+}
+
+
+/*TEST*/
+
+#meta{
+    max-width: 300px;
+}
+
+#login_menu{
+    float:none;
+    z-index: 1000;
+}
+
+#login_menu{
+    display:none;
+}
+
+
+/*------ Layer with Register and Login Section ------ */
+#login_menu{
+    background:#fff;
+    border:solid 2px #D0C6C3;
+    width:250px;
+    margin-left: -215px;
+    padding:10px;
+    color:#666;
+    position:absolute;
+    font-weight:bold;
+    font-size:12px;
+    line-height:18px;
+
+}
+#login_menu li{
+    padding-bottom:6px;
+    text-align:right;
+}
+
+#signup-user-col{
+    float: left;
+    height: 120px;
+    line-height: 12px;
+    margin: 10px 0 0;
+    padding-left: 10px;
+    width: 200px;
+}
+
+#login_menu label{font-size:11px; font-weight:normal;}
+#login_menu input{font-size:11px; color:#333333; margin-left:10px;width: 130px;}
+
+/*------ Button ------ */
+#login_menu .Button{
+    line-height:24px;
+    float:right;
+    color:#000;
+    font-size:11px;
+    text-align:center;
+    cursor:pointer;
+    width:60px;
+}
+
+
+#content .publication {
+    line-height: 17px;
+}
+
+.textbf{
+    font-weight:bold;
+
+}
+
+#searchkeyword{
+    line-height: 22px;
+}
+div.datefield {
+width: 120px;
+padding: 0;
+position: relative;
+top: 0;
+left: 0;
+}
+div.datefield input {
+width: 70px;
+margin-left: 4px;
+}
+
+div.datefield button {
+border: 0 none;
+background: white;
+padding: 0;
+margin: 0;
+}

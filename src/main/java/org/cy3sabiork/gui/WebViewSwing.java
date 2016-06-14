@@ -25,6 +25,8 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+import org.cy3sabiork.gui.FXMLController;
+
 
 @SuppressWarnings("restriction")
 public class WebViewSwing {
@@ -35,6 +37,8 @@ public class WebViewSwing {
 		
         JFrame frame = new JFrame("Swing and JavaFX");
         JDialog dialog = new JDialog(parentFrame);
+        dialog.setTitle("SABIO-RK Web Services");
+        
         
         int width = 1100;
         int height = 700;
@@ -56,10 +60,12 @@ public class WebViewSwing {
 
     private static void initFX(JFXPanel fxPanel, final int width, final int height) {
         // This method is invoked on the JavaFX thread
-        // Scene scene = new Scene(new Browser(appDirectory),1200, 800, Color.web("#666970"));
+        
+    	// Set browser
+    	// Scene scene = new Scene(new Browser(appDirectory),1200, 800, Color.web("#666970"));
         // fxPanel.setScene(scene);
         
-        
+        // Set GUI
         SplitPane root;
 		try {
 			root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/test.fxml"));

@@ -7,53 +7,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="591.0" prefWidth="791.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="591.0" prefWidth="791.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cy3sabiork.gui.FXMLController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="254.0" prefWidth="789.0" style="-fx-background-color: white;">
          <children>
-            <TextArea layoutX="403.0" layoutY="64.0" prefHeight="30.0" prefWidth="143.0" />
-            <Button layoutX="558.0" layoutY="66.0" mnemonicParsing="false" text="Add" />
-            <TextField layoutX="227.0" layoutY="127.0" prefHeight="25.0" prefWidth="424.0" text="kineticLaws/14792" />
-            <Label layoutX="223.0" layoutY="43.0" text="Search term">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
-            <Label layoutX="223.0" layoutY="6.0" text="Query Builder">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="52.0" fitWidth="192.0" layoutX="673.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../resources/gui/images/logo-sabiork.png" />
-               </image>
-            </ImageView>
-            <ComboBox layoutX="229.0" layoutY="66.0" prefWidth="150.0" promptText="Search Terms" />
-            <Label layoutX="223.0" layoutY="101.0" text="Query">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
-            <Label layoutX="407.0" layoutY="42.0" text="Value">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
-            <Label layoutX="13.0" layoutY="6.0" text="Kinetic Laws">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Label>
-            <Label layoutX="23.0" layoutY="41.0" text="Entry IDs">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
-            <TextArea layoutX="23.0" layoutY="64.0" prefHeight="30.0" prefWidth="143.0" />
-            <Button layoutX="228.0" layoutY="167.0" mnemonicParsing="false" text="Perform Query" />
+
+            <Text fx:id="actiontarget" text="kineticLaws/14792" layoutX="227.0" layoutY="127.0" />
+            <Button onAction="#handleQueryButtonAction" text="Perform Query" layoutX="228.0" layoutY="167.0" mnemonicParsing="false" />
+                       
          </children>
       </AnchorPane>
+      
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="163.0" prefWidth="789.0" />
   </items>
 </SplitPane>

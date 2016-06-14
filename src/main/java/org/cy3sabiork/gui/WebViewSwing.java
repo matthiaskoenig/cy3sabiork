@@ -19,13 +19,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.ScrollPane;
 
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import org.cy3sabiork.gui.FXMLController;
+import org.cy3sabiork.gui.QueryFXMLController;
 
 
 @SuppressWarnings("restriction")
@@ -66,9 +67,9 @@ public class WebViewSwing {
         // fxPanel.setScene(scene);
         
         // Set GUI
-        SplitPane root;
+        ScrollPane root;
 		try {
-			root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/test.fxml"));
+			root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/query.fxml"));
 		    Scene scene = new Scene(root);
 		    fxPanel.setScene(scene);
 		} catch (IOException e) {

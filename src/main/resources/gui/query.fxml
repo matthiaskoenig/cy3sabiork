@@ -25,29 +25,24 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="565.0">
                            <children>
-                              <ListView fx:id="keywordList" layoutX="33.0" layoutY="114.0" prefHeight="183.0" prefWidth="200.0">
+                              <ListView fx:id="keywordList" layoutX="33.0" layoutY="94.0" prefHeight="183.0" prefWidth="200.0">
                                  <tooltip>
                                     <Tooltip text="List of available search keywords for SABIO-RK web services." />
                                  </tooltip>
                               </ListView>
-                              <TextField fx:id="term" layoutX="243.0" layoutY="74.0" prefHeight="26.0" prefWidth="224.0" />
-                              <Button fx:id="addKeywordButton" layoutX="396.0" layoutY="114.0" mnemonicParsing="false" onAction="#handleAddKeywordAction" prefHeight="26.0" prefWidth="70.0" text="Add">
+                              <TextField fx:id="term" layoutX="243.0" layoutY="54.0" prefHeight="26.0" prefWidth="224.0" />
+                              <Button fx:id="addKeywordButton" layoutX="396.0" layoutY="94.0" mnemonicParsing="false" onAction="#handleAddKeywordAction" prefHeight="26.0" prefWidth="70.0" text="Add">
                                  <tooltip>
                                     <Tooltip text="Add keyword:searchTerm to the web service query." />
                                  </tooltip>
                               </Button>
-                              <Text fill="#0181D8" layoutX="33.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Query Builder">
-                                 <font>
-                                    <Font name="System Bold" size="17.0" />
-                                 </font>
-                              </Text>
-                              <TextField fx:id="keyword" layoutX="33.0" layoutY="74.0" prefHeight="25.0" prefWidth="198.0" />
-                              <Text layoutX="33.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Keyword">
+                              <TextField fx:id="keyword" layoutX="33.0" layoutY="54.0" prefHeight="25.0" prefWidth="198.0" />
+                              <Text layoutX="33.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Keyword">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="243.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Term">
+                              <Text layoutX="243.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Term">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
@@ -61,11 +56,6 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="338.0" prefWidth="372.0">
                            <children>
-                              <Text fill="#0181D8" layoutX="33.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kinetic Law Entries">
-                                 <font>
-                                    <Font name="System Bold" size="17.0" />
-                                 </font>
-                              </Text>
                               <Button fx:id="addEntryButton" layoutX="239.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleAddEntryAction" prefHeight="26.0" prefWidth="70.0" text="Add">
                                  <tooltip>
                                     <Tooltip text="Add entry ids to the query." />
@@ -76,6 +66,11 @@
                                     <Tooltip text="List SABIO-RK entry ids to retrieve from SABIO-RK." />
                                  </tooltip>
                               </TextField>
+                              <Text layoutX="33.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kinetic Law Ids">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </AnchorPane>
                   </content>

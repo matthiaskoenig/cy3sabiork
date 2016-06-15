@@ -30,42 +30,61 @@ public class QueryFXMLController implements Initializable{
 	// --- Query Builder ---
 	
     @FXML private TextField keyword;
+    @FXML private ListView keywordList;
     @FXML private TextField term;
-    @FXML private ListView termsListView;
     @FXML private Text termDescription;
-    @FXML private Button addKeyword;
     
     @FXML private TextField queryKeywordText;
+    
+    @FXML private Button addKeyword;
     @FXML private Button queryKeyword;
+    @FXML private Button clearKeyword;
     
-    
-    
+   
     // --- Kinetic Law entries ---
+    @FXML private TextField entry;
+    @FXML private ListView entryList;
     
+    @FXML private TextField queryEntryText;
+    
+    @FXML private Button addEntry;
+    @FXML private Button queryEntry;
+    @FXML private Button clearEntry;
     
     // --- REST response ---
     
     
     
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
-    	
-        termsListView.getItems();
-    }
-    
-    @FXML protected void handleTermButtonAction(ActionEvent event) {
-    	String selectedItem = (String) termsListView.getSelectionModel().getSelectedItem();
-    	
+    	System.out.println("<handleAddKeywordAction>");
+    	String selectedItem = (String) keywordList.getSelectionModel().getSelectedItem();
     	System.out.println("Add query term: " + selectedItem + ":" + term.getText());
         queryKeywordText.setText("Query button pressed");
-        termsListView.getItems();
     }
     
-    @FXML protected void handleQueryButtonAction(ActionEvent event) {
+    @FXML protected void handleQueryKeywordAction(ActionEvent event) {
+    	System.out.println("<handleQueryKeywordAction>");
     }
+    
+    @FXML protected void handleClearKeywordAction(ActionEvent event) {
+    	System.out.println("<handleClearKeywordAction>");
+    }
+    
+    @FXML protected void handleAddEntryAction(ActionEvent event) {
+    	System.out.println("<handleAddEntryAction>");
+    }
+    
+    @FXML protected void handleQueryEntryAction(ActionEvent event) {
+    	System.out.println("<handleQueryEntryAction>");
+    }
+    
+    @FXML protected void handleClearEntryAction(ActionEvent event) {
+    	System.out.println("<handleClearEntryAction>");
+    }
+    
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 		
 		// ListView<String> termsListView = new ListView<String>();
 		ObservableList<String> items = FXCollections.observableArrayList (
@@ -78,7 +97,7 @@ public class QueryFXMLController implements Initializable{
 		    "KeggCompoundID", "ChebiID", "UniProtKB_AC", "GOTerm", "SBOTerm",
 		    "Title", "Author", "Year", "Organization", "PubMedID", "DataIdentifier",
 		    "SignallingEvent", "SignallingModification");
-		termsListView.setItems(items);
+		keywordList.setItems(items);
 	}
 	    
 	

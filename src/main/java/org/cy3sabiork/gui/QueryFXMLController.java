@@ -48,17 +48,19 @@ public class QueryFXMLController implements Initializable{
     
     
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
-    	System.out.println("Perform query: " +  queryTextField.getText());
-        queryTextField.setText("Query button pressed");
+    	
         termsListView.getItems();
     }
     
     @FXML protected void handleTermButtonAction(ActionEvent event) {
     	String selectedItem = (String) termsListView.getSelectionModel().getSelectedItem();
-    	String term = termTextField.getText();
-    	System.out.println("Add query term: " + selectedItem + ":" + term);
-        queryTextField.setText("Query button pressed");
+    	
+    	System.out.println("Add query term: " + selectedItem + ":" + term.getText());
+        queryKeywordText.setText("Query button pressed");
         termsListView.getItems();
+    }
+    
+    @FXML protected void handleQueryButtonAction(ActionEvent event) {
     }
 
 	@Override

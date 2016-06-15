@@ -19,6 +19,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.gui.QueryFXMLController;
 
 
@@ -67,7 +68,10 @@ public class WebViewSwing {
 			ScrollPane root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/query.fxml"));
 
 		    Scene scene = new Scene(root);
-		    scene.getStylesheets().add("/gui/query.css");
+		    
+		    // from appDirectory
+		    String cssFile = ResourceExtractor.fileURIforResource("/gui/query.css");
+		    scene.getStylesheets().add(cssFile);
 		    
 		    fxPanel.setScene(scene);
 		} catch (IOException e) {
@@ -90,6 +94,8 @@ public class WebViewSwing {
     public static void main(String[] args) {
     	File appDirectory = new File("src/main/resources");
     	System.out.println(appDirectory.getAbsolutePath());
+    	ResourceExtractor.setAppDirectory(appDirectory);
+    	
     	launch(null, appDirectory);
     }
 }

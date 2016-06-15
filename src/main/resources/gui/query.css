@@ -23,8 +23,8 @@
 
 .tab .tab-label { 
     -fx-alignment: CENTER;
-    -fx-text-fill: #828282;
-    -fx-font-size: 12px;
+    -fx-text-fill: #0181d8;
+    -fx-font-size: 17px;
     -fx-font-weight: bold;
 }
 

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,14 +19,29 @@ import org.osgi.framework.BundleContext;
 
 
 public class ResourceExtractor {
-	private final File appDirectory;
+	private static File appDirectory;
 	private final BundleContext bc;
 
 	public ResourceExtractor(final BundleContext bc, final File appDirectory) {
 		this.bc = bc;
-		this.appDirectory = appDirectory;
+		setAppDirectory(appDirectory);
 	}
 	
+	public static void setAppDirectory(File appDirectory){
+		ResourceExtractor.appDirectory = appDirectory;
+	}
+	
+	/**
+	 * Returns the file URI in the application folder
+	 * for the given resource string.
+	 * 
+	 * For instance "/gui/query.html"
+	 */
+	public static String fileURIforResource(String resource){
+		File file = new File(appDirectory + resource);
+		URI fileURI = file.toURI();	    
+		return fileURI.toString();
+	}
 	
 	public void test(){		
 		File ftest = bc.getDataFile("gui/info.html");

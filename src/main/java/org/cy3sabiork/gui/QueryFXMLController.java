@@ -10,9 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import javafx.application.Platform;
+import javafx.scene.control.ProgressIndicator;
 
 import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
@@ -42,26 +44,20 @@ public class QueryFXMLController implements Initializable{
     @FXML private ListView keywordList;
     @FXML private TextField term;
     @FXML private Text termDescription;
+    @FXML private Button addKeywordButton;
     
-    @FXML private TextField queryKeywordText;
-    
-    @FXML private Button addKeyword;
-    @FXML private Button queryKeyword;
-    @FXML private Button clearKeyword;
-    
-   
     // --- Kinetic Law entries ---
     @FXML private TextField entry;
-    @FXML private ListView entryList;
+    @FXML private Button addEntryButton;
     
-    @FXML private TextField queryEntryText;
+    // -- REST response --
+    @FXML private TextArea queryText;
+    @FXML private Button queryButton;
+    @FXML private Button clearButton;
     
-    @FXML private Button addEntry;
-    @FXML private Button queryEntry;
-    @FXML private Button clearEntry;
-    
-    // --- REST response ---
+    @FXML private ProgressIndicator progressIndicator;
     @FXML private Text statusCode;
+    
     
     
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
@@ -73,43 +69,35 @@ public class QueryFXMLController implements Initializable{
     	
     	
     	String addition = selectedItem + "\"" + searchTerm + "\"";
-    	String query = queryKeywordText.getText();
+    	String query = queryText.getText();
     	if (searchTerm.length() == 0){
     		System.out.println("No term defined, not added");
     		return;
     	}
     	if (query.startsWith(PREFIX_QUERY)){
-    		queryKeywordText.setText(query + CONNECTOR_AND + addition);
+    		queryText.setText(query + CONNECTOR_AND + addition);
     	} else {
-    		queryKeywordText.setText(PREFIX_QUERY + addition);
+    		queryText.setText(PREFIX_QUERY + addition);
     	}
-    }
-    
-    @FXML protected void handleQueryKeywordAction(ActionEvent event) {
-    	System.out.println("<handleQueryKeywordAction>");
-    	statusCode.setText("404");
-    }
-    
-    @FXML protected void handleClearKeywordAction(ActionEvent event) {
-    	System.out.println("<handleClearKeywordAction>");
-    	queryKeywordText.setText("");
-    	statusCode.setText("");
     }
     
     @FXML protected void handleAddEntryAction(ActionEvent event) {
     	System.out.println("<handleAddEntryAction>");
     }
     
-    @FXML protected void handleQueryEntryAction(ActionEvent event) {
-    	System.out.println("<handleQueryEntryAction>");
+    @FXML protected void handleQueryAction(ActionEvent event) {
+    	System.out.println("<handleQueryKeywordAction>");
     	statusCode.setText("404");
     }
     
-    @FXML protected void handleClearEntryAction(ActionEvent event) {
-    	System.out.println("<handleClearEntryAction>");
-    	queryEntryText.setText("");
-    	statusCode.setText("");
+    @FXML protected void handleClearAction(ActionEvent event) {
+    	System.out.println("<handleClearKeywordAction>");
+    	queryText.setText("");
+    	statusCode.setText("?");
     }
+    
+
+    
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

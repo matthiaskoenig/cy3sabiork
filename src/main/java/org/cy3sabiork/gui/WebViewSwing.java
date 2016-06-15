@@ -1,5 +1,6 @@
 package org.cy3sabiork.gui;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
@@ -41,6 +42,7 @@ public class WebViewSwing {
         dialog.add(fxPanel);
         dialog.setSize(width, height);
         dialog.setVisible(true);
+        dialog.setBackground(new Color(255, 255, 255));
         dialog.setLocationRelativeTo(parentFrame);
         
         Platform.runLater(new Runnable() {
@@ -63,6 +65,7 @@ public class WebViewSwing {
 			// see : http://blog.admadic.com/2013/03/javafx-fxmlloader-with-osgi.html
 			FXMLLoader.setDefaultClassLoader(WebViewSwing.class.getClassLoader());
 			ScrollPane root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/query.fxml"));
+
 		    Scene scene = new Scene(root);
 		    fxPanel.setScene(scene);
 		} catch (IOException e) {

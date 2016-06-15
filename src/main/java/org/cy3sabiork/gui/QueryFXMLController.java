@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Button;
 
 import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
@@ -26,13 +27,27 @@ import javafx.collections.ObservableList;
 @SuppressWarnings("restriction")
 public class QueryFXMLController implements Initializable{
 	
-	@FXML
-	private ListView termsListView;
+	// --- Query Builder ---
 	
-    @FXML private TextField queryTextField;
-    @FXML private TextField termTextField;
+    @FXML private TextField keyword;
+    @FXML private TextField term;
+    @FXML private ListView termsListView;
+    @FXML private Text termDescription;
+    @FXML private Button addKeyword;
     
-    @FXML protected void handleQueryButtonAction(ActionEvent event) {
+    @FXML private TextField queryKeywordText;
+    @FXML private Button queryKeyword;
+    
+    
+    
+    // --- Kinetic Law entries ---
+    
+    
+    // --- REST response ---
+    
+    
+    
+    @FXML protected void handleAddKeywordAction(ActionEvent event) {
     	System.out.println("Perform query: " +  queryTextField.getText());
         queryTextField.setText("Query button pressed");
         termsListView.getItems();

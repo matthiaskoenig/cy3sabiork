@@ -51,7 +51,7 @@ public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkL
 	public static synchronized SabioPanel getInstance(CySwingApplication cySwingApplication, OpenBrowser openBrowser, SabioAction sabioAction){
 		if (uniqueInstance == null){
 			logger.debug("ResultsPanel created");
-			uniqueInstance = new SabioPanel(cySwingApplication, openBrowser);
+			uniqueInstance = new SabioPanel(cySwingApplication, openBrowser, sabioAction);
 		}
 		return uniqueInstance;
 	}
@@ -60,9 +60,10 @@ public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkL
 	}
 	
 	/** Constructor */
-	private SabioPanel(CySwingApplication cySwingApplication, OpenBrowser openBrowser){
+	private SabioPanel(CySwingApplication cySwingApplication, OpenBrowser openBrowser, SabioAction sabioAction){
 		this.cySwingApplication = cySwingApplication;
 		this.openBrowser = openBrowser; 
+		this.sabioAction = sabioAction;
 		this.cytoPanelEast = this.cySwingApplication.getCytoPanel(CytoPanelName.EAST);
 		
 		// SBML information area

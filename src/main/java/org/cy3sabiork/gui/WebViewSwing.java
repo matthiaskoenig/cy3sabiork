@@ -10,18 +10,10 @@ import javax.swing.SwingUtilities;
 import javafx.fxml.FXMLLoader;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
-import javafx.application.Application;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.control.SplitPane;
+
 import javafx.scene.control.ScrollPane;
 
-import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -40,9 +32,9 @@ public class WebViewSwing {
         JDialog dialog = new JDialog(parentFrame);
         dialog.setTitle("SABIO-RK Web Services");
         
-        
-        int width = 1100;
-        int height = 700;
+        // use values from Scene Builder
+        int width = 870;
+        int height = 690;
         
         final JFXPanel fxPanel = new JFXPanel();
         
@@ -54,33 +46,29 @@ public class WebViewSwing {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                initFX(fxPanel, width, height);
+                initFX(fxPanel);
             }
        });
     }
 
-    private static void initFX(JFXPanel fxPanel, final int width, final int height) {
+    private static void initFX(JFXPanel fxPanel) {
         // This method is invoked on the JavaFX thread
         
-    	// Set browser
-    	// Scene scene = new Scene(new Browser(appDirectory),1200, 800, Color.web("#666970"));
-        // fxPanel.setScene(scene);
-        
-        // Set GUI
-        ScrollPane root;
 		try {
+			// Set browser
+	    	// Scene scene = new Scene(new Browser(appDirectory));
+	        // fxPanel.setScene(scene);
 			
+			// Load FXML GUI scence
 			// see : http://blog.admadic.com/2013/03/javafx-fxmlloader-with-osgi.html
 			FXMLLoader.setDefaultClassLoader(WebViewSwing.class.getClassLoader());
-			root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/query.fxml"));
+			ScrollPane root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/query.fxml"));
 		    Scene scene = new Scene(root);
 		    fxPanel.setScene(scene);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
   
-        
     }
 	
     

@@ -3,12 +3,16 @@ package org.cy3sabiork.gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
+import javafx.application.Platform;
 
 import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
@@ -26,6 +30,11 @@ import javafx.collections.ObservableList;
 
 @SuppressWarnings("restriction")
 public class QueryFXMLController implements Initializable{
+	public static final String PREFIX_QUERY = "searchKineticLaws/sbml?q=";
+	public static final String PREFIX_LAW = "kineticLaws/";
+	public static final String PREFIX_LAWS = "kineticLaws?kinlawids=";
+	public static final String CONNECTOR_AND = " AND ";
+	
 	
 	// --- Query Builder ---
 	
@@ -52,22 +61,39 @@ public class QueryFXMLController implements Initializable{
     @FXML private Button clearEntry;
     
     // --- REST response ---
-    
+    @FXML private Text statusCode;
     
     
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
     	System.out.println("<handleAddKeywordAction>");
+    	
     	String selectedItem = (String) keywordList.getSelectionModel().getSelectedItem();
-    	System.out.println("Add query term: " + selectedItem + ":" + term.getText());
-        queryKeywordText.setText("Query button pressed");
+    	String searchTerm = term.getText();
+    	System.out.println("Add query term: " + selectedItem + ":" + searchTerm);
+    	
+    	
+    	String addition = selectedItem + "\"" + searchTerm + "\"";
+    	String query = queryKeywordText.getText();
+    	if (searchTerm.length() == 0){
+    		System.out.println("No term defined, not added");
+    		return;
+    	}
+    	if (query.startsWith(PREFIX_QUERY)){
+    		queryKeywordText.setText(query + CONNECTOR_AND + addition);
+    	} else {
+    		queryKeywordText.setText(PREFIX_QUERY + addition);
+    	}
     }
     
     @FXML protected void handleQueryKeywordAction(ActionEvent event) {
     	System.out.println("<handleQueryKeywordAction>");
+    	statusCode.setText("404");
     }
     
     @FXML protected void handleClearKeywordAction(ActionEvent event) {
     	System.out.println("<handleClearKeywordAction>");
+    	queryKeywordText.setText("");
+    	statusCode.setText("");
     }
     
     @FXML protected void handleAddEntryAction(ActionEvent event) {
@@ -76,13 +102,15 @@ public class QueryFXMLController implements Initializable{
     
     @FXML protected void handleQueryEntryAction(ActionEvent event) {
     	System.out.println("<handleQueryEntryAction>");
+    	statusCode.setText("404");
     }
     
     @FXML protected void handleClearEntryAction(ActionEvent event) {
     	System.out.println("<handleClearEntryAction>");
+    	queryEntryText.setText("");
+    	statusCode.setText("");
     }
     
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -98,11 +126,23 @@ public class QueryFXMLController implements Initializable{
 		    "Title", "Author", "Year", "Organization", "PubMedID", "DataIdentifier",
 		    "SignallingEvent", "SignallingModification");
 		keywordList.setItems(items);
-	}
-	    
-	
-	/** Adds term to existing query. */
-	private void addTerm(){
+		
+		keywordList.getSelectionModel().selectedItemProperty().addListener(
+            new ChangeListener<String>() {
+                public void changed(ObservableValue<? extends String> ov, 
+                    String oldValue, String newValue) {
+                		// set keyword in field
+                        keyword.setText(newValue);
+                        // request the term
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                term.requestFocus();
+                            }
+                        });
+            }
+        });
+		
 		
 	}
 	

@@ -17,6 +17,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.event.ListSelectionListener;
 
 import org.cy3sabiork.SabioQuery;
+import org.cy3sabiork.SabioQueryResult;
 import org.cy3sabiork.SabioSBMLReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -168,12 +169,14 @@ public class SabioDialog extends JDialog {
 		
 		// find the query base and the query parameters
 		
-		
 		logger.info("Perform query: GET "+ queryString);
 		try {
 			SabioQuery query = new SabioQuery();
-			String xml = query.performQuery(queryString);
-			sbmlReader.loadNetworkFromSBML(xml);
+			SabioQueryResult queryResult = query.performQuery(queryString);
+			if (queryResult.success()){
+				sbmlReader.loadNetworkFromSBML(queryResult.getSBML());
+			}
+			
 		} catch(RuntimeException e) {
 			throw e;
 		} finally {

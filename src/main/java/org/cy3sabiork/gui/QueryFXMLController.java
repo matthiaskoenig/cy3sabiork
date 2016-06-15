@@ -1,7 +1,11 @@
 package org.cy3sabiork.gui;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+
+import org.cy3sabiork.SabioQuery;
+import org.cy3sabiork.SabioQueryResult;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -32,6 +36,8 @@ import javafx.collections.ObservableList;
 
 @SuppressWarnings("restriction")
 public class QueryFXMLController implements Initializable{
+	
+	
 	public static final String PREFIX_QUERY = "searchKineticLaws/sbml?q=";
 	public static final String PREFIX_LAW = "kineticLaws/";
 	public static final String PREFIX_LAWS = "kineticLaws?kinlawids=";
@@ -58,6 +64,8 @@ public class QueryFXMLController implements Initializable{
     @FXML private ProgressIndicator progressIndicator;
     @FXML private Text statusCode;
     
+    private HashSet<Integer> kineticLaws;
+    
     
     
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
@@ -68,7 +76,7 @@ public class QueryFXMLController implements Initializable{
     	System.out.println("Add query term: " + selectedItem + ":" + searchTerm);
     	
     	
-    	String addition = selectedItem + "\"" + searchTerm + "\"";
+    	String addition = selectedItem + ":\"" + searchTerm + "\"";
     	String query = queryText.getText();
     	if (searchTerm.length() == 0){
     		System.out.println("No term defined, not added");
@@ -83,11 +91,32 @@ public class QueryFXMLController implements Initializable{
     
     @FXML protected void handleAddEntryAction(ActionEvent event) {
     	System.out.println("<handleAddEntryAction>");
+    	Integer kineticLaw = null;
+    	try {
+    		kineticLaw = Integer.parseInt(entry.getText());
+    		queryText.setText(PREFIX_LAW + kineticLaw.toString());
+    	} catch (NumberFormatException e) {
+    		
+    	}
     }
     
     @FXML protected void handleQueryAction(ActionEvent event) {
     	System.out.println("<handleQueryKeywordAction>");
-    	statusCode.setText("404");
+    	
+    	
+		String queryString = queryText.getText();
+		System.out.println("Perform query: GET "+ queryString);
+		System.out.println("working ...");
+		progressIndicator.setProgress(-1);
+		
+		SabioQuery query = new SabioQuery();
+		SabioQueryResult queryResult = query.performQuery(queryString);
+			
+		// TODO: read the SBML
+		// sbmlReader.loadNetworkFromSBML(xml);
+		statusCode.setText(queryResult.getStatus().toString());
+		progressIndicator.setProgress(1);
+    	
     }
     
     @FXML protected void handleClearAction(ActionEvent event) {
@@ -96,11 +125,11 @@ public class QueryFXMLController implements Initializable{
     	statusCode.setText("?");
     }
     
-
-    
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+	
+		progressIndicator.setProgress(1.0);
 		
 		// ListView<String> termsListView = new ListView<String>();
 		ObservableList<String> items = FXCollections.observableArrayList (
@@ -114,6 +143,7 @@ public class QueryFXMLController implements Initializable{
 		    "Title", "Author", "Year", "Organization", "PubMedID", "DataIdentifier",
 		    "SignallingEvent", "SignallingModification");
 		keywordList.setItems(items);
+	
 		
 		keywordList.getSelectionModel().selectedItemProperty().addListener(
             new ChangeListener<String>() {

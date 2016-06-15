@@ -15,9 +15,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Performing SabioRK queries.
+ * Necessary to give feedback to the user about the status of the query.
  */
 public class SabioQuery {
-	private static final Logger logger = LoggerFactory.getLogger(SabioQuery.class);
+	// private static final Logger logger = LoggerFactory.getLogger(SabioQuery.class);
 	public static final String SABIORK_RESTFUL_URL = "http://sabiork.h-its.org/sabioRestWebServices";
 
 	
@@ -29,8 +30,8 @@ public class SabioQuery {
 	 * 		searchKineticLaws/sbml?q=Tissue:spleen AND Organism:\"Homo sapiens\"
 	 * 		searchKineticLaws/sbml?q=Tissue:spleen%20AND%20Organism:%22homo%20sapiens%22
 	 */
-	public String performQuery(String query){
-		logger.info("Perform Sabio-RK query");
+	public SabioQueryResult performQuery(String query){
+		//logger.info("Perform Sabio-RK query");
 
 		String output = null;
 		try {	
@@ -50,22 +51,14 @@ public class SabioQuery {
 			Invocation.Builder invocationBuilder = requestTarget.request(MediaType.TEXT_XML_TYPE);
 			Response response = invocationBuilder.get();
 
-			if (response.getStatus() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : "
-						+ response.getStatus());
-			}
+			return new SabioQueryResult(query, response);
 			
-			output = response.readEntity(String.class);
-			System.out.println("--------------------------------------------");
-			System.out.println(output);
-			System.out.println("--------------------------------------------");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return output;
+		return null;
 	}
 
-	
 	
 	/**
 	 * Parses the path and the parameters from the query string.

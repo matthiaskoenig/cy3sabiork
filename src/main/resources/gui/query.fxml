@@ -51,6 +51,9 @@
                            </children>
                         </AnchorPane>
                   </content>
+                     <tooltip>
+                        <Tooltip text="Create SABIO-RK web service queries from given keywords and searchTerms." />
+                     </tooltip>
                 </Tab>
                 <Tab text="Kinetic Law Entries">
                   <content>
@@ -74,6 +77,9 @@
                            </children>
                         </AnchorPane>
                   </content>
+                     <tooltip>
+                        <Tooltip text="Retrieve Kinetic Law Entries via their IDs from SABIO-RK." />
+                     </tooltip>
                 </Tab>
               </tabs>
             </TabPane>
@@ -82,7 +88,7 @@
                   <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/search-sabiork.png" />
                </image>
             </ImageView>
-            <Button fx:id="queryButton" layoutX="388.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleQueryAction" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Query">
+            <Button fx:id="queryButton" layoutX="388.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleQueryAction" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Query" textFill="#757575">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -118,6 +124,7 @@
                   <Font name="Courier New Bold" size="12.0" />
                </font>
             </TextArea>
+            <Button layoutX="250.0" layoutY="593.0" mnemonicParsing="false" text="Check SABIO-RK Availability" />
          </children>
       </AnchorPane>
    </content>

@@ -67,6 +67,8 @@ public class WebViewSwing {
 			ScrollPane root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/query.fxml"));
 
 		    Scene scene = new Scene(root);
+		    scene.getStylesheets().add("/gui/query.css");
+		    
 		    fxPanel.setScene(scene);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -2,7 +2,10 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
@@ -20,7 +23,7 @@
                   <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/search-sabiork.png" />
                </image>
             </ImageView>
-            <Button fx:id="queryButton" layoutX="393.0" layoutY="208.0" mnemonicParsing="false" onAction="#handleQueryKeywordAction" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Query">
+            <Button fx:id="queryButton" layoutX="388.0" layoutY="487.0" mnemonicParsing="false" onAction="#handleQueryKeywordAction" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Query">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -50,11 +53,6 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="#0181D8" layoutX="567.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kinetic Law Entries">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Text>
             <Text fill="#0181D8" layoutX="30.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Query Builder">
                <font>
                   <Font name="System Bold" size="17.0" />
@@ -71,43 +69,29 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Button fx:id="addEntry" layoutX="774.0" layoutY="175.0" mnemonicParsing="false" onAction="#handleAddEntryAction" prefHeight="26.0" prefWidth="70.0" text="Add">
-               <tooltip>
-                  <Tooltip text="Add entry ids to the query." />
-               </tooltip>
-            </Button>
-            <Button fx:id="clearKeyword" layoutX="389.0" layoutY="487.0" mnemonicParsing="false" onAction="#handleClearKeywordAction" prefWidth="70.0" text="Clear">
+            <Button fx:id="clearKeyword" layoutX="311.0" layoutY="487.0" mnemonicParsing="false" onAction="#handleClearKeywordAction" prefWidth="70.0" text="Clear">
                <tooltip>
                   <Tooltip text="Clear the current query content." />
                </tooltip>
             </Button>
-            <Button fx:id="clearEntry" layoutX="567.0" layoutY="487.0" mnemonicParsing="false" onAction="#handleClearEntryAction" prefHeight="26.0" prefWidth="70.0" text="Clear">
+            <Button fx:id="clearEntry" layoutX="670.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleClearEntryAction" prefHeight="26.0" prefWidth="70.0" text="Clear">
                <tooltip>
                   <Tooltip text="Clear the current query content." />
                </tooltip>
             </Button>
-            <TextField fx:id="entry" layoutX="567.0" layoutY="135.0" prefHeight="26.0" prefWidth="276.0">
-               <tooltip>
-                  <Tooltip text="List SABIO-RK entry ids to retrieve from SABIO-RK." />
-               </tooltip></TextField>
-            <ListView fx:id="entryList" layoutX="567.0" layoutY="175.0" prefHeight="199.0" prefWidth="200.0">
-               <tooltip>
-                  <Tooltip text="Available search terms for SABIO-RK web services." />
-               </tooltip>
-            </ListView>
-            <Button fx:id="queryEntry" layoutX="775.0" layoutY="208.0" mnemonicParsing="false" onAction="#handleQueryEntryAction" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Query">
+            <Button fx:id="queryEntry" layoutX="751.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleQueryEntryAction" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Query">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
                <tooltip>
                   <Tooltip text="Query SABIO-RK web service with query shown in preview." />
                </tooltip></Button>
-            <Text layoutX="567.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Query Preview">
+            <Text layoutX="567.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Query Preview">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <TextField fx:id="queryEntryText" layoutX="567.0" layoutY="419.0" prefHeight="26.0" prefWidth="253.0">
+            <TextField fx:id="queryEntryText" layoutX="567.0" layoutY="239.0" prefHeight="26.0" prefWidth="253.0">
                <font>
                   <Font size="10.0" />
                </font></TextField>
@@ -116,14 +100,48 @@
                   <Font name="System Bold" size="17.0" />
                </font>
             </Text>
-            <Text layoutX="30.0" layoutY="559.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status Code" />
-            <Text layoutX="567.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Entry IDs">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Text>
+            <Text layoutX="90.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status Code" />
             <Text layoutX="240.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" />
             <Text fx:id="statusCode" layoutX="129.0" layoutY="559.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <ProgressIndicator layoutX="29.0" layoutY="547.0" progress="0.0" />
+            <Text layoutX="90.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
+            <TabPane layoutX="474.0" layoutY="16.0" prefHeight="371.0" prefWidth="323.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Untitled Tab 1">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                <Tab text="Untitled Tab 2">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Text fill="#0181D8" layoutX="14.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kinetic Law Entries">
+                                 <font>
+                                    <Font name="System Bold" size="17.0" />
+                                 </font>
+                              </Text>
+                              <Button fx:id="addEntry" layoutX="239.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleAddEntryAction" prefHeight="26.0" prefWidth="70.0" text="Add">
+                                 <tooltip>
+                                    <Tooltip text="Add entry ids to the query." />
+                                 </tooltip>
+                              </Button>
+                              <TextField fx:id="entry" layoutX="33.0" layoutY="61.0" prefHeight="26.0" prefWidth="276.0">
+                                 <tooltip>
+                                    <Tooltip text="List SABIO-RK entry ids to retrieve from SABIO-RK." />
+                                 </tooltip>
+                              </TextField>
+                              <Text layoutX="33.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Entry IDs">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
          </children>
       </AnchorPane>
    </content>

@@ -22,6 +22,34 @@ public class SabioQuery {
 	public static final String SABIORK_RESTFUL_URL = "http://sabiork.h-its.org/sabioRestWebServices";
 
 	
+	/** Check status of the SABIO-RK webservice. */
+	public static String getSabioStatus(){
+		String status = "Down";
+		String query = "status";
+		try {
+			URI uri = new java.net.URI(SabioQuery.SABIORK_RESTFUL_URL + "/" + query);
+	
+			// Create client
+			Client client = ClientBuilder.newClient();
+			WebTarget requestTarget = client.target(uri);
+			
+			// WebTarget requestTarget = resourceTarget.path(path);
+			System.out.println("URI: " + requestTarget.getUri());			
+			
+			// invocation of request
+			Invocation.Builder invocationBuilder = requestTarget.request(MediaType.TEXT_PLAIN);
+			Response response = invocationBuilder.get();
+			status = response.readEntity(String.class);
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return status;
+	}
+	
+	
+	
 	/**
 	 * Parses the path and the parameters from the query string.
 	 * 
@@ -30,7 +58,7 @@ public class SabioQuery {
 	 * 		searchKineticLaws/sbml?q=Tissue:spleen AND Organism:\"Homo sapiens\"
 	 * 		searchKineticLaws/sbml?q=Tissue:spleen%20AND%20Organism:%22homo%20sapiens%22
 	 */
-	public SabioQueryResult performQuery(String query){
+	public static SabioQueryResult performQuery(String query){
 		//logger.info("Perform Sabio-RK query");
 
 		String output = null;

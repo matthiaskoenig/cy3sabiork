@@ -11,12 +11,18 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
+
 import javafx.application.Platform;
 import javafx.scene.control.ProgressIndicator;
 
@@ -63,25 +69,39 @@ public class QueryFXMLController implements Initializable{
     
     @FXML private ProgressIndicator progressIndicator;
     @FXML private Text statusCode;
+    @FXML private Text statusCodeLabel;
+    @FXML private Text time;
+    @FXML private Text timeLabel;
     
     private HashSet<Integer> kineticLaws;
     
     
     
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
+    	// TODO: only use the allowed keywords
+    	
+    	
     	System.out.println("<handleAddKeywordAction>");
     	
     	String selectedItem = (String) keywordList.getSelectionModel().getSelectedItem();
     	String searchTerm = term.getText();
-    	System.out.println("Add query term: " + selectedItem + ":" + searchTerm);
     	
+    	if (selectedItem == null){
+    		System.out.println("No keyword selected, not added !");
+    		return;
+    	}
     	
     	String addition = selectedItem + ":\"" + searchTerm + "\"";
     	String query = queryText.getText();
     	if (searchTerm.length() == 0){
-    		System.out.println("No term defined, not added");
+    		System.out.println("Empty term defined, not added !");
     		return;
     	}
+    	if (query.contains(addition)){
+    		System.out.println("keyword:term already in query !");
+    		return;
+    	}
+    	
     	if (query.startsWith(PREFIX_QUERY)){
     		queryText.setText(query + CONNECTOR_AND + addition);
     	} else {
@@ -102,21 +122,27 @@ public class QueryFXMLController implements Initializable{
     
     @FXML protected void handleQueryAction(ActionEvent event) {
     	System.out.println("<handleQueryKeywordAction>");
+    	showQueryStatus(true);
     	
-    	
+ 
 		String queryString = queryText.getText();
 		System.out.println("Perform query: GET "+ queryString);
 		System.out.println("working ...");
 		progressIndicator.setProgress(-1);
 		
+		long startTime = System.currentTimeMillis();
+		
 		SabioQuery query = new SabioQuery();
 		SabioQueryResult queryResult = query.performQuery(queryString);
 			
+		long endTime = System.currentTimeMillis();
+		long duration = (endTime - startTime);
+		
 		// TODO: read the SBML
 		// sbmlReader.loadNetworkFromSBML(xml);
 		statusCode.setText(queryResult.getStatus().toString());
+		time.setText(duration + " [ms]");
 		progressIndicator.setProgress(1);
-    	
     }
     
     @FXML protected void handleClearAction(ActionEvent event) {
@@ -125,6 +151,23 @@ public class QueryFXMLController implements Initializable{
     	statusCode.setText("?");
     }
     
+    /** Focus the given scene Node. */
+    private void focusNode(Node node){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                term.requestFocus();
+            }
+        });
+    }
+    
+    private void showQueryStatus(Boolean show){
+    	progressIndicator.setVisible(show);
+    	statusCode.setVisible(show);
+    	statusCodeLabel.setVisible(show);
+    	time.setVisible(show);
+    	timeLabel.setVisible(show);
+    }
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -151,16 +194,43 @@ public class QueryFXMLController implements Initializable{
                     String oldValue, String newValue) {
                 		// set keyword in field
                         keyword.setText(newValue);
-                        // request the term
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                term.requestFocus();
-                            }
-                        });
+                        
+                        // focus term field
+                        focusNode(term);
             }
         });
 		
+		// hide elements on first loading
+		showQueryStatus(false);
+		
+		
+		// -- KeyEvents --
+		keyword.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+				if (ke.getCode() == KeyCode.ENTER){
+					System.out.println("KeyCode == ENTER on keyword");
+					focusNode(term);
+				}
+            }
+        });
+		
+		// -- KeyEvents --
+		term.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+				if (ke.getCode() == KeyCode.ENTER){
+					System.out.println("KeyCode == ENTER on term");
+					addKeywordButton.fire();
+					
+				}
+            }
+        });
+		
+		// Query the status
+		progressIndicator.setProgress(-1);
+		String status = SabioQuery.getSabioStatus();
+		if (status.equals("UP")){
+			progressIndicator.setProgress(1.0);
+		}
 		
 	}
 	

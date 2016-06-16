@@ -126,6 +126,11 @@
                      </font>
                   </TextArea>
                   <Text fx:id="time" layoutX="230.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
+            <TextArea fx:id="log" editable="false" layoutX="397.0" layoutY="21.0" prefHeight="83.0" prefWidth="197.0" style="-fx-background-color: white;" wrapText="true">
+               <font>
+                  <Font name="Courier New" size="10.0" />
+               </font>
+            </TextArea>
                </children>
             </AnchorPane>
    </content>

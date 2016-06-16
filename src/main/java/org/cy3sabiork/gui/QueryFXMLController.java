@@ -51,9 +51,11 @@ public class QueryFXMLController implements Initializable{
 	public static final String PREFIX_LAWS = "kineticLaws?kinlawids=";
 	public static final String CONNECTOR_AND = " AND ";
 	
+	// -- Log --
+	@FXML private TextArea log;
+	
 	
 	// --- Query Builder ---
-	
     @FXML private TextField keyword;
     @FXML private ListView keywordList;
     @FXML private TextField term;
@@ -78,29 +80,30 @@ public class QueryFXMLController implements Initializable{
     Thread queryThread = null;
     
     
+    private void logText(String text){
+    	log.setText(log.getText() + "\n" + text);
+    }
     
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
     	// TODO: only use the allowed keywords
     	
     	
-    	System.out.println("<handleAddKeywordAction>");
-    	
     	String selectedItem = (String) keywordList.getSelectionModel().getSelectedItem();
     	String searchTerm = term.getText();
     	
     	if (selectedItem == null){
-    		System.out.println("No keyword selected, not added !");
+    		logText("No keyword selected, not added !");
     		return;
     	}
     	
     	String addition = selectedItem + ":\"" + searchTerm + "\"";
     	String query = queryText.getText();
     	if (searchTerm.length() == 0){
-    		System.out.println("Empty term defined, not added !");
+    		logText("Empty term defined, not added !");
     		return;
     	}
     	if (query.contains(addition)){
-    		System.out.println("keyword:term already in query !");
+    		logText("keyword:term already in query !");
     		return;
     	}
     	
@@ -112,10 +115,11 @@ public class QueryFXMLController implements Initializable{
     }
     
     @FXML protected void handleAddEntryAction(ActionEvent event) {
-    	System.out.println("<handleAddEntryAction>");
     	Integer kineticLaw = null;
     	try {
+    		// TODO: implement parsing of strings
     		kineticLaw = Integer.parseInt(entry.getText());
+    		
     		queryText.setText(PREFIX_LAW + kineticLaw.toString());
     	} catch (NumberFormatException e) {
     		
@@ -124,34 +128,30 @@ public class QueryFXMLController implements Initializable{
     
     @FXML protected void handleQueryAction(ActionEvent event) {
     	// check if already a query thread is running
-    	if (queryThread != null && queryThread.isAlive()){
-    	}
+    	if (queryThread != null && queryThread.isAlive()){}
     	
-    	
-    	
-    	
+    
     	// necessary to run long running request in separate 
     	// thread to allow GUI updates.
     	// GUI updates have to be pased to the JavaFX Thread using runLater()
     	queryThread = new Thread(){
             public void run() {
 
-            	System.out.println("<handleQueryKeywordAction>");
+            	String queryString = queryText.getText();
+            	
             	showQueryStatus(true);
             	Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
+                    	logText("GET "+ queryString);
                         queryButton.setDisable(true);
                     }
                 });
             	
         		statusCode.setStyle("-fx-fill: black;");
         		queryText.setStyle("-fx-region-background: #ffffff;");
-            	
-        		String queryString = queryText.getText();
-        		System.out.println("Perform query: GET "+ queryString);
-        		System.out.println("working ...");
-           
+            	        		
+        		System.out.println("GET "+ queryString);
         		setProgress(-1);
         		
         		long startTime = System.currentTimeMillis();
@@ -187,7 +187,6 @@ public class QueryFXMLController implements Initializable{
     }
     
     @FXML protected void handleClearAction(ActionEvent event) {
-    	System.out.println("<handleClearKeywordAction>");
     	queryText.clear();
     	keyword.clear();
     	term.clear();
@@ -290,6 +289,14 @@ public class QueryFXMLController implements Initializable{
             }
         });
 		
+		log.textProperty().addListener(new ChangeListener<Object>() {
+		    @Override
+		    public void changed(ObservableValue<?> observable, Object oldValue,
+		            Object newValue) {
+		        log.setScrollTop(Double.MAX_VALUE); //this will scroll to the bottom
+		        //use Double.MIN_VALUE to scroll to the top
+		    }
+		});
 		
 		
 		// Query the status
@@ -297,8 +304,7 @@ public class QueryFXMLController implements Initializable{
 		String status = SabioQuery.getSabioStatus();
 		if (status.equals("UP")){
 			setProgress(1.0);
-		}
-		
+		}	
 	}
 	
 }

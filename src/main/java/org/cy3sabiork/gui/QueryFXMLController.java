@@ -1,5 +1,7 @@
 package org.cy3sabiork.gui;
 
+import java.awt.Color;
+import java.awt.Paint;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -73,7 +75,7 @@ public class QueryFXMLController implements Initializable{
     @FXML private Text time;
     @FXML private Text timeLabel;
     
-    private HashSet<Integer> kineticLaws;
+    Thread queryThread = null;
     
     
     
@@ -121,33 +123,75 @@ public class QueryFXMLController implements Initializable{
     }
     
     @FXML protected void handleQueryAction(ActionEvent event) {
-    	System.out.println("<handleQueryKeywordAction>");
-    	showQueryStatus(true);
+    	// check if already a query thread is running
+    	if (queryThread != null && queryThread.isAlive()){
+    	}
     	
- 
-		String queryString = queryText.getText();
-		System.out.println("Perform query: GET "+ queryString);
-		System.out.println("working ...");
-		progressIndicator.setProgress(-1);
-		
-		long startTime = System.currentTimeMillis();
-		
-		SabioQuery query = new SabioQuery();
-		SabioQueryResult queryResult = query.performQuery(queryString);
-			
-		long endTime = System.currentTimeMillis();
-		long duration = (endTime - startTime);
-		
-		// TODO: read the SBML
-		// sbmlReader.loadNetworkFromSBML(xml);
-		statusCode.setText(queryResult.getStatus().toString());
-		time.setText(duration + " [ms]");
-		progressIndicator.setProgress(1);
+    	
+    	
+    	
+    	// necessary to run long running request in separate 
+    	// thread to allow GUI updates.
+    	// GUI updates have to be pased to the JavaFX Thread using runLater()
+    	queryThread = new Thread(){
+            public void run() {
+
+            	System.out.println("<handleQueryKeywordAction>");
+            	showQueryStatus(true);
+            	Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        queryButton.setDisable(true);
+                    }
+                });
+            	
+        		statusCode.setStyle("-fx-fill: black;");
+        		queryText.setStyle("-fx-region-background: #ffffff;");
+            	
+        		String queryString = queryText.getText();
+        		System.out.println("Perform query: GET "+ queryString);
+        		System.out.println("working ...");
+           
+        		setProgress(-1);
+        		
+        		long startTime = System.currentTimeMillis();
+        		
+        		SabioQuery query = new SabioQuery();
+        		SabioQueryResult queryResult = query.performQuery(queryString);
+        			
+        		long endTime = System.currentTimeMillis();
+        		long duration = (endTime - startTime);
+        		
+        		// TODO: read the SBML
+        		// sbmlReader.loadNetworkFromSBML(xml);
+        		Integer restReturnStatus = queryResult.getStatus();
+        		
+            	Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                    	statusCode.setText(restReturnStatus.toString());
+                		if (restReturnStatus != 200){
+                			statusCode.setStyle("-fx-fill: red;");
+                			queryText.setStyle("-fx-region-background: #00ffff;");
+                		}
+                		time.setText(duration + " [ms]");    	
+                        queryButton.setDisable(false);
+                    }
+                });
+        		setProgress(1);    	
+            }
+        };
+        queryThread.start();
+        
+    	
     }
     
     @FXML protected void handleClearAction(ActionEvent event) {
     	System.out.println("<handleClearKeywordAction>");
-    	queryText.setText("");
+    	queryText.clear();
+    	keyword.clear();
+    	term.clear();
+    	entry.clear();
     	statusCode.setText("?");
     }
     
@@ -162,17 +206,30 @@ public class QueryFXMLController implements Initializable{
     }
     
     private void showQueryStatus(Boolean show){
-    	progressIndicator.setVisible(show);
-    	statusCode.setVisible(show);
-    	statusCodeLabel.setVisible(show);
-    	time.setVisible(show);
-    	timeLabel.setVisible(show);
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+		    	statusCode.setVisible(show);
+		    	statusCodeLabel.setVisible(show);
+		    	time.setVisible(show);
+		    	timeLabel.setVisible(show);
+            }
+        });
+    }
+    
+    private void setProgress(double progress){
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+		    	progressIndicator.setProgress(progress);
+            }
+        });
     }
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	
-		progressIndicator.setProgress(1.0);
+		setProgress(1.0);
 		
 		// ListView<String> termsListView = new ListView<String>();
 		ObservableList<String> items = FXCollections.observableArrayList (
@@ -214,7 +271,6 @@ public class QueryFXMLController implements Initializable{
             }
         });
 		
-		// -- KeyEvents --
 		term.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
 				if (ke.getCode() == KeyCode.ENTER){
@@ -225,11 +281,22 @@ public class QueryFXMLController implements Initializable{
             }
         });
 		
+		entry.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+				if (ke.getCode() == KeyCode.ENTER){
+					System.out.println("KeyCode == ENTER on entry");
+					addEntryButton.fire();
+				}
+            }
+        });
+		
+		
+		
 		// Query the status
-		progressIndicator.setProgress(-1);
+		setProgress(-1);
 		String status = SabioQuery.getSabioStatus();
 		if (status.equals("UP")){
-			progressIndicator.setProgress(1.0);
+			setProgress(1.0);
 		}
 		
 	}

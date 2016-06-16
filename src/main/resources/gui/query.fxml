@@ -88,7 +88,7 @@
                   <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/search-sabiork.png" />
                </image>
             </ImageView>
-            <Button fx:id="queryButton" layoutX="388.0" layoutY="567.0" mnemonicParsing="false" onAction="#handleQueryAction" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Run" textFill="#757575">
+            <Button fx:id="queryButton" layoutX="388.0" layoutY="557.0" mnemonicParsing="false" onAction="#handleQueryAction" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Run">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -100,32 +100,29 @@
                   <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/header-sabiork.png" />
                </image>
             </ImageView>
-            <Button fx:id="clearButton" layoutX="311.0" layoutY="567.0" mnemonicParsing="false" onAction="#handleClearAction" prefWidth="70.0" text="Clear">
+            <Button fx:id="clearButton" layoutX="311.0" layoutY="557.0" mnemonicParsing="false" onAction="#handleClearAction" prefWidth="70.0" text="Clear">
                <tooltip>
                   <Tooltip text="Clear the current query content." />
                </tooltip>
             </Button>
-            <Text fill="#0181D8" layoutX="30.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REST Query">
+            <Text fill="#0181D8" layoutX="30.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REST Query">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Text>
-            <Text fx:id="statusCodeLabel" layoutX="90.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status Code">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font></Text>
-            <Text fx:id="statusCode" layoutX="207.0" layoutY="599.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
-            <ProgressIndicator fx:id="progressIndicator" layoutX="39.0" layoutY="576.0" progress="0.0" />
-            <Text fx:id="timeLabel" layoutX="90.0" layoutY="617.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font></Text>
-            <TextArea fx:id="queryText" focusTraversable="false" layoutX="32.0" layoutY="443.0" prefHeight="115.0" prefWidth="426.0" wrapText="true">
+            <Text fx:id="statusCodeLabel" layoutX="120.0" layoutY="590.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status Code" />
+            <Text fx:id="statusCode" layoutX="230.0" layoutY="590.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
+            <ProgressIndicator fx:id="progressIndicator" layoutX="39.0" layoutY="576.0" progress="0.0">
+               <tooltip>
+                  <Tooltip text="Status of SABIO-RK web services and last query." />
+               </tooltip></ProgressIndicator>
+            <Text fx:id="timeLabel" layoutX="120.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
+            <TextArea fx:id="queryText" focusTraversable="false" layoutX="32.0" layoutY="433.0" prefHeight="115.0" prefWidth="426.0" wrapText="true">
                <font>
                   <Font name="Courier New Bold" size="13.0" />
                </font>
             </TextArea>
-            <Text fx:id="time" layoutX="207.0" layoutY="612.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
+            <Text fx:id="time" layoutX="230.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
          </children>
       </AnchorPane>
    </content>

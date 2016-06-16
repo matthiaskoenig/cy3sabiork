@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="654.0" prefWidth="633.0" style="-fx-background-color: white;" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cy3sabiork.gui.QueryFXMLController">
-   <content>
-            <AnchorPane prefHeight="657.0" prefWidth="641.0" style="-fx-background-color: white;">
+<SplitPane dividerPositions="0.6066350710900474" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="533.0" prefWidth="436.0" />
+    <AnchorPane prefHeight="605.0" prefWidth="884.0" style="-fx-background-color: white;">
                <children>
                   <TabPane layoutX="29.0" layoutY="71.0" prefHeight="345.0" prefWidth="565.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
@@ -25,30 +15,30 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="565.0">
                                  <children>
-                                    <ListView fx:id="keywordList" layoutX="33.0" layoutY="84.0" prefHeight="183.0" prefWidth="200.0">
+                                    <ListView fx:id="keywordList" layoutX="33.0" layoutY="94.0" prefHeight="183.0" prefWidth="200.0">
                                        <tooltip>
                                           <Tooltip text="List of available search keywords for SABIO-RK web services." />
                                        </tooltip>
                                     </ListView>
-                                    <TextField fx:id="term" layoutX="243.0" layoutY="44.0" prefHeight="25.0" prefWidth="225.0" />
-                                    <Button fx:id="addKeywordButton" layoutX="481.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleAddKeywordAction" prefHeight="26.0" prefWidth="70.0" text="Add">
+                                    <TextField fx:id="term" layoutX="243.0" layoutY="54.0" prefHeight="26.0" prefWidth="224.0" />
+                                    <Button fx:id="addKeywordButton" layoutX="481.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleAddKeywordAction" prefHeight="26.0" prefWidth="70.0" text="Add">
                                        <tooltip>
                                           <Tooltip text="Add keyword:searchTerm to the web service query." />
                                        </tooltip>
                                     </Button>
-                                    <TextField fx:id="keyword" layoutX="33.0" layoutY="44.0" prefHeight="25.0" prefWidth="200.0" />
-                                    <Text layoutX="33.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Keyword">
+                                    <TextField fx:id="keyword" layoutX="33.0" layoutY="54.0" prefHeight="25.0" prefWidth="198.0" />
+                                    <Text layoutX="33.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Keyword">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Text>
-                                    <Text layoutX="243.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Term">
+                                    <Text layoutX="243.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Term">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Text>
                                     <Text layoutX="271.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                                    <ImageView fitHeight="170.0" fitWidth="350.0" layoutX="250.0" layoutY="98.0" opacity="0.66" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="170.0" fitWidth="350.0" layoutX="250.0" layoutY="128.0" opacity="0.66" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/search-sabiork.png" />
                                        </image>
@@ -64,22 +54,16 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="338.0" prefWidth="372.0">
                                  <children>
-                                    <Button fx:id="addEntryButton" layoutX="243.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleAddEntryAction" prefHeight="26.0" prefWidth="70.0" text="Add">
+                                    <Button fx:id="addEntryButton" layoutX="329.0" layoutY="61.0" mnemonicParsing="false" onAction="#handleAddEntryAction" prefHeight="26.0" prefWidth="70.0" text="Add">
                                        <tooltip>
                                           <Tooltip text="Add entry ids to the query." />
                                        </tooltip>
                                     </Button>
-                                    <Text layoutX="33.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kinetic Law Ids">
+                                    <Text layoutX="33.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kinetic Law Ids">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Text>
-                              <TextArea fx:id="entry" layoutX="33.0" layoutY="44.0" prefHeight="222.0" prefWidth="200.0" />
-                              <ImageView fitHeight="170.0" fitWidth="350.0" layoutX="250.0" layoutY="98.0" opacity="0.66" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/search-sabiork.png" />
-                                 </image>
-                              </ImageView>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -97,7 +81,7 @@
                         <Tooltip text="Query SABIO-RK web service with query shown in preview." />
                      </tooltip>
                   </Button>
-                  <ImageView fitHeight="40.0" fitWidth="315.0" layoutX="36.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="40.0" fitWidth="315.0" layoutX="30.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/header-sabiork.png" />
                      </image>
@@ -128,5 +112,5 @@
                   <Text fx:id="time" layoutX="230.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
                </children>
             </AnchorPane>
-   </content>
-</ScrollPane>
+  </items>
+</SplitPane>

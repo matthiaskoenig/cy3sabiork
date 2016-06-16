@@ -61,7 +61,7 @@ public class QueryFXMLController implements Initializable{
     @FXML private Button addKeywordButton;
     
     // --- Kinetic Law entries ---
-    @FXML private TextField entry;
+    @FXML private TextArea entry;
     @FXML private Button addEntryButton;
     
     // -- REST response --

@@ -35,8 +35,8 @@ public class WebViewSwing {
         dialog.setTitle("SABIO-RK Web Services");
         
         // use values from Scene Builder
-        int width = 870;
-        int height = 690;
+        int width = 633;
+        int height = 670;
         
         final JFXPanel fxPanel = new JFXPanel();
         

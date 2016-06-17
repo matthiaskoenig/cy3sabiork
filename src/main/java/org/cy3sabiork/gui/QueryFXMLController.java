@@ -25,6 +25,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
+
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 
@@ -72,7 +74,7 @@ public class QueryFXMLController implements Initializable{
     @FXML private TextArea entry;
     @FXML private Button addEntryButton;
     
-    // -- REST response --
+    // -- REST Query --
     @FXML private TextArea queryText;
     @FXML private Button queryButton;
     @FXML private Button clearButton;
@@ -82,6 +84,10 @@ public class QueryFXMLController implements Initializable{
     @FXML private Text statusCodeLabel;
     @FXML private Text time;
     @FXML private Text timeLabel;
+    
+    // -- REST Results --
+    @FXML private Button loadButton;
+    @FXML private TableView entryTable; 
     
     Thread queryThread = null;
     
@@ -241,12 +247,20 @@ public class QueryFXMLController implements Initializable{
     }
     
     @FXML protected void handleClearAction(ActionEvent event) {
+    	logInfo("Query information cleared.");
     	queryText.clear();
     	keyword.clear();
     	term.clear();
     	entry.clear();
     	statusCode.setText("?");
     }
+    
+    @FXML protected void handleLoadAction(ActionEvent event) {
+    	logInfo("Loading kinetic laws in Cytoscape ...");
+    	logError("NOT IMPLEMENTED");
+    }
+    
+    
     
     /** Focus the given scene Node. */
     private void focusNode(Node node){

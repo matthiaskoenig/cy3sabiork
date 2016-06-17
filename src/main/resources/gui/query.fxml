@@ -6,6 +6,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
@@ -17,7 +19,7 @@
 
 <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="916.0" prefWidth="633.0" style="-fx-background-color: white;" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cy3sabiork.gui.QueryFXMLController">
    <content>
-            <AnchorPane prefHeight="914.0" prefWidth="641.0" style="-fx-background-color: white;">
+            <AnchorPane prefHeight="911.0" prefWidth="641.0" style="-fx-background-color: white;">
                <children>
                   <TabPane layoutX="29.0" layoutY="71.0" prefHeight="345.0" prefWidth="565.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
@@ -89,7 +91,7 @@
                       </Tab>
                     </tabs>
                   </TabPane>
-                  <Button fx:id="queryButton" layoutX="528.0" layoutY="563.0" mnemonicParsing="false" onAction="#handleQueryAction" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Run">
+                  <Button fx:id="queryButton" layoutX="461.0" layoutY="433.0" mnemonicParsing="false" onAction="#handleQueryAction" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Run">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -102,7 +104,7 @@
                         <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/header-sabiork.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="clearButton" layoutX="451.0" layoutY="563.0" mnemonicParsing="false" onAction="#handleClearAction" prefWidth="70.0" text="Clear">
+                  <Button fx:id="clearButton" layoutX="461.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleClearAction" prefWidth="70.0" text="Clear">
                      <tooltip>
                         <Tooltip text="Clear the current query content." />
                      </tooltip>
@@ -112,25 +114,44 @@
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Text>
-                  <Text fx:id="statusCodeLabel" layoutX="120.0" layoutY="590.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status Code" />
-                  <Text fx:id="statusCode" layoutX="230.0" layoutY="590.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
-                  <ProgressIndicator fx:id="progressIndicator" layoutX="39.0" layoutY="576.0" progress="0.0">
+                  <Text fx:id="statusCodeLabel" layoutX="461.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status Code" />
+                  <Text fx:id="statusCode" layoutX="571.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
+                  <ProgressIndicator fx:id="progressIndicator" layoutX="562.0" layoutY="433.0" progress="0.0">
                      <tooltip>
                         <Tooltip text="Status of query: Queries with many SABIO-RK entries can take seconds to minutes." />
                      </tooltip>
                   </ProgressIndicator>
-                  <Text fx:id="timeLabel" layoutX="120.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
-                  <TextArea fx:id="queryText" focusTraversable="false" layoutX="32.0" layoutY="433.0" prefHeight="115.0" prefWidth="566.0" wrapText="true">
+                  <Text fx:id="timeLabel" layoutX="461.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
+                  <TextArea fx:id="queryText" focusTraversable="false" layoutX="32.0" layoutY="433.0" prefHeight="115.0" prefWidth="414.0" wrapText="true">
                      <font>
                         <Font name="Courier New Bold" size="13.0" />
                      </font>
                   </TextArea>
-                  <Text fx:id="time" layoutX="230.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
-            <TextArea fx:id="log" editable="false" layoutX="30.0" layoutY="650.0" prefHeight="241.0" prefWidth="568.0" wrapText="true">
+                  <Text fx:id="time" layoutX="571.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
+            <TextArea fx:id="log" editable="false" layoutX="30.0" layoutY="775.0" prefHeight="116.0" prefWidth="568.0" wrapText="true">
                <font>
                   <Font name="Courier New" size="13.0" />
                </font>
             </TextArea>
+            <TableView fx:id="entryTable" layoutX="28.0" layoutY="587.0" prefHeight="138.0" prefWidth="568.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+            <Text fill="#0181D8" layoutX="30.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REST Results">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Text>
+            <Button fx:id="loadButton" layoutX="527.0" layoutY="735.0" mnemonicParsing="false" onAction="#handleLoadAction" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Load">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <tooltip>
+                  <Tooltip text="Query SABIO-RK web service with query shown in preview." />
+               </tooltip>
+            </Button>
                </children>
             </AnchorPane>
    </content>

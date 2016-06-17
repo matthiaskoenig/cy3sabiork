@@ -120,15 +120,61 @@ public class QueryFXMLController implements Initializable{
     }
     
     @FXML protected void handleAddEntryAction(ActionEvent event) {
-    	Integer kineticLaw = null;
-    	try {
-    		// TODO: implement parsing of strings
-    		kineticLaw = Integer.parseInt(entry.getText());
-    		
-    		queryText.setText(PREFIX_LAW + kineticLaw.toString());
-    	} catch (NumberFormatException e) {
-    		
+    	
+    	String text = entry.getText();
+    	if (text == null || text.length() == 0){
+    		logWarning("A list of Kinetic Law Ids is required.");
+    		return;
     	}
+    	HashSet<Integer> ids = parseIds(text);
+    	if (ids.isEmpty()){
+    		logError("No Kinetic Law Ids could be parsed from input: <" + entry.getText() + ">. Ids should be separated by ' ', ',', or ';'.");
+    	}
+	
+    	// generate query from ids
+		if (ids.size() == 1){
+			queryText.setText(PREFIX_LAW + ids.iterator().next());	
+		} else {
+			String idText = null;
+			for (Integer kid: ids){
+				if (idText == null){
+					idText = kid.toString();
+				} else {
+					idText += "," + kid.toString();
+				}
+			}
+			queryText.setText(PREFIX_LAWS + idText);    			
+	    }
+		
+    }
+    
+    /* 
+     * Parses the Kinetic Law Ids from given text string. 
+     */
+    private HashSet<Integer> parseIds(String text){
+    	HashSet<Integer> ids = new HashSet<Integer>();
+		
+    	// unify separators
+    	text = text.replace("\n", ",");
+    	text = text.replace("\t", ",");
+    	text = text.replace(" ", ",");
+    	text = text.replace(";", ",");
+    	
+    	String[] tokens = text.split(",");
+    	for (String t : tokens){
+        	// single entry parsing
+    		if (t.length() == 0){
+    			continue;
+    		}
+    		
+        	try {
+        		Integer kineticLaw = Integer.parseInt(t);
+        		ids.add(kineticLaw);
+        	} catch (NumberFormatException e) {
+        		logError("Kinetic Law Id could not be parsed from token: <" + t + ">");
+        	}
+    	}
+    	return ids;
     }
     
     @FXML protected void handleQueryAction(ActionEvent event) {
@@ -154,9 +200,7 @@ public class QueryFXMLController implements Initializable{
                 });
             	
         		statusCode.setStyle("-fx-fill: black;");
-        		queryText.setStyle("-fx-region-background: #ffffff;");
-            	        		
-        		System.out.println("GET "+ queryString);
+        		        		
         		setProgress(-1);
         		logInfo("... waiting for SABIO-RK response ...");
         		
@@ -177,9 +221,11 @@ public class QueryFXMLController implements Initializable{
                     public void run() {
                     	statusCode.setText(restReturnStatus.toString());
                 		if (restReturnStatus != 200){
+                			if (restReturnStatus == 404){
+                				logWarning("No kinetic laws found for query in SABIO-RK.");
+                			}
                 			logWarning("SABIO-RK query returned with status <" + restReturnStatus + ">");
                 			statusCode.setStyle("-fx-fill: red;");
-                			queryText.setStyle("-fx-region-background: #00ffff;");
                 		}else {
                 			logInfo("SABIO-RK query returned with status <" + restReturnStatus + "> after " + duration + "[ms]");
                 		}
@@ -191,8 +237,7 @@ public class QueryFXMLController implements Initializable{
             }
         };
         queryThread.start();
-        
-    	
+
     }
     
     @FXML protected void handleClearAction(ActionEvent event) {
@@ -289,6 +334,7 @@ public class QueryFXMLController implements Initializable{
             }
         });
 		
+		/*
 		entry.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
 				if (ke.getCode() == KeyCode.ENTER){
@@ -297,6 +343,7 @@ public class QueryFXMLController implements Initializable{
 				}
             }
         });
+        */
 		
 		log.textProperty().addListener(new ChangeListener<Object>() {
 		    @Override
@@ -322,8 +369,9 @@ public class QueryFXMLController implements Initializable{
             @Override
             public void run() {
             	Calendar now = Calendar.getInstance();            	
-            	String newText = "[" + dateFormat.format(now.getTime()) + " " + logType.toString() + "] " + text + "\n" + log.getText();  
-            	log.setText(newText);
+            	String newText = "[" + dateFormat.format(now.getTime()) + " " + logType.toString() + "] " + text;  
+            	log.setText(newText + "\n" + log.getText());
+            	System.out.println(newText);
             }
         });  	
     }

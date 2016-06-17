@@ -45,6 +45,7 @@ public class WebViewSwing {
         dialog.setVisible(true);
         dialog.setBackground(new Color(255, 255, 255));
         dialog.setLocationRelativeTo(parentFrame);
+        dialog.setResizable(false);
         
         Platform.runLater(new Runnable() {
             @Override

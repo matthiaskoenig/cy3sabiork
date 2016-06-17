@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
+import javax.swing.SwingUtilities;
+
 import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioKineticLaw;
 import org.cy3sabiork.SabioQuery;
@@ -29,11 +31,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.image.ImageView;
 import javafx.scene.web.WebView;
-import javafx.scene.web.WebEngine;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 
@@ -73,8 +76,9 @@ public class QueryFXMLController implements Initializable{
 	}
 	
 	// browser
+	@FXML private ImageView sabioLogo;
 	@FXML private WebView webView;
-	private WebEngine webEngine;
+	
 	
 	// -- Log --
 	@FXML private TextArea log;
@@ -360,6 +364,19 @@ public class QueryFXMLController implements Initializable{
         });
     }
     
+    private void openURLinExternalBrowser(String text){
+    	if (openBrowser != null){
+	    	logInfo("Opening address in external browser: <" + text +">");    		  
+    		SwingUtilities.invokeLater(new Runnable() {
+    		     public void run() {
+    		    	 openBrowser.openURL(text);    	 
+    		     }
+    		});
+       	 		 
+        } else {
+       	 	logError("No external browser available.");
+        }
+    }
     
     // --------------------------------------------------------------------
     // Init
@@ -475,6 +492,13 @@ public class QueryFXMLController implements Initializable{
 				}
             }
         });
+		
+		sabioLogo.setOnMousePressed(new EventHandler<MouseEvent>() {
+	        @Override
+	        public void handle(MouseEvent event) {
+	            openURLinExternalBrowser("http://sabiork.h-its.org/");
+	        }
+	    });
 		
 		log.textProperty().addListener(new ChangeListener<Object>() {
 		    @Override

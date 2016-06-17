@@ -100,7 +100,7 @@
                         <Tooltip text="Query SABIO-RK web service with query shown in preview." />
                      </tooltip>
                   </Button>
-                  <ImageView fitHeight="40.0" fitWidth="315.0" layoutX="36.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="sabioLogo" fitHeight="40.0" fitWidth="315.0" layoutX="36.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/header-sabiork.png" />
                      </image>

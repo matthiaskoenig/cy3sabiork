@@ -32,3 +32,15 @@
     -fx-alignment: CENTER;
     -fx-text-fill: #0181d8;
 }
+
+#log {
+  // -fx-font-family: Consolas;
+  -fx-highlight-fill: #ffffff;
+  -fx-highlight-text-fill: #000000;
+  -fx-text-fill: #ffffff;
+  -fx-background-color: #000000;
+}
+
+#log .content{
+  -fx-background-color: #000000;
+}

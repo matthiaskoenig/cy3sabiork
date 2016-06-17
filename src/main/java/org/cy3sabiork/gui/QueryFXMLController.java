@@ -3,6 +3,9 @@ package org.cy3sabiork.gui;
 import java.awt.Color;
 import java.awt.Paint;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
@@ -32,15 +35,7 @@ import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
  
-
-// TODO: add SABIO-RK logo
-// 
-// TODO: add terms to query
-// TODO: Feedback about query status code, i.e. 404, ...
-// TODO: execute query
 // TODO: add example queries
-
-
 
 @SuppressWarnings("restriction")
 public class QueryFXMLController implements Initializable{
@@ -50,6 +45,17 @@ public class QueryFXMLController implements Initializable{
 	public static final String PREFIX_LAW = "kineticLaws/";
 	public static final String PREFIX_LAWS = "kineticLaws?kinlawids=";
 	public static final String CONNECTOR_AND = " AND ";
+	
+	// minimal logger
+	public static final String LOG_INFO = "[INFO]";
+	public static final String LOG_WARNING = "[WARNING]";
+	public static final String LOG_ERROR = "[ERROR]";
+	public final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss"); // "yyyy/MM/dd HH:mm:ss"
+	
+	
+	public enum LogType {
+		INFO, WARNING, ERROR, DEBUG
+	}
 	
 	// -- Log --
 	@FXML private TextArea log;
@@ -80,9 +86,7 @@ public class QueryFXMLController implements Initializable{
     Thread queryThread = null;
     
     
-    private void logText(String text){
-    	log.setText(log.getText() + "\n" + text);
-    }
+
     
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
     	// TODO: only use the allowed keywords
@@ -92,18 +96,18 @@ public class QueryFXMLController implements Initializable{
     	String searchTerm = term.getText();
     	
     	if (selectedItem == null){
-    		logText("No keyword selected, not added !");
+    		logWarning("No keyword selected. Select keyword and search term in the Query Builder.");
     		return;
     	}
     	
     	String addition = selectedItem + ":\"" + searchTerm + "\"";
     	String query = queryText.getText();
     	if (searchTerm.length() == 0){
-    		logText("Empty term defined, not added !");
+    		logWarning("No search term provided. Select keyword and search term in the Query Builder.");
     		return;
     	}
     	if (query.contains(addition)){
-    		logText("keyword:term already in query !");
+    		logInfo("keyword:term already in query.");
     		return;
     	}
     	
@@ -112,6 +116,7 @@ public class QueryFXMLController implements Initializable{
     	} else {
     		queryText.setText(PREFIX_QUERY + addition);
     	}
+    	logInfo("<" + addition +"> added to query");
     }
     
     @FXML protected void handleAddEntryAction(ActionEvent event) {
@@ -143,7 +148,7 @@ public class QueryFXMLController implements Initializable{
             	Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                    	logText("GET "+ queryString);
+                    	logInfo("GET <"+ queryString + ">");
                         queryButton.setDisable(true);
                     }
                 });
@@ -153,6 +158,7 @@ public class QueryFXMLController implements Initializable{
             	        		
         		System.out.println("GET "+ queryString);
         		setProgress(-1);
+        		logInfo("... waiting for SABIO-RK response ...");
         		
         		long startTime = System.currentTimeMillis();
         		
@@ -171,8 +177,11 @@ public class QueryFXMLController implements Initializable{
                     public void run() {
                     	statusCode.setText(restReturnStatus.toString());
                 		if (restReturnStatus != 200){
+                			logWarning("SABIO-RK query returned with status <" + restReturnStatus + ">");
                 			statusCode.setStyle("-fx-fill: red;");
                 			queryText.setStyle("-fx-region-background: #00ffff;");
+                		}else {
+                			logInfo("SABIO-RK query returned with status <" + restReturnStatus + "> after " + duration + "[ms]");
                 		}
                 		time.setText(duration + " [ms]");    	
                         queryButton.setDisable(false);
@@ -306,5 +315,31 @@ public class QueryFXMLController implements Initializable{
 			setProgress(1.0);
 		}	
 	}
+	
+    // --- LOGGING ---
+    private void logText(String text, LogType logType){
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            	Calendar now = Calendar.getInstance();            	
+            	String newText = "[" + dateFormat.format(now.getTime()) + " " + logType.toString() + "] " + text + "\n" + log.getText();  
+            	log.setText(newText);
+            }
+        });  	
+    }
+     
+    private void logError(String text){
+    	logText(text, LogType.ERROR);
+    }
+    private void logWarning(String text){
+    	logText(text, LogType.WARNING);
+    }
+    private void logDebug(String text){
+    	logText(text, LogType.DEBUG);
+    }
+    private void logInfo(String text){
+    	logText(text, LogType.INFO);
+    }
+    // --------------
 	
 }

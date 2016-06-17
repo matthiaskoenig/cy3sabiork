@@ -443,7 +443,8 @@ public class QueryFXMLController implements Initializable{
 		
 		// Handle all links by opening external browser
 		// http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/
-		/*
+
+		// FIXME: this opens all links in external locations.
 		webView.getEngine().locationProperty().addListener(new ChangeListener<String>(){
              @Override
              public void changed(ObservableValue<? extends String> observable, final String oldValue, final String newValue){
@@ -456,18 +457,11 @@ public class QueryFXMLController implements Initializable{
                              }
                          });
                          // open the destination URl in the default browser
-                         // class will open a new thread
-                         
-                         if (openBrowser != null){
-                        	 logInfo("Opening address in external browser");                        	 
-                        	 openBrowser.openURL(newValue);	 
-                         } else {
-                        	 logError("No external browser available.");
-                         }
+                         openURLinExternalBrowser(newValue);
                      }
                  }
          });
-         */
+
 		
 		// hide elements on first loading
 		showQueryStatus(false);

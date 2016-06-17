@@ -12,12 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
-
 import javafx.scene.control.ScrollPane;
 
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioSBMLReader;
@@ -33,7 +29,6 @@ public class WebViewSwing {
 	private static void initAndShowGUI(final JFrame parentFrame) {
         // This method is invoked on the EDT thread
 		
-        JFrame frame = new JFrame("Swing and JavaFX");
         JDialog dialog = new JDialog(parentFrame);
         dialog.setTitle("SABIO-RK Web Services");
         
@@ -88,10 +83,12 @@ public class WebViewSwing {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-  
     }
 	
-    
+    /** 
+     * Start the JFXPanel. 
+     * Main entry point to open the GUI.
+     */
     public static void launch(JFrame parentFrame, OpenBrowser openBrowser, SabioSBMLReader sbmlReader){
     	WebViewSwing.openBrowser = openBrowser;
     	WebViewSwing.sbmlReader = sbmlReader;
@@ -104,10 +101,14 @@ public class WebViewSwing {
         });
     }
     
+    /** Testing the GUI without Cytoscape specific functionality. */
     public static void main(String[] args) {
+    	// ! Necessary to provide access to file resources in a consistent
+    	// way in bundle and non-bundle context.
+    	// This is handled by the ResourceExtractor.
     	File appDirectory = new File("src/main/resources");
-    	System.out.println(appDirectory.getAbsolutePath());
     	ResourceExtractor.setAppDirectory(appDirectory);
+    	System.out.println(appDirectory.getAbsolutePath());
     	
     	// GUI launch without Cytoscape
     	launch(null, null, null);

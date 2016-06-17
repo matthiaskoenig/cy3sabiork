@@ -26,15 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * cy3sbml results panel. 
- * 
- * The panel is registered as Cytoscape Results Panel and available
- * from within the GUI.
- * 
- * This panel is the main area for displaying SBML information for the 
- * network.
- * 
- * ResultsPanel is a singleton class.
+ * SabioPanel.
+ * Registered as Results panel.
  */
 public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkListener{
 	private static final Logger logger = LoggerFactory.getLogger(SabioPanel.class);
@@ -138,6 +131,11 @@ public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkL
 		return textPane;
 	}
 	
+	/** Set help information. */
+	public void setHelp(){
+		textPane.setHelp();
+	}
+	
 	/////////////////// HANDLE EVENTS ///////////////////////////////////
 
 	/** 
@@ -148,36 +146,28 @@ public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkL
 	 * This provides an easy solution for integrating app functionality
 	 * with click on hyperlinks.
 	 */
+	@Override
 	public void hyperlinkUpdate(HyperlinkEvent evt) {
 		/* Open link in browser. */
 		URL url = evt.getURL();
 		if (url != null) {
 			if (evt.getEventType() == HyperlinkEvent.EventType.ENTERED) {
-				
+				// nothing
 			} else if (evt.getEventType() == HyperlinkEvent.EventType.EXITED) {
-				
+				// nothing
 			} else if (evt.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-				
+				// decide what to do depending on URL
 				String s = url.toString();
 				
-				// Search SabioRK webservice
+				// menu action
 				if (s.equals("http://sabiork-query")){
-					//SabioAction sabioAction = new SabioAction(this.cySwingApplication, this.appDirectory);
 					sabioAction.actionPerformed(null);
-				}
-				// HTML links	
-				else {
+				} else {
 					// handle the HTML links
 					this.openBrowser.openURL(url.toString());	
 				}
 			}
 		}
-	}
-	
-	
-	/** Set help information. */
-	public void setHelp(){
-		textPane.setHelp();
 	}
 	
 }

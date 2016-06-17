@@ -1,7 +1,6 @@
 package org.cy3sabiork;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -9,6 +8,7 @@ import javax.swing.JFrame;
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.application.swing.CySwingApplication;
 import org.cytoscape.util.swing.OpenBrowser;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.cy3sabiork.gui.WebViewSwing;
@@ -24,7 +24,12 @@ public class SabioAction extends AbstractCyAction{
 	private SabioSBMLReader sbmlReader;
 	
 	
-	public SabioAction(CySwingApplication cySwingApplication, OpenBrowser openBrowser, SabioSBMLReader sabioSBMLReader){
+	/** 
+	 * Constructor. 
+	 * Requires functionality for open links in external browser and
+	 * for reading SBML into networks.
+	 */
+	public SabioAction(CySwingApplication cySwingApplication, OpenBrowser openBrowser, SabioSBMLReader sbmlReader){
 		super("SabioRKAction");
 		this.cySwingApplication = cySwingApplication;
 		this.openBrowser = openBrowser;
@@ -35,7 +40,6 @@ public class SabioAction extends AbstractCyAction{
 		
 		this.putValue(SHORT_DESCRIPTION, "SABIO-RK web services");
 		setToolbarGravity((float) 500.0);
-	
 	}
 	
 	public boolean insertSeparatorBefore(){
@@ -58,14 +62,10 @@ public class SabioAction extends AbstractCyAction{
 		logger.debug("SabioAction performed.");
 		JFrame frame = this.cySwingApplication.getJFrame();
 		
-		// Open JavaFX
-		
-		// The app needs in addition:
-		// sbmlReader, openBrowser
-		
+		// Open JavaFX GUI
 		WebViewSwing.launch(frame, openBrowser, sbmlReader);
 		
-		// Open dialog
+		// Open old dialog GUI
 		// SabioDialog.launch(frame, sbmlReader);
 	}
 	

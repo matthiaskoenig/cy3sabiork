@@ -113,10 +113,10 @@ public class QueryFXMLController implements Initializable{
     Thread queryThread = null;
     
     public void initData(OpenBrowser openBrowser, SabioSBMLReader sbmlReader){
+    	System.out.println("QueryFXMLController data initialized.");
     	this.openBrowser = openBrowser;
     	this.sbmlReader = sbmlReader;
     }
-    
     
     
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
@@ -360,6 +360,10 @@ public class QueryFXMLController implements Initializable{
         });
     }
     
+    
+    // --------------------------------------------------------------------
+    // Init
+    // --------------------------------------------------------------------
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	
@@ -422,6 +426,7 @@ public class QueryFXMLController implements Initializable{
 		
 		// Handle all links by opening external browser
 		// http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/
+		/*
 		webView.getEngine().locationProperty().addListener(new ChangeListener<String>(){
              @Override
              public void changed(ObservableValue<? extends String> observable, final String oldValue, final String newValue){
@@ -445,8 +450,7 @@ public class QueryFXMLController implements Initializable{
                      }
                  }
          });
-		
-		
+         */
 		
 		// hide elements on first loading
 		showQueryStatus(false);
@@ -482,13 +486,15 @@ public class QueryFXMLController implements Initializable{
 		});
 		
 		
-		// Query the status
+		// Query SABIO-RK status
 		setProgress(-1);
 		String status = SabioQuery.getSabioStatus();
 		if (status.equals("UP")){
 			setProgress(1.0);
 		}	
 	}
+    // --------------------------------------------------------------------
+	
 	
     // --- LOGGING ---
     private void logText(String text, LogType logType){

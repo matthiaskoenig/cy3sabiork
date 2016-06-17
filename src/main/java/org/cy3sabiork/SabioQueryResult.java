@@ -36,17 +36,14 @@ public class SabioQueryResult {
 		
 		if (success()) {
 			this.sbml = response.readEntity(String.class);	
-			System.out.println("--------------------------------------------");
-			System.out.println(this.sbml);
-			System.out.println("--------------------------------------------");
+			// System.out.println("--------------------------------------------");
+			// System.out.println(this.sbml);
+			// System.out.println("--------------------------------------------");
 		} else {
 			System.out.println("Request failed with status code: " + status);
-			// throw new RuntimeException("Failed : HTTP error code : "
-			//		+ response.getStatus());
+			
 			this.sbml = null;
 		}
-		// TODO: read kinetic entries if available.
-		
 	}
 	
 	/** Returns true if the request was successful. */

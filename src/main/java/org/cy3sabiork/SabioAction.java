@@ -53,6 +53,10 @@ public class SabioAction extends AbstractCyAction{
 		JFrame frame = this.cySwingApplication.getJFrame();
 		
 		// Open JavaFX
+		
+		// The app needs in addition:
+		// sbmlReader, openBrowser
+		
 		WebViewSwing.launch(frame, appDirectory);
 		
 		// Open dialog

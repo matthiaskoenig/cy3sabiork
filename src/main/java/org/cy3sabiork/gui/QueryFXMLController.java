@@ -1,7 +1,5 @@
 package org.cy3sabiork.gui;
 
-import java.awt.Color;
-import java.awt.Paint;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,9 +7,12 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
+import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioKineticLaw;
 import org.cy3sabiork.SabioQuery;
 import org.cy3sabiork.SabioQueryResult;
+import org.cy3sabiork.SabioSBMLReader;
+import org.cytoscape.util.swing.OpenBrowser;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,6 +29,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -48,6 +51,7 @@ import javafx.collections.ObservableList;
 @SuppressWarnings("restriction")
 public class QueryFXMLController implements Initializable{
 	
+	public static final String PREFIX_KINETIC_LAW_INFO = "http://sabiork.h-its.org/kineticLawEntry.jsp?viewData=true&kinlawid=";
 	
 	public static final String PREFIX_QUERY = "searchKineticLaws/sbml?q=";
 	public static final String PREFIX_LAW = "kineticLaws/";
@@ -60,10 +64,17 @@ public class QueryFXMLController implements Initializable{
 	public static final String LOG_ERROR = "[ERROR]";
 	public final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss"); // "yyyy/MM/dd HH:mm:ss"
 	
+	public final OpenBrowser openBrowser = null;
+	public final SabioSBMLReader sbmlReader = null;
+	
 	
 	public enum LogType {
 		INFO, WARNING, ERROR, DEBUG
 	}
+	
+	// browser
+	@FXML private WebView webView;
+	private WebEngine webEngine;
 	
 	// -- Log --
 	@FXML private TextArea log;
@@ -99,9 +110,6 @@ public class QueryFXMLController implements Initializable{
     @FXML private TableColumn tissueCol;
     
     Thread queryThread = null;
-    
-    
-
     
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
     	// TODO: only use the allowed keywords
@@ -246,15 +254,19 @@ public class QueryFXMLController implements Initializable{
                 		}else {
                 			// successful
                 			logInfo("SABIO-RK query returned with status <" + restReturnStatus + "> after " + duration + "[ms]");
-                			final ObservableList<SabioKineticLaw> data = FXCollections.observableArrayList(queryResult.getKineticLaws());
+                			
+                			// handle empty test call
+                			final ObservableList<SabioKineticLaw> data;
+                			if (queryString == null || queryString.length() == 0){
+                				 data = FXCollections.observableArrayList();
+                			} else {
+                				data = FXCollections.observableArrayList(queryResult.getKineticLaws());	
+                			}
                 			if (! data.isEmpty()){
                 				entryTable.setItems(data);
                 				entryTable.setDisable(false);
                     	    	loadButton.setDisable(false);	
                 			}
-                			
-                			
-                			
                 		}
                 		time.setText(duration + " [ms]");    	
                         queryButton.setDisable(false);
@@ -278,16 +290,24 @@ public class QueryFXMLController implements Initializable{
     	progressIndicator.setStyle("-fx-progress-color: dodgerblue;");
     	
     	// clear table
-    	entryTable.getColumns().clear();
+    	entryTable.setItems(FXCollections.observableArrayList());
     	entryTable.setDisable(true);
     	loadButton.setDisable(true);
+    	setHelp();
     }
     
     @FXML protected void handleLoadAction(ActionEvent event) {
-    	logInfo("Loading kinetic laws in Cytoscape ...");
+    	logInfo("Loading Kinetic Laws in Cytoscape ...");
     	logError("NOT IMPLEMENTED");
     }
     
+    
+    /* Sets the help information. */
+    private void setHelp(){
+		// Initialize the webengine
+		String infoURI = ResourceExtractor.fileURIforResource("/gui/info.html");
+		webView.getEngine().load(infoURI);
+    }
     
     
     /** Focus the given scene Node. */
@@ -366,16 +386,44 @@ public class QueryFXMLController implements Initializable{
 		    new PropertyValueFactory<SabioKineticLaw,String>("tissue")
 		);
 		
-		/*
+
 		entryTable.getSelectionModel().selectedItemProperty().addListener(
 	            new ChangeListener<SabioKineticLaw>() {
 	                public void changed(ObservableValue<? extends SabioKineticLaw> ov, 
 	                    SabioKineticLaw oldValue, SabioKineticLaw newValue) {
-	                		logInfo("Selected Kinetic Law: <" + newValue.getId() + ">");
-	                		
+	                		Integer kid = newValue.getId();	
+	                		String lawURI = PREFIX_KINETIC_LAW_INFO + kid.toString();
+	                		logInfo("Load information for Kinetic Law <" + kid + "> from <" + lawURI +">" );
+	                		webView.getEngine().load(lawURI);
 	            }
 	        });
-		*/
+		
+		setHelp();
+		webView.setZoom(0.9);
+		
+		// Handle all links by opening external browser
+		// http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/
+		webView.getEngine().locationProperty().addListener(new ChangeListener<String>(){
+             @Override
+             public void changed(ObservableValue<? extends String> observable, final String oldValue, final String newValue){
+            	 // Links to open in external browser
+                     if (newValue.startsWith("http")){
+                         Platform.runLater(new Runnable(){
+                             @Override
+                             public void run(){
+                                 // webView.getEngine().load(oldValue);
+                             }
+                         });
+                         // open the destination URl in the default browser
+                         // class will open a new thread
+                         
+                         // TODO:
+                         logInfo("Opening address in external browser");
+                        	
+                     }
+                 }
+         });
+		
 		
 		
 		// hide elements on first loading

@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.application.swing.CySwingApplication;
+import org.cytoscape.util.swing.OpenBrowser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.cy3sabiork.gui.WebViewSwing;
@@ -19,14 +20,15 @@ public class SabioAction extends AbstractCyAction{
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(SabioAction.class);
 	private CySwingApplication cySwingApplication;
-	private File appDirectory;
+	private OpenBrowser openBrowser;
+	private SabioSBMLReader sbmlReader;
 	
-	public static SabioSBMLReader sbmlReader;
 	
-	public SabioAction(CySwingApplication cySwingApplication, File appDirectory){
+	public SabioAction(CySwingApplication cySwingApplication, OpenBrowser openBrowser, SabioSBMLReader sabioSBMLReader){
 		super("SabioRKAction");
 		this.cySwingApplication = cySwingApplication;
-		this.appDirectory = appDirectory;
+		this.openBrowser = openBrowser;
+		this.sbmlReader = sbmlReader;
 		
 		ImageIcon icon = new ImageIcon(getClass().getResource("/gui/images/logo-sabiork.png"));
 		putValue(LARGE_ICON_KEY, icon);
@@ -47,6 +49,10 @@ public class SabioAction extends AbstractCyAction{
 		return false;
 	}
 	
+	public OpenBrowser getOpenBrowser(){
+		return this.openBrowser;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		logger.debug("SabioAction performed.");
@@ -57,13 +63,10 @@ public class SabioAction extends AbstractCyAction{
 		// The app needs in addition:
 		// sbmlReader, openBrowser
 		
-		WebViewSwing.launch(frame, appDirectory);
+		WebViewSwing.launch(frame, openBrowser, sbmlReader);
 		
 		// Open dialog
 		// SabioDialog.launch(frame, sbmlReader);
 	}
 	
-	public static void setSabioSBMLReader(SabioSBMLReader sbmlReader){
-		SabioAction.sbmlReader = sbmlReader;
-	}
 }

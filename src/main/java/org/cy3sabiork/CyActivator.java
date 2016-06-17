@@ -63,8 +63,7 @@ public class CyActivator extends AbstractCyActivator {
 			SabioSBMLReader sbmlReader = new SabioSBMLReader(loadNetworkFileTaskFactory, synchronousTaskManager);
 		
 			// init actions
-			SabioAction sabioAction = new SabioAction(cySwingApplication, appDirectory);	
-			SabioAction.setSabioSBMLReader(sbmlReader);
+			SabioAction sabioAction = new SabioAction(cySwingApplication, openBrowser, sbmlReader);
 			registerService(bc, sabioAction, CyAction.class, new Properties());
 		
 			// Extract resource file if necessary
@@ -72,7 +71,7 @@ public class CyActivator extends AbstractCyActivator {
 			resourceHandler.test();
 			
 			// Sabio Panel
-			SabioPanel sabioPanel = SabioPanel.getInstance(cySwingApplication, openBrowser, sabioAction);
+			SabioPanel sabioPanel = SabioPanel.getInstance(cySwingApplication, sabioAction);
 			registerService(bc, sabioPanel, CytoPanelComponent.class, new Properties());
 			SabioPanel.getInstance().activate();
 			

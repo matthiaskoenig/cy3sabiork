@@ -42,16 +42,16 @@ public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkL
 
 	private static SabioPanel uniqueInstance;
 	private CySwingApplication cySwingApplication;
-	private OpenBrowser openBrowser;
 	private CytoPanel cytoPanelEast;
 	private JEditorPaneSabio textPane;
 	private SabioAction sabioAction;
+	private OpenBrowser openBrowser;
 
 	/** Singleton. */
-	public static synchronized SabioPanel getInstance(CySwingApplication cySwingApplication, OpenBrowser openBrowser, SabioAction sabioAction){
+	public static synchronized SabioPanel getInstance(CySwingApplication cySwingApplication, SabioAction sabioAction){
 		if (uniqueInstance == null){
 			logger.debug("ResultsPanel created");
-			uniqueInstance = new SabioPanel(cySwingApplication, openBrowser, sabioAction);
+			uniqueInstance = new SabioPanel(cySwingApplication, sabioAction);
 		}
 		return uniqueInstance;
 	}
@@ -60,9 +60,9 @@ public class SabioPanel extends JPanel implements CytoPanelComponent, HyperlinkL
 	}
 	
 	/** Constructor */
-	private SabioPanel(CySwingApplication cySwingApplication, OpenBrowser openBrowser, SabioAction sabioAction){
+	private SabioPanel(CySwingApplication cySwingApplication, SabioAction sabioAction){
 		this.cySwingApplication = cySwingApplication;
-		this.openBrowser = openBrowser; 
+		this.openBrowser = sabioAction.getOpenBrowser(); 
 		this.sabioAction = sabioAction;
 		this.cytoPanelEast = this.cySwingApplication.getCytoPanel(CytoPanelName.EAST);
 		

@@ -64,8 +64,8 @@ public class QueryFXMLController implements Initializable{
 	public static final String LOG_ERROR = "[ERROR]";
 	public final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss"); // "yyyy/MM/dd HH:mm:ss"
 	
-	public final OpenBrowser openBrowser = null;
-	public final SabioSBMLReader sbmlReader = null;
+	public OpenBrowser openBrowser;
+	public SabioSBMLReader sbmlReader;
 	
 	
 	public enum LogType {
@@ -109,7 +109,15 @@ public class QueryFXMLController implements Initializable{
     @FXML private TableColumn organismCol;
     @FXML private TableColumn tissueCol;
     
+    private SabioQueryResult queryResult;
     Thread queryThread = null;
+    
+    public void initData(OpenBrowser openBrowser, SabioSBMLReader sbmlReader){
+    	this.openBrowser = openBrowser;
+    	this.sbmlReader = sbmlReader;
+    }
+    
+    
     
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
     	// TODO: only use the allowed keywords
@@ -231,13 +239,12 @@ public class QueryFXMLController implements Initializable{
         		long startTime = System.currentTimeMillis();
         		
         		SabioQuery query = new SabioQuery();
-        		SabioQueryResult queryResult = query.performQuery(queryString);
+        		queryResult = query.performQuery(queryString);
         			
         		long endTime = System.currentTimeMillis();
         		long duration = (endTime - startTime);
         		
-        		// TODO: read the SBML
-        		// sbmlReader.loadNetworkFromSBML(xml);
+
         		Integer restReturnStatus = queryResult.getStatus();
         		
             	Platform.runLater(new Runnable() {
@@ -298,7 +305,19 @@ public class QueryFXMLController implements Initializable{
     
     @FXML protected void handleLoadAction(ActionEvent event) {
     	logInfo("Loading Kinetic Laws in Cytoscape ...");
-    	logError("NOT IMPLEMENTED");
+    	
+    	if (sbmlReader != null){
+    		String sbml = queryResult.getSBML();
+    		if (sbml != null){
+    			logInfo("... loading ...");
+    			sbmlReader.loadNetworkFromSBML(sbml);	
+    		} else {
+    			logError("No SBML in request result.");
+    		}
+    	} else {
+    		logError("No SBMLReader available in controller.");;
+    	}
+		
     }
     
     
@@ -411,15 +430,18 @@ public class QueryFXMLController implements Initializable{
                          Platform.runLater(new Runnable(){
                              @Override
                              public void run(){
-                                 // webView.getEngine().load(oldValue);
+                                 webView.getEngine().load(oldValue);
                              }
                          });
                          // open the destination URl in the default browser
                          // class will open a new thread
                          
-                         // TODO:
-                         logInfo("Opening address in external browser");
-                        	
+                         if (openBrowser != null){
+                        	 logInfo("Opening address in external browser");                        	 
+                        	 openBrowser.openURL(newValue);	 
+                         } else {
+                        	 logError("No external browser available.");
+                         }
                      }
                  }
          });

@@ -20,12 +20,15 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import org.cy3sabiork.ResourceExtractor;
+import org.cy3sabiork.SabioSBMLReader;
 import org.cy3sabiork.gui.QueryFXMLController;
+import org.cytoscape.util.swing.OpenBrowser;
 
 
 @SuppressWarnings("restriction")
 public class WebViewSwing {
-	public static File appDirectory;
+	public static OpenBrowser openBrowser;
+	public static SabioSBMLReader sbmlReader;
 	
 	private static void initAndShowGUI(final JFrame parentFrame) {
         // This method is invoked on the EDT thread
@@ -66,8 +69,15 @@ public class WebViewSwing {
 			// Load FXML GUI scence
 			// see : http://blog.admadic.com/2013/03/javafx-fxmlloader-with-osgi.html
 			FXMLLoader.setDefaultClassLoader(WebViewSwing.class.getClassLoader());
-			ScrollPane root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/query.fxml"));
+			
+			FXMLLoader loader = new FXMLLoader(WebViewSwing.class.getResource("/gui/query.fxml"));
+			ScrollPane root = loader.load();
+			// ScrollPane root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/query.fxml"));
 
+			QueryFXMLController controller = loader.getController();
+			controller.initData(openBrowser, sbmlReader);
+			
+			
 		    Scene scene = new Scene(root);
 		    
 		    // from appDirectory
@@ -82,8 +92,10 @@ public class WebViewSwing {
     }
 	
     
-    public static void launch(JFrame parentFrame, File appDirectory){
-    	WebViewSwing.appDirectory = appDirectory;
+    public static void launch(JFrame parentFrame, OpenBrowser openBrowser, SabioSBMLReader sbmlReader){
+    	WebViewSwing.openBrowser = openBrowser;
+    	WebViewSwing.sbmlReader = sbmlReader;
+    	
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -97,6 +109,7 @@ public class WebViewSwing {
     	System.out.println(appDirectory.getAbsolutePath());
     	ResourceExtractor.setAppDirectory(appDirectory);
     	
-    	launch(null, appDirectory);
+    	// GUI launch without Cytoscape
+    	launch(null, null, null);
     }
 }

@@ -33,6 +33,11 @@
     -fx-text-fill: #0181d8;
 }
 
+
+.table-view .table-cell{
+    -fx-font-size: 10;
+}
+
 #log {
   // -fx-font-family: Consolas;
   -fx-highlight-fill: #ffffff;

@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
+import org.cy3sabiork.SabioKineticLaw;
 import org.cy3sabiork.SabioQuery;
 import org.cy3sabiork.SabioQueryResult;
 
@@ -26,6 +27,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
@@ -37,7 +41,9 @@ import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
  
-// TODO: add example queries
+
+// TOOD: get terms and respective suggestions from file
+// TODO: add example queries in HTML
 
 @SuppressWarnings("restriction")
 public class QueryFXMLController implements Initializable{
@@ -88,6 +94,9 @@ public class QueryFXMLController implements Initializable{
     // -- REST Results --
     @FXML private Button loadButton;
     @FXML private TableView entryTable; 
+    @FXML private TableColumn idCol;
+    @FXML private TableColumn organismCol;
+    @FXML private TableColumn tissueCol;
     
     Thread queryThread = null;
     
@@ -200,14 +209,15 @@ public class QueryFXMLController implements Initializable{
             	Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                    	logInfo("GET <"+ queryString + ">");
+                    	
                         queryButton.setDisable(true);
+                        statusCode.setStyle("-fx-fill: black;");
+                		progressIndicator.setStyle("-fx-progress-color: dodgerblue;");
                     }
                 });
             	
-        		statusCode.setStyle("-fx-fill: black;");
-        		        		
         		setProgress(-1);
+        		logInfo("GET <"+ queryString + ">");
         		logInfo("... waiting for SABIO-RK response ...");
         		
         		long startTime = System.currentTimeMillis();
@@ -232,8 +242,19 @@ public class QueryFXMLController implements Initializable{
                 			}
                 			logWarning("SABIO-RK query returned with status <" + restReturnStatus + ">");
                 			statusCode.setStyle("-fx-fill: red;");
+                			progressIndicator.setStyle("-fx-progress-color: red;");
                 		}else {
+                			// successful
                 			logInfo("SABIO-RK query returned with status <" + restReturnStatus + "> after " + duration + "[ms]");
+                			final ObservableList<SabioKineticLaw> data = FXCollections.observableArrayList(queryResult.getKineticLaws());
+                			if (! data.isEmpty()){
+                				entryTable.setItems(data);
+                				entryTable.setDisable(false);
+                    	    	loadButton.setDisable(false);	
+                			}
+                			
+                			
+                			
                 		}
                 		time.setText(duration + " [ms]");    	
                         queryButton.setDisable(false);
@@ -253,6 +274,13 @@ public class QueryFXMLController implements Initializable{
     	term.clear();
     	entry.clear();
     	statusCode.setText("?");
+    	showQueryStatus(false);
+    	progressIndicator.setStyle("-fx-progress-color: dodgerblue;");
+    	
+    	// clear table
+    	entryTable.getColumns().clear();
+    	entryTable.setDisable(true);
+    	loadButton.setDisable(true);
     }
     
     @FXML protected void handleLoadAction(ActionEvent event) {
@@ -324,6 +352,32 @@ public class QueryFXMLController implements Initializable{
             }
         });
 		
+		// Table for SabioKineticLaws
+		entryTable.setEditable(false);
+		
+		idCol.setCellValueFactory(
+			new PropertyValueFactory<SabioKineticLaw,Integer>("id")
+		);
+		
+		organismCol.setCellValueFactory(
+		    new PropertyValueFactory<SabioKineticLaw,String>("organism")
+		);
+		tissueCol.setCellValueFactory(
+		    new PropertyValueFactory<SabioKineticLaw,String>("tissue")
+		);
+		
+		/*
+		entryTable.getSelectionModel().selectedItemProperty().addListener(
+	            new ChangeListener<SabioKineticLaw>() {
+	                public void changed(ObservableValue<? extends SabioKineticLaw> ov, 
+	                    SabioKineticLaw oldValue, SabioKineticLaw newValue) {
+	                		logInfo("Selected Kinetic Law: <" + newValue.getId() + ">");
+	                		
+	            }
+	        });
+		*/
+		
+		
 		// hide elements on first loading
 		showQueryStatus(false);
 		
@@ -347,17 +401,6 @@ public class QueryFXMLController implements Initializable{
 				}
             }
         });
-		
-		/*
-		entry.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-				if (ke.getCode() == KeyCode.ENTER){
-					System.out.println("KeyCode == ENTER on entry");
-					addEntryButton.fire();
-				}
-            }
-        });
-        */
 		
 		log.textProperty().addListener(new ChangeListener<Object>() {
 		    @Override

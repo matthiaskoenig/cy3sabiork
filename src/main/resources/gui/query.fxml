@@ -30,16 +30,22 @@
                                  <children>
                                     <ListView fx:id="keywordList" layoutX="33.0" layoutY="84.0" prefHeight="183.0" prefWidth="200.0">
                                        <tooltip>
-                                          <Tooltip text="List of available search keywords for SABIO-RK web services." />
+                                          <Tooltip text="List of available search keywords." />
                                        </tooltip>
                                     </ListView>
-                                    <TextField fx:id="term" layoutX="243.0" layoutY="44.0" prefHeight="25.0" prefWidth="225.0" />
+                                    <TextField fx:id="term" layoutX="243.0" layoutY="44.0" prefHeight="25.0" prefWidth="225.0">
+                                 <tooltip>
+                                    <Tooltip text="Search Term for given Keyword." />
+                                 </tooltip></TextField>
                                     <Button fx:id="addKeywordButton" layoutX="481.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleAddKeywordAction" prefHeight="26.0" prefWidth="70.0" text="Add">
                                        <tooltip>
                                           <Tooltip text="Add keyword:searchTerm to the web service query." />
                                        </tooltip>
                                     </Button>
-                                    <TextField fx:id="keyword" layoutX="33.0" layoutY="44.0" prefHeight="25.0" prefWidth="200.0" />
+                                    <TextField fx:id="keyword" layoutX="33.0" layoutY="44.0" prefHeight="25.0" prefWidth="200.0">
+                                 <tooltip>
+                                    <Tooltip text="Search keywords for SABIO-RK." />
+                                 </tooltip></TextField>
                                     <Text layoutX="33.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Keyword">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
@@ -97,7 +103,7 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                      <tooltip>
-                        <Tooltip text="Query SABIO-RK web service with query shown in preview." />
+                        <Tooltip text="Run given query." />
                      </tooltip>
                   </Button>
                   <ImageView fx:id="sabioLogo" fitHeight="40.0" fitWidth="315.0" layoutX="36.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
@@ -105,9 +111,9 @@
                         <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/header-sabiork.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="clearButton" layoutX="441.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleClearAction" prefWidth="70.0" text="Clear">
+                  <Button fx:id="clearButton" layoutX="441.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleClearAction" prefWidth="70.0" text="Reset">
                      <tooltip>
-                        <Tooltip text="Clear the current query content." />
+                        <Tooltip text="Reset query and clear all information." />
                      </tooltip>
                   </Button>
                   <Text fill="#0181D8" layoutX="30.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REST Query">
@@ -127,12 +133,18 @@
                      <font>
                         <Font name="Courier New Bold" size="13.0" />
                      </font>
+               <tooltip>
+                  <Tooltip text="Preview of web service query." />
+               </tooltip>
                   </TextArea>
                   <Text fx:id="time" layoutX="491.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
             <TextArea fx:id="log" editable="false" layoutX="30.0" layoutY="775.0" prefHeight="116.0" prefWidth="568.0" wrapText="true">
                <font>
                   <Font name="Courier New" size="13.0" />
                </font>
+               <tooltip>
+                  <Tooltip text="Log information." />
+               </tooltip>
             </TextArea>
             <TableView fx:id="entryTable" disable="true" layoutX="28.0" layoutY="587.0" prefHeight="138.0" prefWidth="568.0">
               <columns>
@@ -140,6 +152,9 @@
                 <TableColumn fx:id="organismCol" prefWidth="180.0" text="Organism" />
                   <TableColumn fx:id="tissueCol" prefWidth="219.0" text="Tissue" />
               </columns>
+               <tooltip>
+                  <Tooltip text="Kinetic Law Entries of last query. Click on entry to load details." />
+               </tooltip>
             </TableView>
             <Text fill="#0181D8" layoutX="30.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SABIO-RK Entries">
                <font>
@@ -151,7 +166,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
                <tooltip>
-                  <Tooltip text="Load all REST Results in Cytoscape." />
+                  <Tooltip text="Load Kinetic Laws as Cytoscape networks.." />
                </tooltip>
             </Button>
             <WebView fx:id="webView" layoutX="619.0" layoutY="20.0" prefHeight="871.0" prefWidth="772.0" />

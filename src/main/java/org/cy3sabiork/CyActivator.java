@@ -69,14 +69,11 @@ public class CyActivator extends AbstractCyActivator {
 			// Extract all resource files for JavaFX (no bundle access)
 			final ResourceExtractor resourceHandler = new ResourceExtractor(bc, appDirectory);
 			resourceHandler.extract();
-			// Test access
-			String fileURI = resourceHandler.fileURIforResource("/gui/info.html");
-			logger.info("Test resource access: " + fileURI);
 		
 			// Sabio Panel
-			SabioPanel sabioPanel = SabioPanel.getInstance(cySwingApplication, sabioAction);
-			registerService(bc, sabioPanel, CytoPanelComponent.class, new Properties());
-			SabioPanel.getInstance().activate();
+			// SabioPanel sabioPanel = SabioPanel.getInstance(cySwingApplication, sabioAction);
+			// registerService(bc, sabioPanel, CytoPanelComponent.class, new Properties());
+			// SabioPanel.getInstance().activate();
 			
 			logger.info("----------------------------");
 		} catch (Throwable e){

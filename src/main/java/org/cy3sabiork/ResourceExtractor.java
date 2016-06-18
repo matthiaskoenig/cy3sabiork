@@ -9,8 +9,6 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
@@ -76,54 +74,71 @@ public class ResourceExtractor {
 					"Files not extracted");
 			return;
 		}
-		
-		Bundle bundle = bc.getBundle();
-		@SuppressWarnings("unchecked")
+		System.out.println("-------------------------------------------------");
+		System.out.println("Extract bundle resources");
+		System.out.println("-------------------------------------------------");
 		// bundle root
-		URL entry = bundle.getEntry("/");
-		System.out.println("bundle root: " + entry);
+		Bundle bundle = bc.getBundle();
+		URL rootURL = bundle.getEntry("/");
+		System.out.println("bundle root: " + rootURL);
 		
-		// clean old resources
-		
-		
-		
+		/* FIXME: we don't care about existing resources, just overwriting them
+		 * This will accumulate files with versions and should be cleaned up.
+		 * Also copying everything on every bundle startup is overkill.
+		 * 
+		 // Delete if resources are already available
+		 if(destination.exists()) {
+				// Maybe there is an old version
+				final File versionFile = new File(destination, VERSION_NAME);
+				if(!versionFile.exists()) {
+					logger.info("Version file not found.  Creating new preview template...");
+					deleteAll(destination);
+		*/
+		extractDirectory(rootURL, GUI_RESOURCES);
+		System.out.println("-------------------------------------------------");
+	}
+	
+	/* 
+	 * Extract the resources in given directory.  
+	 */
+	private void extractDirectory(URL rootURL, String directory){
 		// list all GUI resources of bundle and extract them
-		Enumeration<String> e = bundle.getEntryPaths(GUI_RESOURCES);
+		Enumeration<String> e = bc.getBundle().getEntryPaths(directory);
+		
 		while(e.hasMoreElements()){
 			String path = e.nextElement();
-			// System.out.println(path);
-			
-			// skip directories
-			/*
-			if (path.endsWith("/")){
-				continue;
-			}
-			*/
 				
 			// copy via stream from bundle URL to application file
 			try {
-				URL inURL = new URL(entry.toString() + path);
+				URL inURL = new URL(rootURL.toString() + path);
 
 				try {
 					InputStream inputStream = inURL.openConnection().getInputStream();
-					
 					File outFile = new File(appDirectory + "/" + path);
-					// create directories if necessary
-					File parent = outFile.getParentFile();
-					if (!parent.exists() && !parent.mkdirs()){
-					    throw new IllegalStateException("Couldn't create dir: " + parent);
+					// create directory
+					if (path.endsWith("/")){
+						outFile.mkdirs();
+						// extract subdirectory recursively
+						extractDirectory(rootURL, "/" + path);
+						
+					}else{
+						// create directories for file if required
+						File parent = outFile.getParentFile();
+						if (!parent.exists() && !parent.mkdirs()){
+						    throw new IllegalStateException("Couldn't create dir: " + parent);
+						}
+						
+						System.out.println(" --> " + outFile.getAbsolutePath());
+						OutputStream outputStream = new FileOutputStream(outFile);
+				
+						int read = 0;
+						byte[] bytes = new byte[1024];
+				
+						while ((read = inputStream.read(bytes)) != -1) {
+								outputStream.write(bytes, 0, read);
+						}
+						outputStream.close();
 					}
-					
-					System.out.println(" --> " + outFile.getAbsolutePath());
-					OutputStream outputStream = new FileOutputStream(outFile);
-			
-					int read = 0;
-					byte[] bytes = new byte[1024];
-			
-					while ((read = inputStream.read(bytes)) != -1) {
-							outputStream.write(bytes, 0, read);
-					}
-					outputStream.close();
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
 					return;
@@ -133,61 +148,13 @@ public class ResourceExtractor {
 			} catch (MalformedURLException urlException) {
 				urlException.printStackTrace();
 				return;
-			}
-
-			
-			/*
-			 // Delete if resources are already available
-			 if(destination.exists()) {
-					// Maybe there is an old version
-					final File versionFile = new File(destination, VERSION_NAME);
-					if(!versionFile.exists()) {
-						logger.info("Version file not found.  Creating new preview template...");
-						deleteAll(destination);
-			*/
-						
+			}	
 		}
 		
 	}
 	
 	
-	/*
-	public final void extractResource(String location) throws IOException {
-
-		// Get the location of web preview template
-		final URL source = this.getClass().getClassLoader().getResource(location);
-		final File destination = appDirectory;
-
-		// Unzip resource to this directory in CytoscapeConfig
-		if (!destination.exists() || !destination.isDirectory()) {
-			unzipTemplate(source, destination);
-		} else if(destination.exists()) {
-			// Maybe there is an old version
-			final File versionFile = new File(destination, VERSION_NAME);
-			if(!versionFile.exists()) {
-				logger.info("Version file not found.  Creating new preview template...");
-				deleteAll(destination);
-				unzipTemplate(source, destination);
-			} else {
-				// Check version number
-				final String contents = Files.lines(Paths.get(versionFile.toURI()))
-					.reduce((t, u) -> t+u).get();
-				
-				logger.info("Preview template version: " + contents);
-				logger.info("Current template version: " + VERSION);
-				
-				if(!contents.equals(VERSION)) {
-					logger.info("Updating template to version " + VERSION);
-					deleteAll(destination);
-					unzipTemplate(source, destination);
-				} else {
-					logger.info("No need to update preview template.");
-				}
-			}
-		}
-	}
-	*/
-	
+		
 	private final void deleteAll(final File f) {
 		if(f.isDirectory()) {
 			final File[] files = f.listFiles();

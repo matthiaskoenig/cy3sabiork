@@ -6,19 +6,31 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 
-
+/**
+ * Class extracts the bundle resources to given app directory.
+ * This provides access to the local resources via 
+ * file:// uris. 
+ * Required to provide JavaFX access to bundle resources, which
+ * are currently not supported. 
+ */
 public class ResourceExtractor {
+	/* Resources made available via the ResourceExtractor */
+	public final String GUI_RESOURCES = "/gui/";   
+	
 	private static File appDirectory;
 	private final BundleContext bc;
 
@@ -29,6 +41,15 @@ public class ResourceExtractor {
 	
 	public static void setAppDirectory(File appDirectory){
 		ResourceExtractor.appDirectory = appDirectory;
+	}
+	
+	/* 
+	 * Replacement of
+	 * 	getClass().getResource("/gui/info.html");
+	 * which does not work for bundle resources in context of JavaFX. 
+	 */
+	public static String getResource(String resource){
+		return fileURIforResource(resource);
 	}
 	
 	/**
@@ -43,58 +64,91 @@ public class ResourceExtractor {
 		return fileURI.toString();
 	}
 	
-	public void test(){		
-		File ftest = bc.getDataFile("gui/info.html");
-		System.out.println(ftest.getAbsolutePath());
-		System.out.println("File exists: " + ftest.exists());
-		
-		
-		// copying the file does not work
-		// Files.copy(ftest.toPath(), new File(appDirectory + "/" + "info.html").toPath(), 
-		//		StandardCopyOption.REPLACE_EXISTING);
-		
-		
-		URL infoURL = getClass().getResource("/gui/info.html");
-		System.out.println(infoURL);
-		
-		/*
-		InputStream inputStream = infoURL.openStream();
-		OutputStream outputStream = new FileOutputStream(new File(appDirectory + "/" + "info.html"));
-
-		
-		int read = 0;
-		byte[] bytes = new byte[1024];
-
-		while ((read = inputStream.read(bytes)) != -1) {
-			outputStream.write(bytes, 0, read);
+	/** 
+	 * Extracts the bundle resources from the BundleContext in the 
+	 * application directory.
+	 * 
+	 * BundleContext and application directory have to be provided.
+	 */
+	public void extract(){
+		if (bc == null || appDirectory == null){
+			System.out.println("WARNING BundleContext or application directory not set. " +
+					"Files not extracted");
+			return;
 		}
-		*/
 		
-		
-		/*
 		Bundle bundle = bc.getBundle();
 		@SuppressWarnings("unchecked")
-		Enumeration<String> e = bundle.getEntryPaths("/gui/");
+		// bundle root
+		URL entry = bundle.getEntry("/");
+		System.out.println("bundle root: " + entry);
+		
+		// clean old resources
+		
+		
+		
+		// list all GUI resources of bundle and extract them
+		Enumeration<String> e = bundle.getEntryPaths(GUI_RESOURCES);
 		while(e.hasMoreElements()){
 			String path = e.nextElement();
-			System.out.println(path);
+			// System.out.println(path);
 			
 			// skip directories
+			/*
 			if (path.endsWith("/")){
 				continue;
 			}
-			File file = bc.getDataFile(path);
-			System.out.println(file.getAbsolutePath());
+			*/
+				
+			// copy via stream from bundle URL to application file
+			try {
+				URL inURL = new URL(entry.toString() + path);
+
+				try {
+					InputStream inputStream = inURL.openConnection().getInputStream();
+					
+					File outFile = new File(appDirectory + "/" + path);
+					// create directories if necessary
+					File parent = outFile.getParentFile();
+					if (!parent.exists() && !parent.mkdirs()){
+					    throw new IllegalStateException("Couldn't create dir: " + parent);
+					}
+					
+					System.out.println(" --> " + outFile.getAbsolutePath());
+					OutputStream outputStream = new FileOutputStream(outFile);
 			
-			// copy to app folder
-			Path src = file.toPath();	
-			Path des = new File(appDirectory.toPath() + "/" + path).toPath();
-			System.out.println(src + " -> " + des);
-			Files.copy(file.toPath(), des, StandardCopyOption.REPLACE_EXISTING);	
+					int read = 0;
+					byte[] bytes = new byte[1024];
+			
+					while ((read = inputStream.read(bytes)) != -1) {
+							outputStream.write(bytes, 0, read);
+					}
+					outputStream.close();
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+					return;
+				}
+				
+				
+			} catch (MalformedURLException urlException) {
+				urlException.printStackTrace();
+				return;
+			}
+
+			
+			/*
+			 // Delete if resources are already available
+			 if(destination.exists()) {
+					// Maybe there is an old version
+					final File versionFile = new File(destination, VERSION_NAME);
+					if(!versionFile.exists()) {
+						logger.info("Version file not found.  Creating new preview template...");
+						deleteAll(destination);
+			*/
+						
 		}
-		*/
+		
 	}
-	
 	
 	
 	/*
@@ -142,7 +196,8 @@ public class ResourceExtractor {
 		f.delete();
 	}
 
-	public void unzipTemplate(final URL source, final File destDir) throws IOException {
+	/* Handling zip resources. */
+	private void unzipTemplate(final URL source, final File destDir) throws IOException {
 
 		destDir.mkdir();
 		final ZipInputStream zipIn = new ZipInputStream(source.openStream());

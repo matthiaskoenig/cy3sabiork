@@ -31,6 +31,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.WebView;
 
@@ -76,7 +78,9 @@ public class QueryFXMLController implements Initializable{
 	}
 	
 	// browser
-	@FXML private ImageView sabioLogo;
+	@FXML private ImageView imageSabioLogo;
+	@FXML private ImageView imageSabioSearch;
+	
 	@FXML private WebView webView;
 	
 	
@@ -383,7 +387,11 @@ public class QueryFXMLController implements Initializable{
     // --------------------------------------------------------------------
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	
+		Image image = new Image(ResourceExtractor.fileURIforResource("gui/images/header-sabiork.png"));
+		imageSabioLogo.setImage(image);
+		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("gui/images/search-sabiork.png")));
+		
+		
 		setProgress(1.0);
 		
 		// ListView<String> termsListView = new ListView<String>();
@@ -487,7 +495,7 @@ public class QueryFXMLController implements Initializable{
             }
         });
 		
-		sabioLogo.setOnMousePressed(new EventHandler<MouseEvent>() {
+		imageSabioLogo.setOnMousePressed(new EventHandler<MouseEvent>() {
 	        @Override
 	        public void handle(MouseEvent event) {
 	            openURLinExternalBrowser("http://sabiork.h-its.org/");

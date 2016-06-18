@@ -57,11 +57,7 @@
                                        </font>
                                     </Text>
                                     <Text layoutX="271.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                                    <ImageView fitHeight="170.0" fitWidth="350.0" layoutX="250.0" layoutY="98.0" opacity="0.66" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/search-sabiork.png" />
-                                       </image>
-                                    </ImageView>
+                                    <ImageView fx:id="imageSabioSearch" fitHeight="170.0" fitWidth="350.0" layoutX="250.0" layoutY="98.0" opacity="0.66" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                         </content>
@@ -106,11 +102,7 @@
                         <Tooltip text="Run given query." />
                      </tooltip>
                   </Button>
-                  <ImageView fx:id="sabioLogo" fitHeight="40.0" fitWidth="315.0" layoutX="36.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/header-sabiork.png" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="imageSabioLogo" fitHeight="40.0" fitWidth="315.0" layoutX="36.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
                   <Button fx:id="clearButton" layoutX="441.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleClearAction" prefWidth="70.0" text="Reset">
                      <tooltip>
                         <Tooltip text="Reset query and clear all information." />

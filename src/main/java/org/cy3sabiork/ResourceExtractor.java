@@ -54,11 +54,15 @@ public class ResourceExtractor {
 	 * Returns the file URI in the application folder
 	 * for the given resource string.
 	 * 
-	 * For instance "/gui/query.html"
+	 * For instance "/gui/query.html" 
 	 */
 	public static String fileURIforResource(String resource){
 		File file = new File(appDirectory + resource);
-		URI fileURI = file.toURI();	    
+		if (!file.exists()){
+			System.out.println("ERROR: Resource is not available");
+		}
+		URI fileURI = file.toURI();
+		
 		return fileURI.toString();
 	}
 	

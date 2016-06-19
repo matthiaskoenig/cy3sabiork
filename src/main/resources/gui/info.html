@@ -43,6 +43,35 @@
 <p>
 <strong>cy3sabiork</strong> was developed by <a href="https://www.livermetabolism.com/contact/">Matthias K&ouml;nig</a>.
 </p>
+<p>
+<img src="images/cy3sabiork-workflow.png"  width="700"/><br />
+<em>Figure 1: cy3sabiork workflow</em>. The main steps of operation are (1) searching entries 
+in SABIO-RK: Kinetic entries are retrieved from SABIO-RK via calls to the RESTful web services 
+or via searching the web interface and exporting selected entries as SBML. (2) loading entries in 
+cy3sabiork: The exchange format between SABIO-RK and cy3sabiork is SBML. (3) visual exploration 
+of results. The kinetic graphs for the imported entries are generated providing simple access 
+to kinetic information and annotations. An example query with resulting SABIO-RK information 
+and subsequent visualization is shown in the next figure.
+</p>
+
+<p>
+<img src="images/cy3sabiork-kineticEntry.png" width="700"/><br />
+<em>Overview of kinetic information and visualization for a single SABIO-RK entry.</em> 
+The kinetic entry 14792 for galactokinase (EC:2.7.1.6, UniProtKB:P51570) was retrieved via 
+the web service query <a href="http://sabiork.h-its.org/sabioRestWebServices/kineticLaws/14792">http://sabiork.h-its.org/sabioRestWebServices/kineticLaws/14792</a> 
+(the SBML for the entry is available as Supplementary File 1). (A) Overview of kinetic information 
+for SABIO-RK entry (<a href="http://sabiork.h-its.org/kineticLawEntry.jsp?viewData=true&kinlawid=14792">http://sabiork.h-its.org/kineticLawEntry.jsp?viewData=true&kinlawid=14792</a>) 
+with color coding according to  {Wittig2014}. (B) cy3sabiork information for entry 14792: 
+[1] Resulting species-reaction-modifier graph. The galacokinase enzyme catalyzes the conversion of 
+D-Galactose + ATP → α-D-Galactose 1-phosphate + ADP (see also Substrates, Products and Modifiers in A); 
+[2] kinetic graph with additional nodes for kinetic law, parameters and localization; 
+[3] Selecting nodes in the graphs provides access to the annotation information and links to databases. 
+In the example the kinetic law information is displayed in the Results Panel. 
+[4] MIRIAM annotations with respective links to databases are available via the Results Panel; 
+[5] Additional SABIO-RK annotations in XML for the experimental conditions are displayed in this section.
+</p>
+
+
 
 <h2>Query Builder</span></h2>
 <p>
@@ -51,7 +80,9 @@ in the web interface for forming queries. Multiple keyword:term fields may be co
 operator to form complex queries.  
 </p>
 <h3>Examples</h3>
-TODO:
+Find all Kinetic Law Entries for spleen in Homo sapiens:<br /> 
+<code>Tissue:spleen AND Organism:"Homo sapiens"</code>
+
 
 <h3>Keywords</h3>
 <p>
@@ -59,17 +90,17 @@ The following keywords may be used to form queries to search for entries.
 </p>
 <div class="table-responsive">
 <table class="table">
-	<tr><td><strong> Entry </strong></td><td></td></tr>
-	  	<tr><td><em> EntryID </em></td><td>SABIO-RK entry ID (e.g. <a>EntryID:"123"</a>)</td></tr>
+	<tr><td><strong>Entry</strong></td><td></td></tr>
+	  	<tr><td><em>EntryID</em></td><td>SABIO-RK entry ID (e.g. <code>EntryID:"123"</code>)</td></tr>
 
-	<tr><td><strong> Reaction/Pathway </strong></td><td></td></tr>
-	    <tr><td><em> Pathway </em></td><td>The name of the reaction pathway (e.g. <a>Pathway:"urea cycle"</a>)</td></tr>
-	    <tr><td><em> KeggReactionID </em></td><td>KEGG ID for the reaction (e.g. <a>KeggReactionID:"R00782"</a>)</td></tr>
-	    <tr><td><em> SabioReactionID </em></td><td>SABIO-RK ID for the reaction (e.g. <a>SabioReactionID:"14"</a>)</td></tr>
+	<tr><td><strong>Reaction/Pathway </strong></td><td></td></tr>
+	    <tr><td><em>Pathway</em></td><td>The name of the reaction pathway (e.g. <code>Pathway:"urea cycle"</code>)</td></tr>
+	    <tr><td><em>KeggReactionID</em></td><td>KEGG ID for the reaction (e.g. <code>KeggReactionID:"R00782"</code>)</td></tr>
+	    <tr><td><em>SabioReactionID</em></td><td>SABIO-RK ID for the reaction (e.g. <code>SabioReactionID:"14"</code>)</td></tr>
 	    
 	<tr><td><strong>Compound</strong></td><td></td></tr>
-	    <tr><td><em>AnyRole</em></td><td>Compound found in any role in a reaction (e.g. <a>AnyRole:"oxygen"</a>)</td></tr>
-	    <tr><td><em>Substrate</em></td><td>Compound acting as a substrate in a reaction (e.g. <a>Substrate:"ATP"</a>)</td></tr>
+	    <tr><td><em>AnyRole</em></td><td>Compound found in any role in a reaction (e.g. <code>AnyRole:"oxygen"</code>)</td></tr>
+	    <tr><td><em>Substrate</em></td><td>Compound acting as a substrate in a reaction (e.g. <code>Substrate:"ATP"</code>)</td></tr>
 	    <tr><td><em>Product</em></td><td>Compound acting as a product in a reaction</td></tr>
 	    <tr><td><em>Inhibitor</em></td><td>Compound acting as an inhibitor modifier in a reaction</td></tr>
 	    <tr><td><em>Catalyst</em></td><td>Compound acting as a catalyst modifier in a reaction</td></tr>
@@ -82,36 +113,36 @@ The following keywords may be used to form queries to search for entries.
 	    <tr><td><em>SabioCompoundID</em></td><td></td></tr>
 	      
 	<tr><td><strong>Enzyme</strong></td><td></td></tr>
-	    <tr><td><em>Enzymename</em></td><td>An enzyme may included in the search parameters by name (e.g. <a>Enzymename:"galactokinase"</a>)</td></tr>
-	    <tr><td><em>ECNumber</em></td><td>An enzyme may included in the search parameters by EC Class number (e.g. <a>ECNumber:1.1.1.2</a>)</td></tr>
-	    <tr><td><em>UniProtKB_AC</em></td><td>Protein as listed in UniProtKB (e.g. <a>UniProtKB_AC:A1VCV2</a>) </td></tr>
-	    <tr><td><em>EnzymeType</em></td><td>Type of the enzyme, only valid queries are <a>EnzymeType:"mutant"</a> or <a>EnzymeType:"wildtype"</a> </td></tr>
+	    <tr><td><em>Enzymename</em></td><td>An enzyme may included in the search parameters by name (e.g. <code>Enzymename:"galactokinase"</code>)</td></tr>
+	    <tr><td><em>ECNumber</em></td><td>An enzyme may included in the search parameters by EC Class number (e.g. <code>ECNumber:1.1.1.2</code>)</td></tr>
+	    <tr><td><em>UniProtKB_AC</em></td><td>Protein as listed in UniProtKB (e.g. <code>UniProtKB_AC:A1VCV2</code>) </td></tr>
+	    <tr><td><em>EnzymeType</em></td><td>Type of the enzyme, only valid queries are <code>EnzymeType:"mutant"</code> or <code>EnzymeType:"wildtype"</code> </td></tr>
 	
 	<tr><td><strong>Biological Source</strong></td><td></td></tr>
-	    <tr><td><em>Tissue</em></td><td>The name of the tissue (e.g. <a>Tissue:"liver"</a>)</td></tr>
-	    <tr><td><em>Organism</em></td><td>The name of the organism (e.g. <a>Organism:"homo sapiens"</a>)</td></tr>
-	    <tr><td><em>CellularLocation</em></td><td>Location within the cell that a kinetic reaction takes place (e.g. <a>CellularLocation:"leucoplast"</a>)</td></tr>
+	    <tr><td><em>Tissue</em></td><td>The name of the tissue (e.g. <code>Tissue:"liver"</code>)</td></tr>
+	    <tr><td><em>Organism</em></td><td>The name of the organism (e.g. <code>Organism:"homo sapiens"</code>)</td></tr>
+	    <tr><td><em>CellularLocation</em></td><td>Location within the cell that a kinetic reaction takes place (e.g. <code>CellularLocation:"leucoplast"</code>)</td></tr>
 	      
 	<tr><td><strong>Kinetic Data</strong></td><td></td></tr>  
-	    <tr><td><em>Parametertype</em></td><td>Experimental parameter specified in the kinetic law entry (e.g. <a>Parametertype:"Vmax"</a>)</td></tr>
-	    <tr><td><em>KineticMechanismType</em></td><td>Mechanism for the kinetic data (e.g. <a>KineticMechanismType:"rapid equilibrium"</a>)</td></tr>
-	    <tr><td><em>AssociatedSpecies</em></td><td>Species which is associated with a parameter (e.g. <a>AssociatedSpecies:"ATP"</a></td></tr>
+	    <tr><td><em>Parametertype</em></td><td>Experimental parameter specified in the kinetic law entry (e.g. <code>Parametertype:"Vmax"</code>)</td></tr>
+	    <tr><td><em>KineticMechanismType</em></td><td>Mechanism for the kinetic data (e.g. <code>KineticMechanismType:"rapid equilibrium"</code>)</td></tr>
+	    <tr><td><em>AssociatedSpecies</em></td><td>Species which is associated with a parameter (e.g. <code>AssociatedSpecies:"ATP"</code></td></tr>
 	      
 	<tr><td><strong>Publication</strong></td><td></td></tr>
 	    <tr><td><em>Title</em></td><td>Publication within which the kinetic law data is published, by title </td></tr>
-	    <tr><td><em>Author</em></td><td>Publication within which the kinetic law data is published, by author (e.g. <a>Author:"Shelton E"</a>)</td></tr>
-	    <tr><td><em>Year</em></td><td>Year of publication (e.g. <a>"Year:2010")</a></td></tr>
-	    <tr><td><em>PubMedID</em></td><td>Publication within which the kinetic law data is published, by PubMed ID (e.g. <a>PubMedID:13538975</a>)</td></tr>
-	    <tr><td><em>InfosourceType</em></td><td>Source of the data, valid queries are <a>InfosourceType:"Journal"</a> or <a>InfosourceType:"direct submission"</a></td></tr>
-	    <tr><td><em>DateSubmitted</em></td><td>Earliest possible date from which the entry exists in SABIO-RK (e.g. <a>DateSubmitted:"27/10/2010"</a>)</td></tr>
+	    <tr><td><em>Author</em></td><td>Publication within which the kinetic law data is published, by author (e.g. <code>Author:"Shelton E"</code>)</td></tr>
+	    <tr><td><em>Year</em></td><td>Year of publication (e.g. <code>"Year:2010")</code></td></tr>
+	    <tr><td><em>PubMedID</em></td><td>Publication within which the kinetic law data is published, by PubMed ID (e.g. <code>PubMedID:13538975</code>)</td></tr>
+	    <tr><td><em>InfosourceType</em></td><td>Source of the data, valid queries are <code>InfosourceType:"Journal"</code> or <code>InfosourceType:"direct submission"</code></td></tr>
+	    <tr><td><em>DateSubmitted</em></td><td>Earliest possible date from which the entry exists in SABIO-RK (e.g. <code>DateSubmitted:"27/10/2010"</code>)</td></tr>
 	      
 	<tr><td><strong>Range options</strong></td><td></td></tr> 
-	    <tr><td><em>TemperatureRange</em></td><td>Range of temperatures (e.g. <a>TemperatureRange:"[36.9 TO 37.1]"</a>)</td></tr>
-	    <tr><td><em>pHValueRange</em></td><td>Range of pH values (e.g. <a>pHValueRange:"[6.9 TO 7.1]"</a>)</td></tr>
+	    <tr><td><em>TemperatureRange</em></td><td>Range of temperatures (e.g. <code>TemperatureRange:"[36.9 TO 37.1]"</code>)</td></tr>
+	    <tr><td><em>pHValueRange</em></td><td>Range of pH values (e.g. <code>pHValueRange:"[6.9 TO 7.1]"</code>)</td></tr>
 	     
 	<tr><td><strong>Boolean options</strong></td><td></td></tr>
-	    <tr><td><em>hasKineticData</em></td><td>Entry specifies a rate equation (e.g. <a>hasKineticData:"true"</a>)</td></tr>
-	    <tr><td><em>IsRecombinant</em></td><td>Entry has recombinant data (e.g. <a>IsRecombinant:"false"</a>)</td></tr>
+	    <tr><td><em>hasKineticData</em></td><td>Entry specifies a rate equation (e.g. <code>hasKineticData:"true"</code>)</td></tr>
+	    <tr><td><em>IsRecombinant</em></td><td>Entry has recombinant data (e.g. <code>IsRecombinant:"false"</code>)</td></tr>
 </table>
 <div>
 

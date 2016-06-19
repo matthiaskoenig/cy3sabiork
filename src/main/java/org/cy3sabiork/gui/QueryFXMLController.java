@@ -387,9 +387,9 @@ public class QueryFXMLController implements Initializable{
     // --------------------------------------------------------------------
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Image image = new Image(ResourceExtractor.fileURIforResource("gui/images/header-sabiork.png"));
+		Image image = new Image(ResourceExtractor.fileURIforResource("/gui/images/header-sabiork.png"));
 		imageSabioLogo.setImage(image);
-		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("gui/images/search-sabiork.png")));
+		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/search-sabiork.png")));
 		
 		
 		setProgress(1.0);

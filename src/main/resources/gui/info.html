@@ -31,7 +31,10 @@
 <a href="about:blank" onclick="app.setText('test argument');">Send argument</a><br />
 <a href="about:blank" onclick="app.setText('Tissue:&quot;spleen&quot; AND Organism:&quot;Homo sapiens&quot;');">Tissue:&quot;spleen&quot; AND Organism:&quot;Homo sapiens&quot;</a><br />
 
-<a id="query" href="about:blank" onclick="f1()">set query</a><br />
+<a id="query">set query</a><br />
+
+<a id="query2">Organism:"Homo sapiens"</a><br />
+
 
 
 
@@ -176,13 +179,30 @@ SABIO-RK entries can be retrieved by their Kinetic Law IDs.
 <script>
 
 window.onload = function() {
-    document.getElementById("query").onclick = function fun() {
-        
+	alert('Hello world');
+
+    document.getElementById("query").onclick = function fun() {        
         // Set query information in java;  
+        alert('query');
         app.query = "Test query";
         app.setQuery();
+    };
+    
+    // create information to sent do Java
+    var item = document.getElementById("query2");
+    item.onclick = function fun() {        
         
-    }
+        // get the text from a element
+        var text = element.innerText || element.textContent;
+        
+        // escape '"'
+        var query = text.replace(/"/g, '&quot;');
+        alert(query);
+        app.query = query;
+        app.setQuery();
+    };
+    
+    
 }
 </script>
 

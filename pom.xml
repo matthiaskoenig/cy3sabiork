@@ -227,7 +227,10 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
-		    	
+
+		<!-- netscape.javascript -->		
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit -->
+
  
   		<!-- JSBML EXTENSION dependency -->
   		<dependency>

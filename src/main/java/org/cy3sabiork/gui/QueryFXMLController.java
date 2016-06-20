@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javax.swing.SwingUtilities;
 
 
+import javafx.concurrent.Worker.State;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -29,6 +30,7 @@ import javafx.scene.control.TableColumn;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -43,6 +45,8 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import netscape.javascript.JSObject;
 
 import org.cytoscape.util.swing.OpenBrowser;
 
@@ -77,6 +81,7 @@ public class QueryFXMLController implements Initializable{
 	// browser
 	@FXML private ImageView imageSabioLogo;
 	@FXML private ImageView imageSabioSearch;
+	@FXML private ImageView imageHelp;
 	@FXML private WebView webView;
 	
 	// -- Log --
@@ -220,14 +225,10 @@ public class QueryFXMLController implements Initializable{
         		if (queryString.startsWith(SabioQuery.PREFIX_QUERY)){
         			
         			logInfo("GET COUNT <"+ queryString + ">");
-                	logInfo("... waiting for SABIO-RK response ...");
                 	
                 	Integer count = SabioQuery.performCountQuery(queryString);
                 	setEntryCount(count);
                 	logInfo("<" + count + "> Kinetic Law Entries for query in SABIO-RK.");
-                	if (count > 20){
-                		logWarning("<" + count + "> Entries. Query will take some time.");
-                	}
         		}
             	
             	// do the real query
@@ -252,7 +253,7 @@ public class QueryFXMLController implements Initializable{
                 			progressIndicator.setStyle("-fx-progress-color: red;");
                 		}else {
                 			// successful
-                			logInfo("SABIO-RK returned status <" + restReturnStatus + "> after " + duration + "[ms]");
+                			logInfo("SABIO-RK returned status <" + restReturnStatus + "> after " + duration + " [ms]");
                 			
                 			// handle empty test call
                 			final ObservableList<SabioKineticLaw> data;
@@ -316,6 +317,24 @@ public class QueryFXMLController implements Initializable{
     		logError("No SBMLReader available in controller.");;
     	}
     }
+    
+    
+    
+    // JavaScript interface object
+    public class JavaApp {
+    	public String query;
+    	
+    	public void setQuery() {
+            System.out.println(" --> Upcall from WebView! query=" +  query);
+        }
+    	
+    	public void setText(String text) {
+    		query = text;
+            System.out.println(" --> Upcall from WebView! query=" +  query);
+            queryText.setText(text);
+        }
+    }
+    
     
     // --------------------------------------------------------------------
     // GUI helpers
@@ -390,9 +409,10 @@ public class QueryFXMLController implements Initializable{
     // --------------------------------------------------------------------
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Image image = new Image(ResourceExtractor.fileURIforResource("/gui/images/header-sabiork.png"));
-		imageSabioLogo.setImage(image);
+		
+		imageSabioLogo.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/header-sabiork.png")));
 		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/search-sabiork.png")));
+		imageHelp.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/icon-help.png")));
 		
 		
 		setProgress(1.0);
@@ -449,29 +469,54 @@ public class QueryFXMLController implements Initializable{
 	            }
 	        });
 		
+		//-----------------------
+		// Webengine & Webview
+		//-----------------------
+		WebEngine webEngine = webView.getEngine();
 		setHelp();
-		webView.setZoom(0.9);
+		webView.setZoom(1.0);
 		
+		/*
 		// Handle all links by opening external browser
 		// http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/
-
-		// FIXME: this opens all links in external locations.
-		webView.getEngine().locationProperty().addListener(new ChangeListener<String>(){
+		webEngine.locationProperty().addListener(new ChangeListener<String>(){
              @Override
              public void changed(ObservableValue<? extends String> observable, final String oldValue, final String newValue){
-            	 // Links to open in external browser
-                     if (newValue.startsWith("http")){
+            	 	 // Links to open in external browser
+                     if (isExternalLink(newValue)){
                          Platform.runLater(new Runnable(){
                              @Override
                              public void run(){
+                            	 // reload the old page
                                  webView.getEngine().load(oldValue);
                              }
                          });
                          // open the destination URl in the default browser
                          openURLinExternalBrowser(newValue);
+                     } else {
+                    	// Links with special action, i.e. query injection
+                    	// TODO
                      }
                  }
          });
+         */
+		
+		// Handle WebView -> Java upcalls
+		// process page loading
+        webEngine.getLoadWorker().stateProperty().addListener(
+            new ChangeListener<State>() {
+                @Override
+                public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {    
+                    	if (newState == State.SUCCEEDED) {
+                    		System.out.println("JavaScript object attached.");
+                            JSObject win = (JSObject) webEngine.executeScript("window");
+                            win.setMember("app", new JavaApp());                
+                    	}
+                }
+            }
+        );
+        //-----------------------
+		
 
 		// hide elements on first loading
 		showQueryStatus(false);
@@ -502,6 +547,15 @@ public class QueryFXMLController implements Initializable{
 	        }
 	    });
 		
+		imageHelp.setOnMousePressed(new EventHandler<MouseEvent>() {
+	        @Override
+	        public void handle(MouseEvent event) {
+	            setHelp();
+	        }
+	    });
+		
+		
+		
 		log.textProperty().addListener(new ChangeListener<Object>() {
 		    @Override
 		    public void changed(ObservableValue<?> observable, Object oldValue,
@@ -520,6 +574,24 @@ public class QueryFXMLController implements Initializable{
 	}
 	
 	// --- HELPERS ------------------------------------------------------------
+	
+	/* 
+	 * Helper function to decide which links are opened in external
+	 * browser.
+	 */
+	private Boolean isExternalLink(String link){
+		Boolean external = true;
+		
+		if (link.startsWith("http://sabiork.h-its.org/kineticLawEntry.jsp")){
+			// Kinetic law information
+			external = false;
+		} else if (link.startsWith("file:///")){
+			// Links to file resources
+			external = false;
+		}
+		return external;
+	}
+	
 	
     /* 
      * Parses the Kinetic Law Ids from given text string. 

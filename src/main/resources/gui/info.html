@@ -27,6 +27,14 @@
 
 
 <h1>cy3sabiork</h1>
+<a href="about:blank" onclick="app.setQuery();">Empty data call</a><br />
+<a href="about:blank" onclick="app.setText('test argument');">Send argument</a><br />
+<a href="about:blank" onclick="app.setText('Tissue:&quot;spleen&quot; AND Organism:&quot;Homo sapiens&quot;');">Tissue:&quot;spleen&quot; AND Organism:&quot;Homo sapiens&quot;</a><br />
+
+<a id="query" href="about:blank" onclick="f1()">set query</a><br />
+
+
+
 <p>
 <strong>cy3sabiork</strong> provides access to <a href="http://sabiork.h-its.org">SABIO-RK</a> information in SBML format via web services.
 </p>
@@ -83,7 +91,15 @@ operator to form complex queries.
 </p>
 <h3>Examples</h3>
 Find all Kinetic Law Entries for spleen in Homo sapiens:<br /> 
-<code>Tissue:spleen AND Organism:"Homo sapiens"</code>
+<code><a href="http://query:Tissue:spleen">Tissue:"spleen" AND Organism:"Homo sapiens"</a></code><br />
+
+<a href="http://query:Tissue:spleen">Tissue:"spleen" AND Organism:"Homo sapiens"</a><br />
+<a href="http://query">Test</a>
+
+<a href="about:blank" onclick="app.setQuery(Tissue:&quot;spleen&quot; AND Organism:&quot;Homo sapiens&quot;)">Send data to java</a><br />
+
+
+http://sabiork.h-its.org/sabioRestWebServices/searchKineticLaws/sbml?q=Tissue:spleen%20AND%20Organism:%22Homo%20sapiens%22
 
 
 <h3>Keywords</h3>
@@ -153,6 +169,23 @@ The following keywords may be used to form queries to search for entries.
 SABIO-RK entries can be retrieved by their Kinetic Law IDs. 
 
 </div>
+
+
+<!-- CUSTOM CODE -------------------------------------------------------->
+
+<script>
+
+window.onload = function() {
+    document.getElementById("query").onclick = function fun() {
+        
+        // Set query information in java;  
+        app.query = "Test query";
+        app.setQuery();
+        
+    }
+}
+</script>
+
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

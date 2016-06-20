@@ -1,48 +1,32 @@
 <html>
- <head>
+<head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>cy3sabiork</title>
   <meta name="description" content="cy3sabiork: A Cytoscape app for visualization of kinetic information from SABIO-RK">
-
-  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-
-  <link rel="stylesheet" href="/css/main.css">
   <meta name="author" content="Matthias Koenig">
-
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 </head>
+
 <body>    
 
 <div class="container">
-
-
-
 <h1>cy3sabiork</h1>
-<a href="about:blank" onclick="app.setQuery();">Empty data call</a><br />
-<a href="about:blank" onclick="app.setText('test argument');">Send argument</a><br />
-<a href="about:blank" onclick="app.setText('Tissue:&quot;spleen&quot; AND Organism:&quot;Homo sapiens&quot;');">Tissue:&quot;spleen&quot; AND Organism:&quot;Homo sapiens&quot;</a><br />
+<code><a class="query">Organism:"Homo sapiens"</a></code>
 
-<a id="query">set query</a><br />
-
-<a id="query2">Organism:"Homo sapiens"</a><br />
-
-
-
-
-<p>
-<strong>cy3sabiork</strong> provides access to <a href="http://sabiork.h-its.org">SABIO-RK</a> information in SBML format via web services.
+<p><strong>cy3sabiork</strong> provides access to <a href="http://sabiork.h-its.org">SABIO-RK</a> information 
+in SBML format via web services.
 </p>
 
-<p>Information about the SABIO-RK webservices is available at <br />
+<p>Documentation of the SABIO-RK web services is available at <br />
 <a href="http://sabiork.h-its.org/layouts/content/webservices.gsp">http://sabiork.h-its.org/layouts/content/webservices.gsp</a>.
 </p>
 
@@ -84,23 +68,25 @@ In the example the kinetic law information is displayed in the Results Panel.
 [5] Additional SABIO-RK annotations in XML for the experimental conditions are displayed in this section.
 </p>
 
-
-
 <h2>Query Builder</span></h2>
-<p>
-SABIO-RK entries can be searched based on combinations of keyword:term searches. The keywords are identical to those used 
+<p>SABIO-RK entries can be searched based on combinations of keyword:term searches. The keywords are identical to those used 
 in the web interface for forming queries. Multiple keyword:term fields may be combined using the <strong>AND</strong> 
 operator to form complex queries.  
 </p>
 <h3>Examples</h3>
-Find all Kinetic Law Entries for spleen in Homo sapiens:<br /> 
+<p>Find all Kinetic Law Entries for spleen in Homo sapiens:<br /> 
 <code><a href="http://query:Tissue:spleen">Tissue:"spleen" AND Organism:"Homo sapiens"</a></code><br />
-
-<a href="http://query:Tissue:spleen">Tissue:"spleen" AND Organism:"Homo sapiens"</a><br />
-<a href="http://query">Test</a>
-
-<a href="about:blank" onclick="app.setQuery(Tissue:&quot;spleen&quot; AND Organism:&quot;Homo sapiens&quot;)">Send data to java</a><br />
-
+<ul>
+	<li>
+	<a href="http://query:Tissue:spleen">Tissue:"spleen" AND Organism:"Homo sapiens"</a><br />
+	</li>
+	<li>
+	<a href="http://query">Test</a>
+	</li>
+	<li>
+	<a href="about:blank" onclick="app.setQuery(Tissue:&quot;spleen&quot; AND Organism:&quot;Homo sapiens&quot;)">Send data to java</a><br />
+	</li>
+</ul>
 
 http://sabiork.h-its.org/sabioRestWebServices/searchKineticLaws/sbml?q=Tissue:spleen%20AND%20Organism:%22Homo%20sapiens%22
 
@@ -165,7 +151,7 @@ The following keywords may be used to form queries to search for entries.
 	    <tr><td><em>hasKineticData</em></td><td>Entry specifies a rate equation (e.g. <code>hasKineticData:"true"</code>)</td></tr>
 	    <tr><td><em>IsRecombinant</em></td><td>Entry has recombinant data (e.g. <code>IsRecombinant:"false"</code>)</td></tr>
 </table>
-<div>
+</div>
 
 <h2>Kinetic Law Entries</h2>
 <p>
@@ -179,33 +165,37 @@ SABIO-RK entries can be retrieved by their Kinetic Law IDs.
 <script>
 
 window.onload = function() {
-	alert('Hello world');
 
-    document.getElementById("query").onclick = function fun() {        
-        // Set query information in java;  
-        alert('query');
-        app.query = "Test query";
-        app.setQuery();
-    };
+    // Register onclick function for elements of class 'query'. The 
+    // link content is processed and send to java
     
-    // create information to sent do Java
-    var item = document.getElementById("query2");
-    item.onclick = function fun() {        
+    // the elements to handle with this function
+    var items = document.getElementsByClassName("query");
+    for (var i = 0; i < items.length; i++) {
+ 	  var item = items[i];
+ 	  
+ 	  // The function which creates the query from the given link text
+      item.onclick = function fun() {        
         
         // get the text from a element
-        var text = element.innerText || element.textContent;
+        var text = item.innerText || item.textContent;
         
         // escape '"'
-        var query = text.replace(/"/g, '&quot;');
-        alert(query);
+        // var text = text.replace(/"/g, '&quot;');
+        
+        // attach the q-prefix
+        var query = '/searchKineticLaws/sbml?q=' + text;
+        
+        // debug
+        // alert(query);
+        
+        // call Java code
         app.query = query;
         app.setQuery();
-    };
-    
-    
+      };
+    }
 }
 </script>
-
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

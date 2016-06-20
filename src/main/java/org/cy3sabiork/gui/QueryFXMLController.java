@@ -325,13 +325,9 @@ public class QueryFXMLController implements Initializable{
     	public String query;
     	
     	public void setQuery() {
-            System.out.println(" --> Upcall from WebView! query=" +  query);
-        }
-    	
-    	public void setText(String text) {
-    		query = text;
-            System.out.println(" --> Upcall from WebView! query=" +  query);
-            queryText.setText(text);
+            logInfo("<Upcall WebView> : "+ query);
+            clearButton.fire();
+            queryText.setText(query);
         }
     }
     
@@ -507,11 +503,11 @@ public class QueryFXMLController implements Initializable{
             new ChangeListener<State>() {
                 @Override
                 public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {    
-                    	if (newState == State.SUCCEEDED) {
-                    		System.out.println("JavaScript object attached.");
-                            JSObject win = (JSObject) webEngine.executeScript("window");
-                            win.setMember("app", new JavaApp());                
-                    	}
+                	if (newState == State.SUCCEEDED) {
+                		System.out.println("JavaScript object attached.");
+                        JSObject win = (JSObject) webEngine.executeScript("window");
+                        win.setMember("app", new JavaApp());                
+                	}
                 }
             }
         );

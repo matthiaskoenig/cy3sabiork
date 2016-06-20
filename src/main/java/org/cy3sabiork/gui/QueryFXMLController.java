@@ -53,7 +53,8 @@ import org.cy3sabiork.SabioQueryResult;
 import org.cy3sabiork.SabioSBMLReader;
 
 
-// TOOD: get terms and respective suggestions from file
+// TODO: get terms and respective suggestions from file, i.e.
+//		restrict the keyworkds and searchTerms to available values
 // TODO: add example queries in HTML
 
 @SuppressWarnings("restriction")
@@ -76,9 +77,7 @@ public class QueryFXMLController implements Initializable{
 	// browser
 	@FXML private ImageView imageSabioLogo;
 	@FXML private ImageView imageSabioSearch;
-	
 	@FXML private WebView webView;
-	
 	
 	// -- Log --
 	@FXML private TextArea log;
@@ -96,7 +95,6 @@ public class QueryFXMLController implements Initializable{
     @FXML private Button addEntryButton;
     
     // -- REST Query --
-    @FXML private Text queryLabel;
     @FXML private TextArea queryText;
     @FXML private Button queryButton;
     @FXML private Button clearButton;
@@ -108,11 +106,12 @@ public class QueryFXMLController implements Initializable{
     @FXML private Text timeLabel;
     
     // -- REST Results --
-    @FXML private Button loadButton;
+    @FXML private Text entryLabel;
     @FXML private TableView entryTable; 
     @FXML private TableColumn idCol;
     @FXML private TableColumn organismCol;
     @FXML private TableColumn tissueCol;
+    @FXML private Button loadButton;
     
     private SabioQueryResult queryResult;
     Thread queryThread = null;
@@ -123,11 +122,10 @@ public class QueryFXMLController implements Initializable{
     	this.sbmlReader = sbmlReader;
     }
     
-    
+    /** 
+     * Adds keyword:searchTerm to the query.
+     */
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
-    	// TODO: only use the allowed keywords
-    	
-    	
     	String selectedItem = (String) keywordList.getSelectionModel().getSelectedItem();
     	String searchTerm = term.getText();
     	
@@ -155,8 +153,10 @@ public class QueryFXMLController implements Initializable{
     	logInfo("<" + addition +"> added to query");
     }
     
+    /**
+     * Add kinetic law entries to the query.
+     */
     @FXML protected void handleAddEntryAction(ActionEvent event) {
-    	
     	String text = entry.getText();
     	if (text == null || text.length() == 0){
     		logWarning("A list of Kinetic Law Ids is required.");
@@ -181,80 +181,63 @@ public class QueryFXMLController implements Initializable{
 			}
 			queryText.setText(SabioQuery.PREFIX_LAWS + idText);    			
 	    }
-		
     }
     
-    /* 
-     * Parses the Kinetic Law Ids from given text string. 
+
+    /**
+     * Query the SABIO-RK web services with the current.
+     * 
+     * Uses the current query string.
      */
-    private HashSet<Integer> parseIds(String text){
-    	HashSet<Integer> ids = new HashSet<Integer>();
-		
-    	// unify separators
-    	text = text.replace("\n", ",");
-    	text = text.replace("\t", ",");
-    	text = text.replace(" ", ",");
-    	text = text.replace(";", ",");
-    	
-    	String[] tokens = text.split(",");
-    	for (String t : tokens){
-        	// single entry parsing
-    		if (t.length() == 0){
-    			continue;
-    		}
-    		
-        	try {
-        		Integer kineticLaw = Integer.parseInt(t);
-        		ids.add(kineticLaw);
-        	} catch (NumberFormatException e) {
-        		logError("Kinetic Law Id could not be parsed from token: <" + t + ">");
-        	}
-    	}
-    	return ids;
-    }
-    
     @FXML protected void handleQueryAction(ActionEvent event) {
     	// check if already a query thread is running
+    	// FIXME: handle overlapping queries, i.e. a query started before last finished.
     	if (queryThread != null && queryThread.isAlive()){}
     	
     
     	// necessary to run long running request in separate 
     	// thread to allow GUI updates.
-    	// GUI updates have to be pased to the JavaFX Thread using runLater()
+    	// GUI updates have to be passed to the JavaFX Thread using runLater()
     	queryThread = new Thread(){
             public void run() {
-
+            	// query to perform
             	String queryString = queryText.getText();
             	
+            	// update initial GUI
             	showQueryStatus(true);
             	Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                    	
                         queryButton.setDisable(true);
                         statusCode.setStyle("-fx-fill: black;");
                 		progressIndicator.setStyle("-fx-progress-color: dodgerblue;");
                     }
                 });
-            	
         		setProgress(-1);
         		
-        		// query number of entries
-        		logInfo("GET COUNT <"+ queryString + ">");
-            	logInfo("... waiting for SABIO-RK response ...");
-            	Integer count = SabioQuery.performCountQuery(queryString);
-        		
+        		// query number of entries in case of q-Query to give
+        		// information about long running full queries
+        		if (queryString.startsWith(SabioQuery.PREFIX_QUERY)){
+        			
+        			logInfo("GET COUNT <"+ queryString + ">");
+                	logInfo("... waiting for SABIO-RK response ...");
+                	
+                	Integer count = SabioQuery.performCountQuery(queryString);
+                	setEntryCount(count);
+                	logInfo("<" + count + "> Kinetic Law Entries for query in SABIO-RK.");
+                	if (count > 20){
+                		logWarning("<" + count + "> Entries. Query will take some time.");
+                	}
+        		}
             	
-        		
+            	// do the real query
         		long startTime = System.currentTimeMillis();
         		logInfo("GET <"+ queryString + ">");
         		logInfo("... waiting for SABIO-RK response ...");
         		queryResult = SabioQuery.performQuery(queryString);
+        		Integer restReturnStatus = queryResult.getStatus();
         		long endTime = System.currentTimeMillis();
         		long duration = (endTime - startTime);
-        		
-
-        		Integer restReturnStatus = queryResult.getStatus();
         		
             	Platform.runLater(new Runnable() {
                     @Override
@@ -264,12 +247,12 @@ public class QueryFXMLController implements Initializable{
                 			if (restReturnStatus == 404){
                 				logWarning("No kinetic laws found for query in SABIO-RK.");
                 			}
-                			logWarning("SABIO-RK query returned with status <" + restReturnStatus + ">");
+                			logWarning("SABIO-RK returned status <" + restReturnStatus + ">");
                 			statusCode.setStyle("-fx-fill: red;");
                 			progressIndicator.setStyle("-fx-progress-color: red;");
                 		}else {
                 			// successful
-                			logInfo("SABIO-RK query returned with status <" + restReturnStatus + "> after " + duration + "[ms]");
+                			logInfo("SABIO-RK returned status <" + restReturnStatus + "> after " + duration + "[ms]");
                 			
                 			// handle empty test call
                 			final ObservableList<SabioKineticLaw> data;
@@ -295,7 +278,7 @@ public class QueryFXMLController implements Initializable{
 
     }
     
-    @FXML protected void handleClearAction(ActionEvent event) {
+    @FXML protected void handleResetAction(ActionEvent event) {
     	logInfo("Query information cleared.");
     	queryText.clear();
     	keyword.clear();
@@ -309,9 +292,15 @@ public class QueryFXMLController implements Initializable{
     	entryTable.setItems(FXCollections.observableArrayList());
     	entryTable.setDisable(true);
     	loadButton.setDisable(true);
+    	keywordList.getSelectionModel().clearSelection();
+    	
+    	setEntryCount(null);
     	setHelp();
     }
     
+    /**
+     * Load the SABIO-RK entries in Cytoscape.
+     */
     @FXML protected void handleLoadAction(ActionEvent event) {
     	logInfo("Loading Kinetic Laws in Cytoscape ...");
     	
@@ -326,19 +315,19 @@ public class QueryFXMLController implements Initializable{
     	} else {
     		logError("No SBMLReader available in controller.");;
     	}
-		
     }
     
+    // --------------------------------------------------------------------
+    // GUI helpers
+    // --------------------------------------------------------------------
     
-    /* Sets the help information. */
+    /** Set help information. */
     private void setHelp(){
-		// Initialize the webengine
 		String infoURI = ResourceExtractor.fileURIforResource("/gui/info.html");
 		webView.getEngine().load(infoURI);
     }
     
-    
-    /** Focus the given scene Node. */
+    /** Focus given scene Node. */
     private void focusNode(Node node){
         Platform.runLater(new Runnable() {
             @Override
@@ -348,6 +337,20 @@ public class QueryFXMLController implements Initializable{
         });
     }
     
+    /** Set number of entries in the query. */
+    private void setEntryCount(Integer count){
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            	String text = "SABIO-RK Entries";
+            	if (count != null && count != 0){
+            		text += " (" + count.toString() + ")";
+            	} 
+            	entryLabel.setText(text);
+            }
+    	});	
+    }
+	
     private void showQueryStatus(Boolean show){
     	Platform.runLater(new Runnable() {
             @Override
@@ -371,13 +374,12 @@ public class QueryFXMLController implements Initializable{
     
     private void openURLinExternalBrowser(String text){
     	if (openBrowser != null){
-	    	logInfo("Opening address in external browser: <" + text +">");    		  
+	    	logInfo("Open in external browser <" + text +">");    		  
     		SwingUtilities.invokeLater(new Runnable() {
     		     public void run() {
     		    	 openBrowser.openURL(text);    	 
     		     }
-    		});
-       	 		 
+    		});	 
         } else {
        	 	logError("No external browser available.");
         }
@@ -442,7 +444,7 @@ public class QueryFXMLController implements Initializable{
 	                    SabioKineticLaw oldValue, SabioKineticLaw newValue) {
 	                		Integer kid = newValue.getId();	
 	                		String lawURI = SabioQuery.PREFIX_KINETIC_LAW_INFO + kid.toString();
-	                		logInfo("Load information for Kinetic Law <" + kid + "> from <" + lawURI +">" );
+	                		logInfo("Load information for Kinetic Law <" + kid + ">");
 	                		webView.getEngine().load(lawURI);
 	            }
 	        });
@@ -471,7 +473,6 @@ public class QueryFXMLController implements Initializable{
                  }
          });
 
-		
 		// hide elements on first loading
 		showQueryStatus(false);
 		
@@ -480,7 +481,6 @@ public class QueryFXMLController implements Initializable{
 		keyword.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
 				if (ke.getCode() == KeyCode.ENTER){
-					System.out.println("KeyCode == ENTER on keyword");
 					focusNode(term);
 				}
             }
@@ -489,7 +489,6 @@ public class QueryFXMLController implements Initializable{
 		term.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
 				if (ke.getCode() == KeyCode.ENTER){
-					System.out.println("KeyCode == ENTER on term");
 					addKeywordButton.fire();
 					
 				}
@@ -512,7 +511,6 @@ public class QueryFXMLController implements Initializable{
 		    }
 		});
 		
-		
 		// Query SABIO-RK status
 		setProgress(-1);
 		String status = SabioQuery.getSabioStatus();
@@ -520,10 +518,39 @@ public class QueryFXMLController implements Initializable{
 			setProgress(1.0);
 		}	
 	}
-    // --------------------------------------------------------------------
 	
+	// --- HELPERS ------------------------------------------------------------
 	
-    // --- LOGGING ---
+    /* 
+     * Parses the Kinetic Law Ids from given text string. 
+     */
+    private HashSet<Integer> parseIds(String text){
+    	HashSet<Integer> ids = new HashSet<Integer>();
+		
+    	// unify separators
+    	text = text.replace("\n", ",");
+    	text = text.replace("\t", ",");
+    	text = text.replace(" ", ",");
+    	text = text.replace(";", ",");
+    	
+    	String[] tokens = text.split(",");
+    	for (String t : tokens){
+        	// single entry parsing
+    		if (t.length() == 0){
+    			continue;
+    		}
+    		
+        	try {
+        		Integer kineticLaw = Integer.parseInt(t);
+        		ids.add(kineticLaw);
+        	} catch (NumberFormatException e) {
+        		logError("Kinetic Law Id could not be parsed from token: <" + t + ">");
+        	}
+    	}
+    	return ids;
+    }
+	
+    // --- LOGGING ------------------------------------------------------------
     private void logText(String text, LogType logType){
     	Platform.runLater(new Runnable() {
             @Override
@@ -548,6 +575,6 @@ public class QueryFXMLController implements Initializable{
     private void logInfo(String text){
     	logText(text, LogType.INFO);
     }
-    // --------------
+    // ------------------------------------------------------------------------
 	
 }

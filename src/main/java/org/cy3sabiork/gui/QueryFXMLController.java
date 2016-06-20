@@ -46,8 +46,6 @@ import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import netscape.javascript.JSObject;
-
 import org.cytoscape.util.swing.OpenBrowser;
 
 import org.cy3sabiork.ResourceExtractor;
@@ -56,9 +54,12 @@ import org.cy3sabiork.SabioQuery;
 import org.cy3sabiork.SabioQueryResult;
 import org.cy3sabiork.SabioSBMLReader;
 
+import netscape.javascript.JSObject;
+// import com.sun.webkit.dom.JSObject;
+
 
 // TODO: get terms and respective suggestions from file, i.e.
-//		restrict the keyworkds and searchTerms to available values
+//		restrict the keywords and searchTerms to available values
 // TODO: add example queries in HTML
 
 @SuppressWarnings("restriction")
@@ -472,7 +473,7 @@ public class QueryFXMLController implements Initializable{
 		setHelp();
 		webView.setZoom(1.0);
 		
-		/*
+
 		// Handle all links by opening external browser
 		// http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/
 		webEngine.locationProperty().addListener(new ChangeListener<String>(){
@@ -489,13 +490,10 @@ public class QueryFXMLController implements Initializable{
                          });
                          // open the destination URl in the default browser
                          openURLinExternalBrowser(newValue);
-                     } else {
-                    	// Links with special action, i.e. query injection
-                    	// TODO
                      }
                  }
          });
-         */
+
 		
 		// Handle WebView -> Java upcalls
 		// process page loading

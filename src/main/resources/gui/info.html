@@ -73,22 +73,13 @@ In the example the kinetic law information is displayed in the Results Panel.
 in the web interface for forming queries. Multiple keyword:term fields may be combined using the <strong>AND</strong> 
 operator to form complex queries.  
 </p>
-<h3>Examples</h3>
-<p>Find all Kinetic Law Entries for spleen in Homo sapiens:<br /> 
-<code><a href="http://query:Tissue:spleen">Tissue:"spleen" AND Organism:"Homo sapiens"</a></code><br />
+<h3>Examples</h3> 
 <ul>
 	<li>
-	<a href="http://query:Tissue:spleen">Tissue:"spleen" AND Organism:"Homo sapiens"</a><br />
-	</li>
-	<li>
-	<a href="http://query">Test</a>
-	</li>
-	<li>
-	<a href="about:blank" onclick="app.setQuery(Tissue:&quot;spleen&quot; AND Organism:&quot;Homo sapiens&quot;)">Send data to java</a><br />
+		<p>Find all Kinetic Law Entries for spleen in Homo sapiens:<br />	
+		<code><a class="query">Tissue:"spleen" AND Organism:"Homo sapiens"</a></code>
 	</li>
 </ul>
-
-http://sabiork.h-its.org/sabioRestWebServices/searchKineticLaws/sbml?q=Tissue:spleen%20AND%20Organism:%22Homo%20sapiens%22
 
 
 <h3>Keywords</h3>
@@ -98,7 +89,7 @@ The following keywords may be used to form queries to search for entries.
 <div class="table-responsive">
 <table class="table">
 	<tr><td><strong>Entry</strong></td><td></td></tr>
-	  	<tr><td><em>EntryID</em></td><td>SABIO-RK entry ID (e.g. <code>EntryID:"123"</code>)</td></tr>
+	  	<tr><td><em>EntryID</em></td><td>SABIO-RK entry ID (e.g. <code><a class="query">EntryID:"123"</a></code>)</td></tr>
 
 	<tr><td><strong>Reaction/Pathway </strong></td><td></td></tr>
 	    <tr><td><em>Pathway</em></td><td>The name of the reaction pathway (e.g. <code>Pathway:"urea cycle"</code>)</td></tr>
@@ -169,8 +160,11 @@ window.onload = function() {
     // Register onclick function for elements of class 'query'. The 
     // link content is processed and send to java
     
+    // FIXME: problem with scope, all functions init with last item (hoisting?)
+    
     // the elements to handle with this function
     var items = document.getElementsByClassName("query");
+    var i
     for (var i = 0; i < items.length; i++) {
  	  var item = items[i];
  	  
@@ -187,7 +181,7 @@ window.onload = function() {
         var query = '/searchKineticLaws/sbml?q=' + text;
         
         // debug
-        // alert(query);
+        alert(query);
         
         // call Java code
         app.query = query;

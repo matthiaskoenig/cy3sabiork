@@ -9,12 +9,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.SwingUtilities;
 
-import org.cy3sabiork.ResourceExtractor;
-import org.cy3sabiork.SabioKineticLaw;
-import org.cy3sabiork.SabioQuery;
-import org.cy3sabiork.SabioQueryResult;
-import org.cy3sabiork.SabioSBMLReader;
-import org.cytoscape.util.swing.OpenBrowser;
+
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -48,21 +43,22 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
- 
+
+import org.cytoscape.util.swing.OpenBrowser;
+
+import org.cy3sabiork.ResourceExtractor;
+import org.cy3sabiork.SabioKineticLaw;
+import org.cy3sabiork.SabioQuery;
+import org.cy3sabiork.SabioQueryResult;
+import org.cy3sabiork.SabioSBMLReader;
+
 
 // TOOD: get terms and respective suggestions from file
 // TODO: add example queries in HTML
 
 @SuppressWarnings("restriction")
 public class QueryFXMLController implements Initializable{
-	
-	public static final String PREFIX_KINETIC_LAW_INFO = "http://sabiork.h-its.org/kineticLawEntry.jsp?viewData=true&kinlawid=";
-	
-	public static final String PREFIX_QUERY = "searchKineticLaws/sbml?q=";
-	public static final String PREFIX_LAW = "kineticLaws/";
-	public static final String PREFIX_LAWS = "kineticLaws?kinlawids=";
-	public static final String CONNECTOR_AND = " AND ";
-	
+		
 	// minimal logger
 	public static final String LOG_INFO = "[INFO]";
 	public static final String LOG_WARNING = "[WARNING]";
@@ -100,6 +96,7 @@ public class QueryFXMLController implements Initializable{
     @FXML private Button addEntryButton;
     
     // -- REST Query --
+    @FXML private Text queryLabel;
     @FXML private TextArea queryText;
     @FXML private Button queryButton;
     @FXML private Button clearButton;
@@ -150,10 +147,10 @@ public class QueryFXMLController implements Initializable{
     		return;
     	}
     	
-    	if (query.startsWith(PREFIX_QUERY)){
-    		queryText.setText(query + CONNECTOR_AND + addition);
+    	if (query.startsWith(SabioQuery.PREFIX_QUERY)){
+    		queryText.setText(query + SabioQuery.CONNECTOR_AND + addition);
     	} else {
-    		queryText.setText(PREFIX_QUERY + addition);
+    		queryText.setText(SabioQuery.PREFIX_QUERY + addition);
     	}
     	logInfo("<" + addition +"> added to query");
     }
@@ -172,7 +169,7 @@ public class QueryFXMLController implements Initializable{
 	
     	// generate query from ids
 		if (ids.size() == 1){
-			queryText.setText(PREFIX_LAW + ids.iterator().next());	
+			queryText.setText(SabioQuery.PREFIX_LAW + ids.iterator().next());	
 		} else {
 			String idText = null;
 			for (Integer kid: ids){
@@ -182,7 +179,7 @@ public class QueryFXMLController implements Initializable{
 					idText += "," + kid.toString();
 				}
 			}
-			queryText.setText(PREFIX_LAWS + idText);    			
+			queryText.setText(SabioQuery.PREFIX_LAWS + idText);    			
 	    }
 		
     }
@@ -241,14 +238,18 @@ public class QueryFXMLController implements Initializable{
                 });
             	
         		setProgress(-1);
-        		logInfo("GET <"+ queryString + ">");
-        		logInfo("... waiting for SABIO-RK response ...");
+        		
+        		// query number of entries
+        		logInfo("GET COUNT <"+ queryString + ">");
+            	logInfo("... waiting for SABIO-RK response ...");
+            	Integer count = SabioQuery.performCountQuery(queryString);
+        		
+            	
         		
         		long startTime = System.currentTimeMillis();
-        		
-        		SabioQuery query = new SabioQuery();
-        		queryResult = query.performQuery(queryString);
-        			
+        		logInfo("GET <"+ queryString + ">");
+        		logInfo("... waiting for SABIO-RK response ...");
+        		queryResult = SabioQuery.performQuery(queryString);
         		long endTime = System.currentTimeMillis();
         		long duration = (endTime - startTime);
         		
@@ -440,7 +441,7 @@ public class QueryFXMLController implements Initializable{
 	                public void changed(ObservableValue<? extends SabioKineticLaw> ov, 
 	                    SabioKineticLaw oldValue, SabioKineticLaw newValue) {
 	                		Integer kid = newValue.getId();	
-	                		String lawURI = PREFIX_KINETIC_LAW_INFO + kid.toString();
+	                		String lawURI = SabioQuery.PREFIX_KINETIC_LAW_INFO + kid.toString();
 	                		logInfo("Load information for Kinetic Law <" + kid + "> from <" + lawURI +">" );
 	                		webView.getEngine().load(lawURI);
 	            }

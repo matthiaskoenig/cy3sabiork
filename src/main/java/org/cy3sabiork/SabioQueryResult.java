@@ -70,31 +70,7 @@ public class SabioQueryResult {
 	/** Read the kineticLaws from the given SBML; 
 	 * @throws XMLStreamException */
 	public ArrayList<SabioKineticLaw> getKineticLaws(){
-		ArrayList<SabioKineticLaw> list = new ArrayList<SabioKineticLaw>();
-		if (this.sbml == null){
-			return list;
-		}
-		
-		// parse the entries from the SBML
-		SBMLDocument doc;
-		try {
-			doc = JSBML.readSBMLFromString(sbml);
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
-			return list;
-		}
-		
-		// necessary to read information from annotations
-		Model model = doc.getModel();
-		for (Reaction r : model.getListOfReactions()){
-			KineticLaw law = r.getKineticLaw();
-			// FIXME: bad hack to get the id, necessary to read the XML
-			String metaId = law.getMetaId();
-			String[] tokens = metaId.split("_");
-			Integer kid = Integer.parseInt(tokens[tokens.length-1]);
-			list.add(new SabioKineticLaw(kid, "not parsed", "not parsed"));
-		}
-		return list;
+		return SabioKineticLaw.parseKineticLaws(this.sbml);
 	}
 	
 	

@@ -113,10 +113,13 @@ public class QueryFXMLController implements Initializable{
     
     // -- REST Results --
     @FXML private Text entryLabel;
-    @FXML private TableView entryTable; 
+    @FXML private TableView entryTable;
+    
+    @FXML private TableColumn countCol;
     @FXML private TableColumn idCol;
     @FXML private TableColumn organismCol;
     @FXML private TableColumn tissueCol;
+    @FXML private TableColumn reactionCol;
     @FXML private Button loadButton;
     
     private SabioQueryResult queryResult;
@@ -440,21 +443,17 @@ public class QueryFXMLController implements Initializable{
             }
         });
 		
+		// ---------------------------
 		// Table for SabioKineticLaws
+		// ---------------------------
 		entryTable.setEditable(false);
 		
-		idCol.setCellValueFactory(
-			new PropertyValueFactory<SabioKineticLaw,Integer>("id")
-		);
+		countCol.setCellValueFactory(new PropertyValueFactory<SabioKineticLaw,Integer>("count"));
+		idCol.setCellValueFactory(new PropertyValueFactory<SabioKineticLaw,Integer>("id"));
+		organismCol.setCellValueFactory(new PropertyValueFactory<SabioKineticLaw,String>("organism"));
+		tissueCol.setCellValueFactory(new PropertyValueFactory<SabioKineticLaw,String>("tissue"));
+		reactionCol.setCellValueFactory(new PropertyValueFactory<SabioKineticLaw,String>("reaction"));
 		
-		organismCol.setCellValueFactory(
-		    new PropertyValueFactory<SabioKineticLaw,String>("organism")
-		);
-		tissueCol.setCellValueFactory(
-		    new PropertyValueFactory<SabioKineticLaw,String>("tissue")
-		);
-		
-
 		entryTable.getSelectionModel().selectedItemProperty().addListener(
 	            new ChangeListener<SabioKineticLaw>() {
 	                public void changed(ObservableValue<? extends SabioKineticLaw> ov, 
@@ -547,8 +546,6 @@ public class QueryFXMLController implements Initializable{
 	            setHelp();
 	        }
 	    });
-		
-		
 		
 		log.textProperty().addListener(new ChangeListener<Object>() {
 		    @Override

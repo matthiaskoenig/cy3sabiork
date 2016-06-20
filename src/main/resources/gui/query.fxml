@@ -140,9 +140,11 @@
             </TextArea>
             <TableView fx:id="entryTable" disable="true" layoutX="28.0" layoutY="587.0" prefHeight="138.0" prefWidth="568.0">
               <columns>
-                <TableColumn fx:id="idCol" prefWidth="147.0" text="Id" />
-                <TableColumn fx:id="organismCol" prefWidth="180.0" text="Organism" />
-                  <TableColumn fx:id="tissueCol" prefWidth="219.0" text="Tissue" />
+                <TableColumn fx:id="countCol" prefWidth="49.999969482421875" text="#" />
+                <TableColumn fx:id="idCol" prefWidth="90.0" text="Id" />
+                  <TableColumn fx:id="organismCol" prefWidth="144.0" text="Organism" />
+                  <TableColumn fx:id="tissueCol" prefWidth="141.0" text="Tissue" />
+                  <TableColumn fx:id="reactionCol" prefWidth="142.0" text="Reaction" />
               </columns>
                <tooltip>
                   <Tooltip text="Kinetic Law Entries of last query. Click on entry to load details." />
@@ -161,7 +163,7 @@
                   <Tooltip text="Load Kinetic Law Entries as Cytoscape networks." />
                </tooltip>
             </Button>
-            <WebView fx:id="webView" layoutX="619.0" layoutY="20.0" prefHeight="871.0" prefWidth="772.0" />
+            <WebView fx:id="webView" layoutX="596.0" layoutY="24.0" prefHeight="871.0" prefWidth="772.0" />
             <ImageView fx:id="imageHelp" fitHeight="40.0" fitWidth="42.0" layoutX="552.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>

@@ -35,11 +35,11 @@ public class SabioAction extends AbstractCyAction{
 		this.openBrowser = openBrowser;
 		this.sbmlReader = sbmlReader;
 		
-		ImageIcon icon = new ImageIcon(getClass().getResource("/gui/images/logo-sabiork.png"));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/gui/images/logo-sabiork-compact.png"));
 		putValue(LARGE_ICON_KEY, icon);
 		
 		this.putValue(SHORT_DESCRIPTION, "SABIO-RK web services");
-		setToolbarGravity((float) 500.0);
+		setToolbarGravity((float) 80.0);
 	}
 	
 	public boolean insertSeparatorBefore(){

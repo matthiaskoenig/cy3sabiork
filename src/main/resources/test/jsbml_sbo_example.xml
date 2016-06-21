@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='utf-8' standalone='no'?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
+  <model name="SABIOmdl21Jun2016423">
+    <notes>
+      <body xmlns="http://www.w3.org/1999/xhtml">
+      <p>This model has been created with the help of the SABIO-RK Database (http://sabio.h-its.org/) (c) 2005-2016 HITS gGmbH http://www.h-its.org</p>
+      <br />
+      To cite SABIO-RK Database, please use "http://www.ncbi.nlm.nih.gov/pubmed/22102587" 
+      <br />
+      SABIO-RK - database for biochemical reaction kinetics. Wittig U, Kania R, Golebiewski M, Rey M, Shi L, Jong L, Algaa E, Weidemann A, Sauer-Danzwith H, Mir S, Krebs O, Bittkowski M, Wetsch E,
+      Rojas I, Mueller W. Nucleic Acids Res. 2012;40(Database issue)790-6</body>
+    </notes>
+    <listOfFunctionDefinitions>
+      <functionDefinition id="KL_14792">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <lambda>
+            <bvar>
+              <ci>E</ci>
+            </bvar>
+            <bvar>
+              <ci>kcat</ci>
+            </bvar>
+            <bvar>
+              <ci>A</ci>
+            </bvar>
+            <bvar>
+              <ci>kcat_Km</ci>
+            </bvar>
+            <bvar>
+              <ci>Km</ci>
+            </bvar>
+            <apply>
+              <divide />
+              <apply>
+                <times />
+                <apply>
+                  <times />
+                  <ci>E</ci>
+                  <ci>kcat</ci>
+                </apply>
+                <ci>A</ci>
+              </apply>
+              <apply>
+                <plus />
+                <ci>Km</ci>
+                <ci>A</ci>
+              </apply>
+            </apply>
+          </lambda>
+        </math>
+      </functionDefinition>
+    </listOfFunctionDefinitions>
+    <listOfUnitDefinitions>
+      <unitDefinition id="swedgeone" name="s^(-1)">
+        <listOfUnits>
+          <unit exponent="-1" kind="second" multiplier="1" scale="0" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="Mwedgeoneswedgeone" name="M^(-1)*s^(-1)">
+        <listOfUnits>
+          <unit exponent="1" kind="litre" multiplier="1" scale="0" />
+          <unit exponent="-1" kind="mole" multiplier="1" scale="0" />
+          <unit exponent="-1" kind="second" multiplier="1" scale="0" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="M" name="M">
+        <listOfUnits>
+          <unit exponent="-1" kind="litre" multiplier="1" scale="0" />
+          <unit exponent="1" kind="mole" multiplier="1" scale="0" />
+        </listOfUnits>
+      </unitDefinition>
+    </listOfUnitDefinitions>
+    <listOfCompartments>
+      <compartment constant="true" id="compart_cytosol" name="cytosol" />
+    </listOfCompartments>
+    <listOfSpecies>
+      <species boundaryCondition="false" compartment="compart_cytosol" constant="false" hasOnlySubstanceUnits="false" id="SPC_1661_cytosol" initialConcentration="1" metaid="META_SPC_1661_cytosol"
+      name="D-Galactose">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#META_SPC_1661_cytosol">
+              <bqbiol:is>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:4139" />
+                  <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:12936" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00124" />
+                </rdf:Bag>
+              </bqbiol:is>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" compartment="compart_cytosol" constant="false" hasOnlySubstanceUnits="false" id="SPC_34_cytosol" initialConcentration="1" metaid="META_SPC_34_cytosol"
+      name="ATP">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#META_SPC_34_cytosol">
+              <bqbiol:is>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:15422" />
+                  <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:30616" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00002" />
+                </rdf:Bag>
+              </bqbiol:is>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" compartment="compart_cytosol" constant="false" hasOnlySubstanceUnits="false" id="SPC_35_cytosol" initialConcentration="1" metaid="META_SPC_35_cytosol"
+      name="ADP">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#META_SPC_35_cytosol">
+              <bqbiol:is>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:16761" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00008" />
+                </rdf:Bag>
+              </bqbiol:is>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" compartment="compart_cytosol" constant="false" hasOnlySubstanceUnits="false" id="SPC_1381_cytosol" initialConcentration="1" metaid="META_SPC_1381_cytosol"
+      name="alpha-D-Galactose 1-phosphate">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#META_SPC_1381_cytosol">
+              <bqbiol:is>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/chebi/CHEBI:17973" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00446" />
+                </rdf:Bag>
+              </bqbiol:is>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" compartment="compart_cytosol" constant="false" hasOnlySubstanceUnits="false" id="ENZ_77023_cytosol" initialConcentration="1" metaid="META_ENZ_77023_cytosol"
+      name="galactokinase(Enzyme) wildtype His-tagged">
+        <annotation>
+          <sbrk:sabiork xmlns:sbrk="http://sabiork.h-its.org">
+            <sbrk:modifierType>Modifier-Catalyst</sbrk:modifierType>
+          </sbrk:sabiork>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#META_ENZ_77023_cytosol">
+              <bqbiol:is>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/uniprot/P51570" />
+                </rdf:Bag>
+              </bqbiol:is>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+    </listOfSpecies>
+    <listOfReactions>
+      <reaction fast="false" id="REAC_0" metaid="META_REAC_0" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#META_REAC_0">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/ec-code/2.7.1.6" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+              <bqbiol:is>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.reaction/R01092" />
+                </rdf:Bag>
+              </bqbiol:is>
+              <bqbiol:hasTaxon>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/taxonomy/9606" />
+                </rdf:Bag>
+              </bqbiol:hasTaxon>
+              <bqbiol:is>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/sabiork.reaction/1354" />
+                </rdf:Bag>
+              </bqbiol:is>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference constant="true" species="SPC_1661_cytosol" stoichiometry="1" />
+          <speciesReference constant="true" species="SPC_34_cytosol" stoichiometry="1" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference constant="true" species="SPC_35_cytosol" stoichiometry="1" />
+          <speciesReference constant="true" species="SPC_1381_cytosol" stoichiometry="1" />
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="ENZ_77023_cytosol" />
+        </listOfModifiers>
+        <kineticLaw metaid="META_KL_14792">
+          <annotation>
+            <sbrk:sabiork xmlns:sbrk="http://sabiork.h-its.org">
+              <sbrk:kineticLawID>14792</sbrk:kineticLawID>
+              <sbrk:experimentalConditions>
+                <sbrk:pH>
+                  <sbrk:startValuepH>8.0</sbrk:startValuepH>
+                </sbrk:pH>
+                <sbrk:temperature>
+                  <sbrk:startValueTemperature>37.0</sbrk:startValueTemperature>
+                  <sbrk:temperatureUnit>°C</sbrk:temperatureUnit>
+                </sbrk:temperature>
+                <sbrk:buffer>20 mM Hepes, 150 mM NaCl, 5 mM MgCl2, 1 mM KCl, 10% (v/v) glycerrol, 1 mM NADH, 1 mM dithiothreitol, 400 µM phosphoenolpyrovate, 7.5 U pyrovate kinase, 10 U lactate
+                dehydrogenase</sbrk:buffer>
+              </sbrk:experimentalConditions>
+            </sbrk:sabiork>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+              <rdf:Description rdf:about="#META_KL_14792">
+                <bqbiol:isDescribedBy>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://identifiers.org/pubmed/12694189" />
+                  </rdf:Bag>
+                </bqbiol:isDescribedBy>
+                <bqbiol:isDescribedBy>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://identifiers.org/sabiork.kineticrecord/14792" />
+                  </rdf:Bag>
+                </bqbiol:isDescribedBy>
+              </rdf:Description>
+            </rdf:RDF>
+          </annotation>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <ci>KL_14792</ci>
+              <ci>ENZ_77023_cytosol</ci>
+              <ci>REAC_0_kcat</ci>
+              <ci>SPC_34_cytosol</ci>
+              <ci>REAC_0_kcat_Km_SPC_34_cytosol</ci>
+              <ci>REAC_0_Km_SPC_34_cytosol</ci>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="REAC_0_kcat" name="kcat" units="swedgeone" value="8.7" />
+            <localParameter id="REAC_0_kcat_Km_SPC_34_cytosol" name="kcat_Km_ATP" units="Mwedgeoneswedgeone" value="260000" />
+            <localParameter id="REAC_0_Km_SPC_34_cytosol" name="Km_ATP" units="M" value="3.4E-5" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

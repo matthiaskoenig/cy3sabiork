@@ -1,11 +1,16 @@
 package org.cy3sabiork;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.osgi.framework.BundleContext;
-
+import org.sbml.jsbml.JSBML;
+import org.sbml.jsbml.Model;
+import org.sbml.jsbml.SBMLDocument;
 import org.cytoscape.application.CyApplicationConfiguration;
 import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.application.swing.CySwingApplication;
@@ -16,6 +21,7 @@ import org.cytoscape.util.swing.OpenBrowser;
 import org.cytoscape.work.SynchronousTaskManager;
 
 import org.cy3sbml.BundleInformation;
+import org.cy3sbml.SBMLReaderTask;
 import org.cy3sabiork.gui.SabioPanel;
 import org.cy3sabiork.SabioAction;
 
@@ -52,7 +58,7 @@ public class CyActivator extends AbstractCyActivator {
 			logger.info("----------------------------");
 			logger.info("directory = " + appDirectory.getAbsolutePath());
 			logger.info("logfile = " + logFile.getAbsolutePath());
-			
+						
 			// get services
 			final CySwingApplication cySwingApplication = getService(bc, CySwingApplication.class);
 			final OpenBrowser openBrowser = getService(bc, OpenBrowser.class);
@@ -81,4 +87,5 @@ public class CyActivator extends AbstractCyActivator {
 			e.printStackTrace();
 		}
 	}
+
 }

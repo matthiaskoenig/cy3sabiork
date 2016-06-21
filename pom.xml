@@ -11,6 +11,7 @@
 		
 		<Cytoscape-App-Dependencies>cy3sbml;0.1.8</Cytoscape-App-Dependencies>
 		<org.osgi.framework.system.packages.extra>javafx.animation,javafx.application,javafx.collections,javafx.embed.swing,javafx.geometry,javafx.scene,javafx.scene.layout,javafx.scene.transform,javax.swing,javax.swing.border,javafx.fxml,netscape.javascript,org.osgi.framework</org.osgi.framework.system.packages.extra>
+		<org.osgi.framework.bootdelegation>netscape.javascript</org.osgi.framework.bootdelegation>
 		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<cytoscape.api.version>3.2.1</cytoscape.api.version>
@@ -96,12 +97,18 @@
 						<Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>!${bundle.namespace}.*</Export-Package>
-						<Import-Package>org.cy3sbml.*;version="0.1.8"</Import-Package>
+						<Import-Package>org.cy3sbml.*;version="0.1.8";</Import-Package>
+						<Import-Package>netscape.javascript</Import-Package>
+						<Import-Package>*;resolution:=optional</Import-Package>
 						<Private-Package>${bundle.namespace}.*</Private-Package>
 						<Bundle-Activator>${bundle.namespace}.CyActivator</Bundle-Activator>
 						<Embed-Dependency>*;scope=!provided|test;groupId=!org.cytoscape</Embed-Dependency>
           				<Embed-Transitive>true</Embed-Transitive>
-          				<Import-Package>*;resolution:=optional</Import-Package>
+          				 
+          				<!--
+          				<Import-Package>netscape, *;resolution:=optional</Import-Package> 
+          				<Import-Package>*;resolution:=optional</Import-Package><
+          				 -->
 					</instructions>
 				</configuration>
 			</plugin>
@@ -198,7 +205,6 @@
 		</dependency>
 		
 		<!-- 3rd party dependency -->
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -227,9 +233,24 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
-
-		<!-- netscape.javascript -->		
-		<!-- https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit -->
+		
+		<!--  netscape.javascript -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.dataformat</groupId>
+		    <artifactId>jackson-dataformat-xml</artifactId>
+		    <version>2.7.5</version>
+		</dependency>
+		<dependency>
+		   <groupId>com.fasterxml.jackson.dataformat</groupId>
+		   <artifactId>jackson-dataformat-yaml</artifactId>
+		   <version>2.7.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.sun.webkit</groupId>
+		    <artifactId>webview-deps</artifactId>
+		    <version>1.3</version>
+		    <type>pom</type>
+		</dependency>
 
  
   		<!-- JSBML EXTENSION dependency -->
@@ -239,6 +260,7 @@
 			<version>0.1.9</version>
 		</dependency> 
   		
+  		
   		<dependency>
   			<groupId>cy3sbml-dep</groupId>
   			<artifactId>jsbml</artifactId>
@@ -246,94 +268,71 @@
   		</dependency>
   		<dependency>
   			<groupId>cy3sbml-dep</groupId>
-  			<artifactId>jsbml-qual</artifactId>
-  			<version>2.1-b1</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>cy3sbml-dep</groupId>
-  			<artifactId>jsbml-layout</artifactId>
-  			<version>1.0-b1</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>cy3sbml-dep</groupId>
-  			<artifactId>jsbml-comp</artifactId>
-  			<version>1.0-b1</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>cy3sbml-dep</groupId>
-  			<artifactId>jsbml-fbc</artifactId>
-  			<version>1.0-b1</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>cy3sbml-dep</groupId>
-  			<artifactId>jsbml-groups</artifactId>
-  			<version>0.4-b1</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>cy3sbml-dep</groupId>
-  			<artifactId>jsbml-distrib</artifactId>
-  			<version>0.5</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>cy3sbml-dep</groupId>
   			<artifactId>jsbml-tidy</artifactId>
   			<version>1.2.1</version>
   		</dependency>
-  		
-  		
+  		  
   		 <!-- JSBML dependencies -->
-  		<dependency>
-    		<groupId>cy3sbml-dep</groupId>
-    		<artifactId>jigsaw-dateParser</artifactId>
-    		<version>0.1</version>
-    	</dependency>
-    	<dependency>
-    		<groupId>cy3sbml-dep</groupId>
-    		<artifactId>spi-full</artifactId>
-    		<version>0.2.4</version>
-    	</dependency>
-  		<dependency>
-  			<groupId>org.biojava</groupId>
-  			<artifactId>biojava3-ontology</artifactId>
-  			<version>3.1.0</version>
-  		</dependency>
-  		<dependency>
-    		<groupId>junit</groupId>
-    		<artifactId>junit</artifactId>
-    		<version>4.8</version>
+  		 <!-- 
+  		 <dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.3</version>
 		</dependency>
 		<dependency>
-    		<groupId>log4j</groupId>
-    		<artifactId>log4j</artifactId>
-    		<version>1.2.17</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-1.2-api</artifactId>
+			<version>2.3</version>
+		</dependency>
+		 -->
+		<dependency>
+			<groupId>com.fasterxml.woodstox</groupId>
+			<artifactId>woodstox-core</artifactId>
+			<version>5.0.1</version>
 		</dependency>
 		<dependency>
-    		<groupId>stax</groupId>
-    		<artifactId>stax-api</artifactId>
-    		<version>1.0.1</version>
+			<groupId>org.w3c.jigsaw</groupId>
+			<artifactId>jigsaw</artifactId>
+			<version>2.2.6</version>
 		</dependency>
+		<dependency>
+			<groupId>org.biojava</groupId>
+			<artifactId>biojava-ontology</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.3.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.staxmate</groupId>
+			<artifactId>staxmate</artifactId>
+			<version>2.3.0</version>	
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mangosdk.spi</groupId>
+			<artifactId>spi</artifactId>
+			<version>0.2.4</version>
+		</dependency>
+   		<dependency>
+		    <groupId>net.sf.jtidy</groupId>
+		    <artifactId>jtidy</artifactId>
+		    <version>r938</version>
+		</dependency>		 
 		<dependency>
     		<groupId>org.codehaus.woodstox</groupId>
     		<artifactId>stax2-api</artifactId>
-    		<version>3.0.3</version>
-		</dependency>
-		<dependency>
-    		<groupId>org.codehaus.staxmate</groupId>
-    		<artifactId>staxmate</artifactId>
-    		<version>2.0.0</version>
-		</dependency>
-		<dependency>
-    		<groupId>org.codehaus.woodstox</groupId>
-    		<artifactId>woodstox-core-lgpl</artifactId>
-    		<version>4.0.9</version>
-		</dependency>    	
-        <dependency>
-        	<groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>1.3.1</version>
-            <type>jar</type>
-            <scope>compile</scope>
-		</dependency>
-		
+    		<version>3.1.4</version>
+		</dependency>		
 	</dependencies>
 </project>

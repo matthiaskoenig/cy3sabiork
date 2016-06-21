@@ -55,7 +55,10 @@ import org.cy3sabiork.SabioQueryResult;
 import org.cy3sabiork.SabioSBMLReader;
 
 import netscape.javascript.JSObject;
-// import com.sun.webkit.dom.JSObject;
+// http://mvnrepository.com/artifact/com.sun.webkit/webview-deps/1.3
+
+// import org.cy3sabiork.gui.JSObject;
+//import com.sun.webkit.dom.JSObject;
 
 
 // TODO: get terms and respective suggestions from file, i.e.
@@ -503,7 +506,7 @@ public class QueryFXMLController implements Initializable{
                 	if (newState == State.SUCCEEDED) {
                 		System.out.println("JavaScript object attached.");
                         JSObject win = (JSObject) webEngine.executeScript("window");
-                        win.setMember("app", new JavaApp());                
+                        win.setMember("app", new JavaApp());                             
                 	}
                 }
             }

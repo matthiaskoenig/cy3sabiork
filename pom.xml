@@ -37,6 +37,7 @@
 			<name>Cytoscape Snapshots</name>
 			<url>http://code.cytoscape.org/nexus/content/repositories/snapshots/</url>
 		</repository>
+		
 		<repository>
 			<id>cytoscape_releases</id>
 			<snapshots>
@@ -48,6 +49,19 @@
 			<name>Cytoscape Releases</name>
 			<url>http://code.cytoscape.org/nexus/content/repositories/releases/</url>
 		</repository>
+		
+		<repository>
+			<id>maven-central</id>
+			<name>Maven central repository</name>
+			<url>http://repo.maven.apache.org/maven2/</url>
+		</repository>  
+		
+    	<repository>
+			<id>biojava-maven-repo</id>
+			<name>BioJava repository</name>
+			<url>https://github.com/biojava/maven-repo/raw/master/</url>			
+		</repository>
+		
 		<repository>
     		<id>ebi-repo</id>
     		<name>The EBI internal repository</name>
@@ -55,16 +69,18 @@
     		<releases><enabled>true</enabled></releases>
     		<snapshots><enabled>false</enabled></snapshots>
     	</repository>
-    	<repository>
-		    <id>biojava-legacy-repo</id>
-		    <name>BioJava's Git based legacy maven repo</name>
-		    <url>https://github.com/biojava/maven-repo/raw/master/</url>
-		</repository>
-    	<repository>
+		
+		<repository>
     		<id>in-project</id>
     		<name>In project repository</name>
     		<url>file://${project.basedir}/lib</url>
 		</repository>
+		
+		<repository>
+		     <id>repository.jboss.org-public</id>
+		     <name>JBoss.org Maven repository</name>
+		     <url>https://repository.jboss.org/nexus/content/groups/public</url>
+    	</repository> 
   	</repositories>
 
 	<build>
@@ -97,7 +113,7 @@
 						<Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>!${bundle.namespace}.*</Export-Package>
-						<Import-Package>org.cy3sbml.*;version="0.1.8";</Import-Package>
+						<Import-Package>org.cy3sbml.*;version="0.1.9";</Import-Package>
 						<Import-Package>netscape.javascript</Import-Package>
 						<Import-Package>*;resolution:=optional</Import-Package>
 						<Private-Package>${bundle.namespace}.*</Private-Package>
@@ -204,7 +220,7 @@
 			<scope>provided</scope>
 		</dependency>
 		
-		<!-- 3rd party dependency -->
+		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -215,6 +231,7 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.12</version>
 		</dependency>
+		
 		
 		<!--  Jersey RESTful -->
 		<dependency>
@@ -229,10 +246,16 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
+		
 		
 		<!--  netscape.javascript -->
 		<dependency>
@@ -260,7 +283,6 @@
 			<version>0.1.9</version>
 		</dependency> 
   		
-  		
   		<dependency>
   			<groupId>cy3sbml-dep</groupId>
   			<artifactId>jsbml</artifactId>
@@ -273,19 +295,7 @@
   		</dependency>
   		  
   		 <!-- JSBML dependencies -->
-  		 <!-- 
   		 <dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-1.2-api</artifactId>
-			<version>2.3</version>
-		</dependency>
-		 -->
-		<dependency>
 			<groupId>com.fasterxml.woodstox</groupId>
 			<artifactId>woodstox-core</artifactId>
 			<version>5.0.1</version>
@@ -295,17 +305,37 @@
 			<artifactId>jigsaw</artifactId>
 			<version>2.2.6</version>
 		</dependency>
+		<!--
+		<dependency>
+   			<groupId>cy3sbml-dep</groupId>
+    		<artifactId>jigsaw-dateParser</artifactId>
+    		<version>0.1</version>
+   		</dependency> 
+   		-->
 		<dependency>
 			<groupId>org.biojava</groupId>
 			<artifactId>biojava-ontology</artifactId>
 			<version>4.0.0</version>
+			<exclusions>
+			      <exclusion> 
+			        <groupId>org.apache.logging.log4j</groupId>
+			        <artifactId>log4j-slf4j-impl</artifactId>
+			      </exclusion>
+			      <exclusion> 
+			        <groupId>org.apache.logging.log4j</groupId>
+			        <artifactId>log4j-core</artifactId>
+			      </exclusion>
+			      <exclusion> 
+			        <groupId>org.apache.logging.log4j</groupId>
+			        <artifactId>log4j-api</artifactId>
+			      </exclusion>
+		    </exclusions> 
 		</dependency>
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
 			<version>1.3.1</version>
 			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.staxmate</groupId>
@@ -317,7 +347,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<type>jar</type>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mangosdk.spi</groupId>
@@ -333,6 +362,7 @@
     		<groupId>org.codehaus.woodstox</groupId>
     		<artifactId>stax2-api</artifactId>
     		<version>3.1.4</version>
-		</dependency>		
+		</dependency>
+			
 	</dependencies>
 </project>

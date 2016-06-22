@@ -1,6 +1,6 @@
 package org.cy3sabiork.oven;
 
-import java.awt.image.SampleModel;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;

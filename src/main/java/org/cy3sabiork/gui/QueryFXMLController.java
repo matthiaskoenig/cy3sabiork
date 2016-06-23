@@ -1,14 +1,10 @@
 package org.cy3sabiork.gui;
 
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
 import javax.swing.SwingUtilities;
-
 
 import javafx.concurrent.Worker.State;
 
@@ -46,15 +42,14 @@ import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import org.cytoscape.util.swing.OpenBrowser;
+import netscape.javascript.JSObject;
 
+import org.cytoscape.util.swing.OpenBrowser;
 import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioKineticLaw;
 import org.cy3sabiork.SabioQuery;
 import org.cy3sabiork.SabioQueryResult;
 import org.cy3sabiork.SabioSBMLReader;
-
-import netscape.javascript.JSObject;
 
 
 /** 
@@ -69,21 +64,8 @@ import netscape.javascript.JSObject;
  */
 @SuppressWarnings("restriction")
 public class QueryFXMLController implements Initializable{
-		
-	// minimal logger for the GUI
-	// TODO: refactor the logger in a separate class
-	public static final String LOG_INFO = "[INFO]";
-	public static final String LOG_WARNING = "[WARNING]";
-	public static final String LOG_ERROR = "[ERROR]";
-	public final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-	
-	public OpenBrowser openBrowser;
-	public SabioSBMLReader sbmlReader;
-	
-	
-	public enum LogType {
-		INFO, WARNING, ERROR, DEBUG
-	}
+	private OpenBrowser openBrowser;
+	private SabioSBMLReader sbmlReader;
 	
 	// browser
 	@FXML private ImageView imageSabioLogo;
@@ -93,6 +75,7 @@ public class QueryFXMLController implements Initializable{
 	
 	// -- Log --
 	@FXML private TextArea log;
+	private Logger logger;
 	
 	// --- Query Builder ---
     @FXML private TextField keyword;
@@ -131,7 +114,6 @@ public class QueryFXMLController implements Initializable{
     Thread queryThread = null;
     
     public void initData(OpenBrowser openBrowser, SabioSBMLReader sbmlReader){
-    	System.out.println("QueryFXMLController data initialized.");
     	this.openBrowser = openBrowser;
     	this.sbmlReader = sbmlReader;
     }
@@ -144,18 +126,18 @@ public class QueryFXMLController implements Initializable{
     	String searchTerm = term.getText();
     	
     	if (selectedItem == null){
-    		logWarning("No keyword selected. Select keyword and search term in the Query Builder.");
+    		logger.warn("No keyword selected. Select keyword and search term in the Query Builder.");
     		return;
     	}
     	
     	String addition = selectedItem + ":\"" + searchTerm + "\"";
     	String query = queryText.getText();
     	if (searchTerm.length() == 0){
-    		logWarning("No search term provided. Select keyword and search term in the Query Builder.");
+    		logger.warn("No search term provided. Select keyword and search term in the Query Builder.");
     		return;
     	}
     	if (query.contains(addition)){
-    		logInfo("keyword:term already in query.");
+    		logger.info("keyword:term already in query.");
     		return;
     	}
     	
@@ -164,7 +146,7 @@ public class QueryFXMLController implements Initializable{
     	} else {
     		queryText.setText(SabioQuery.PREFIX_QUERY + addition);
     	}
-    	logInfo("<" + addition +"> added to query");
+    	logger.info("<" + addition +"> added to query");
     }
     
     /**
@@ -173,12 +155,12 @@ public class QueryFXMLController implements Initializable{
     @FXML protected void handleAddEntryAction(ActionEvent event) {
     	String text = entry.getText();
     	if (text == null || text.length() == 0){
-    		logWarning("A list of Kinetic Law Ids is required.");
+    		logger.warn("A list of Kinetic Law Ids is required.");
     		return;
     	}
     	HashSet<Integer> ids = parseIds(text);
     	if (ids.isEmpty()){
-    		logError("No Kinetic Law Ids could be parsed from input: <" + entry.getText() + ">. Ids should be separated by ' ', ',', or ';'.");
+    		logger.error("No Kinetic Law Ids could be parsed from input: <" + entry.getText() + ">. Ids should be separated by ' ', ',', or ';'.");
     	}
 	
     	// generate query from ids
@@ -233,17 +215,17 @@ public class QueryFXMLController implements Initializable{
         		// information about long running full queries
         		if (queryString.startsWith(SabioQuery.PREFIX_QUERY)){
         			
-        			logInfo("GET COUNT <"+ queryString + ">");
+        			logger.info("GET COUNT <"+ queryString + ">");
                 	
                 	Integer count = SabioQuery.performCountQuery(queryString);
                 	setEntryCount(count);
-                	logInfo("<" + count + "> Kinetic Law Entries for query in SABIO-RK.");
+                	logger.info("<" + count + "> Kinetic Law Entries for query in SABIO-RK.");
         		}
             	
             	// do the real query
         		long startTime = System.currentTimeMillis();
-        		logInfo("GET <"+ queryString + ">");
-        		logInfo("... waiting for SABIO-RK response ...");
+        		logger.info("GET <"+ queryString + ">");
+        		logger.info("... waiting for SABIO-RK response ...");
         		queryResult = SabioQuery.performQuery(queryString);
         		Integer restReturnStatus = queryResult.getStatus();
         		long endTime = System.currentTimeMillis();
@@ -255,14 +237,14 @@ public class QueryFXMLController implements Initializable{
                     	statusCode.setText(restReturnStatus.toString());
                 		if (restReturnStatus != 200){
                 			if (restReturnStatus == 404){
-                				logWarning("No kinetic laws found for query in SABIO-RK.");
+                				logger.warn("No kinetic laws found for query in SABIO-RK.");
                 			}
-                			logWarning("SABIO-RK returned status <" + restReturnStatus + ">");
+                			logger.warn("SABIO-RK returned status <" + restReturnStatus + ">");
                 			statusCode.setStyle("-fx-fill: red;");
                 			progressIndicator.setStyle("-fx-progress-color: red;");
                 		}else {
                 			// successful
-                			logInfo("SABIO-RK returned status <" + restReturnStatus + "> after " + duration + " [ms]");
+                			logger.info("SABIO-RK returned status <" + restReturnStatus + "> after " + duration + " [ms]");
                 			
                 			// handle empty test call
                 			final ObservableList<SabioKineticLaw> data;
@@ -289,7 +271,7 @@ public class QueryFXMLController implements Initializable{
     }
     
     @FXML protected void handleResetAction(ActionEvent event) {
-    	logInfo("Query information cleared.");
+    	logger.info("Query information cleared.");
     	queryText.clear();
     	keyword.clear();
     	term.clear();
@@ -312,34 +294,33 @@ public class QueryFXMLController implements Initializable{
      * Load the SABIO-RK entries in Cytoscape.
      */
     @FXML protected void handleLoadAction(ActionEvent event) {
-    	logInfo("Loading Kinetic Laws in Cytoscape ...");
+    	logger.info("Loading Kinetic Laws in Cytoscape ...");
     	
     	if (sbmlReader != null){
     		String sbml = queryResult.getSBML();
     		if (sbml != null){
-    			logInfo("... loading ...");
+    			logger.info("... loading ...");
     			sbmlReader.loadNetworkFromSBML(sbml);	
     		} else {
-    			logError("No SBML in request result.");
+    			logger.error("No SBML in request result.");
     		}
     	} else {
-    		logError("No SBMLReader available in controller.");;
+    		logger.error("No SBMLReader available in controller.");;
     	}
     }
     
-    
-    
+    // --------------------------------------------------------------------
     // JavaScript interface object
+    // --------------------------------------------------------------------
     public class JavaApp {
     	public String query;
     	
     	public void setQuery() {
-            logInfo("<Upcall WebView> : "+ query);
+            logger.info("<Upcall WebView> : "+ query);
             clearButton.fire();
             queryText.setText(query);
         }
     }
-    
     
     // --------------------------------------------------------------------
     // GUI helpers
@@ -354,7 +335,7 @@ public class QueryFXMLController implements Initializable{
     /** Get information for KineticLaw in WebView. */
 	private void setInfoForKineticLaw(Integer kid){
 		String lawURI = SabioQuery.PREFIX_KINETIC_LAW_INFO + kid.toString();
-		logInfo("Load information for Kinetic Law <" + kid + ">");
+		logger.info("Load information for Kinetic Law <" + kid + ">");
 		webView.getEngine().load(lawURI);
 	}
     
@@ -405,14 +386,14 @@ public class QueryFXMLController implements Initializable{
     
     private void openURLinExternalBrowser(String text){
     	if (openBrowser != null){
-	    	logInfo("Open in external browser <" + text +">");    		  
+	    	logger.info("Open in external browser <" + text +">");    		  
     		SwingUtilities.invokeLater(new Runnable() {
     		     public void run() {
     		    	 openBrowser.openURL(text);    	 
     		     }
     		});	 
         } else {
-       	 	logError("No external browser available.");
+       	 	logger.error("No external browser available.");
         }
     }
     
@@ -421,6 +402,8 @@ public class QueryFXMLController implements Initializable{
     // --------------------------------------------------------------------
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		logger = new Logger(this.log);
+		
 		
 		imageSabioLogo.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/header-sabiork.png")));
 		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/search-sabiork.png")));
@@ -632,37 +615,11 @@ public class QueryFXMLController implements Initializable{
         		Integer kineticLaw = Integer.parseInt(t);
         		ids.add(kineticLaw);
         	} catch (NumberFormatException e) {
-        		logError("Kinetic Law Id could not be parsed from token: <" + t + ">");
+        		logger.error("Kinetic Law Id could not be parsed from token: <" + t + ">");
         	}
     	}
     	return ids;
     }
 	
-    // --- LOGGING ------------------------------------------------------------
-    private void logText(String text, LogType logType){
-    	Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-            	Calendar now = Calendar.getInstance();            	
-            	String newText = "[" + dateFormat.format(now.getTime()) + " " + logType.toString() + "] " + text;  
-            	log.setText(newText + "\n" + log.getText());
-            	System.out.println(newText);
-            }
-        });  	
-    }
-     
-    private void logError(String text){
-    	logText(text, LogType.ERROR);
-    }
-    private void logWarning(String text){
-    	logText(text, LogType.WARNING);
-    }
-    private void logDebug(String text){
-    	logText(text, LogType.DEBUG);
-    }
-    private void logInfo(String text){
-    	logText(text, LogType.INFO);
-    }
-    // ------------------------------------------------------------------------
-	
+
 }

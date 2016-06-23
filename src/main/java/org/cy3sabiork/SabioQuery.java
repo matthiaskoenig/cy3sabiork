@@ -1,6 +1,9 @@
 package org.cy3sabiork;
 
 import java.net.URI;
+import java.util.Collection;
+import java.util.Set;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
@@ -105,4 +108,23 @@ public class SabioQuery {
 		}
 		return count;
 	}
+	
+	/** Generate query from ids. */
+	public static String queryStringFromIds(Collection<Integer> ids){
+		
+		if (ids.size() == 1){
+			return (SabioQuery.PREFIX_LAW + ids.iterator().next());	
+		} else {
+			String idText = null;
+			for (Integer kid: ids){
+				if (idText == null){
+					idText = kid.toString();
+				} else {
+					idText += "," + kid.toString();
+				}
+			}
+			return (SabioQuery.PREFIX_LAWS + idText);
+	    }
+	}
+	
 }

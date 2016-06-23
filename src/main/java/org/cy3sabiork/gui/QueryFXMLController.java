@@ -158,25 +158,16 @@ public class QueryFXMLController implements Initializable{
     		logger.warn("A list of Kinetic Law Ids is required.");
     		return;
     	}
+  
+    	// parse ids
     	HashSet<Integer> ids = SabioKineticLaw.parseIds(text);
     	if (ids.isEmpty()){
     		logger.error("No Kinetic Law Ids could be parsed from input: <" + entry.getText() + ">. Ids should be separated by ' ', ',', or ';'.");
+    		return;
     	}
-	
-    	// generate query from ids
-		if (ids.size() == 1){
-			queryText.setText(SabioQuery.PREFIX_LAW + ids.iterator().next());	
-		} else {
-			String idText = null;
-			for (Integer kid: ids){
-				if (idText == null){
-					idText = kid.toString();
-				} else {
-					idText += "," + kid.toString();
-				}
-			}
-			queryText.setText(SabioQuery.PREFIX_LAWS + idText);    			
-	    }
+    	
+    	// query for ids
+    	queryText.setText(SabioQuery.queryStringFromIds(ids));
     }
     
     /**
@@ -206,15 +197,13 @@ public class QueryFXMLController implements Initializable{
         		// query number of entries in case of q-Query to give
         		// information about long running full queries
         		if (queryString.startsWith(SabioQuery.PREFIX_QUERY)){
-        			
         			logger.info("GET COUNT <"+ queryString + ">");
-                	
                 	Integer count = SabioQuery.performCountQuery(queryString);
                 	setEntryCount(count);
                 	logger.info("<" + count + "> Kinetic Law Entries for query in SABIO-RK.");
         		}
             	
-            	// do the real query
+            	// do real query
         		long startTime = System.currentTimeMillis();
         		logger.info("GET <"+ queryString + ">");
         		logger.info("... waiting for SABIO-RK response ...");

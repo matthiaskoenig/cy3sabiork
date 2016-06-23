@@ -12,13 +12,16 @@ import org.cytoscape.work.TaskIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/** Helper class to provide SBML reader functionality. */
 public class SabioSBMLReader {
 	private static final Logger logger = LoggerFactory.getLogger(CyActivator.class);
 	
 	private LoadNetworkFileTaskFactory factory;
+	@SuppressWarnings("rawtypes")
 	private SynchronousTaskManager taskManager;
 	
 	/* Helper class to read SBML graphs. */
+	@SuppressWarnings("rawtypes")
 	public SabioSBMLReader(LoadNetworkFileTaskFactory factory, SynchronousTaskManager taskManager){
 		this.factory = factory;
 		this.taskManager = taskManager;
@@ -26,10 +29,7 @@ public class SabioSBMLReader {
 	
 	/** Create Cytoscape graphs from SBML string. */
 	public void loadNetworkFromSBML(String sbml){
-		logger.info("Load SBML for kinetic information");
-		// InputStream instream = new ByteArrayInputStream(sbml.getBytes(StandardCharsets.UTF_8));
-		
-		// Load the network via a LoadNetworkFileTaskFactory
+		logger.debug("Load SBML for kinetic information");
 		try{
 			// temp file
     	    File temp = File.createTempFile("sabiork-temp", ".xml"); 
@@ -40,11 +40,6 @@ public class SabioSBMLReader {
     	    // execute task
     		TaskIterator taskIterator = factory.createTaskIterator(temp);
     		taskManager.execute(taskIterator);
-    		
-    		// Creates a task to read the SBML file
-    		
-    		// SBMLReaderTask sbmlReaderTask = new SBMLReaderTask(instream, null, networkFactory, viewFactory, viewManager);
-    		// TaskIterator taskIterator = new TaskIterator(sbmlReaderTask);
     		
     	}catch(IOException e){
     	    e.printStackTrace();

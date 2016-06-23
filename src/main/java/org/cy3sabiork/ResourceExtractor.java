@@ -1,6 +1,5 @@
 package org.cy3sabiork;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,24 +8,20 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-
 
 /**
  * Class extracts the bundle resources to given app directory.
  * This provides access to the local resources via 
  * file:// uris. 
- * Required to provide JavaFX access to bundle resources, which
- * are currently not supported. 
+ * Required to allow JavaFX access to bundle resources. JavaFX does currently
+ * not support the acces via bundle: uris.
  */
 public class ResourceExtractor {
-	/* Resources made available via the ResourceExtractor */
+	/* Resources made available via the ResourceExtractor. */
 	public final String GUI_RESOURCES = "/gui/";   
 	
 	private static File appDirectory;
@@ -155,48 +150,5 @@ public class ResourceExtractor {
 			}	
 		}
 		
-	}
-	
-	
-		
-	private final void deleteAll(final File f) {
-		if(f.isDirectory()) {
-			final File[] files = f.listFiles();
-			Arrays.stream(files).forEach(file->deleteAll(file));
-		}
-		f.delete();
-	}
-
-	/* Handling zip resources. */
-	private void unzipTemplate(final URL source, final File destDir) throws IOException {
-
-		destDir.mkdir();
-		final ZipInputStream zipIn = new ZipInputStream(source.openStream());
-
-		ZipEntry entry = zipIn.getNextEntry();
-		while (entry != null) {
-			final String filePath = destDir.getPath() + File.separator + entry.getName();
-			if (!entry.isDirectory()) {
-				unzipEntry(zipIn, filePath);
-			} else {
-				final File dir = new File(filePath);
-				dir.mkdir();
-			}
-			zipIn.closeEntry();
-			entry = zipIn.getNextEntry();
-		}
-		zipIn.close();
-	}
-
-	private final void unzipEntry(final ZipInputStream zis, final String filePath) throws IOException {
-		final byte[] buffer = new byte[4096];
-		final BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
-		int read = 0;
-		while ((read = zis.read(buffer)) != -1) {
-			bos.write(buffer, 0, read);
-		}
-		bos.close();
-	}
-	
-	
+	}	
 }

@@ -1,7 +1,5 @@
 package org.cy3sabiork.oven;
 
-import org.cy3sabiork.gui.Browser;
-
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;

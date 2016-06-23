@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
  * 		 (client connection building and init creates additional overhead)
  */
 
-
 public class SabioQuery {
 	// private static final Logger logger = LoggerFactory.getLogger(SabioQuery.class);
 	public static final String SABIORK_RESTFUL_URL = "http://sabiork.h-its.org/sabioRestWebServices";
@@ -88,7 +87,7 @@ public class SabioQuery {
 	}
 	
 	/**
-	 * Performs query for count of kineticLaws.
+	 * Perform query for count of kineticLaws.
 	 */
 	public static Integer performCountQuery(String query){
 		

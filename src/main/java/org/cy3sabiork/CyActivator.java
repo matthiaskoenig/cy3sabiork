@@ -22,9 +22,8 @@ import org.cytoscape.work.SynchronousTaskManager;
 
 import org.cy3sbml.BundleInformation;
 import org.cy3sbml.SBMLReaderTask;
-import org.cy3sabiork.gui.SabioPanel;
 import org.cy3sabiork.SabioAction;
-
+import org.cy3sabiork.oven.SabioPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

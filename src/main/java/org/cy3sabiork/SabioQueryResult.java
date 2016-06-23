@@ -1,23 +1,8 @@
 package org.cy3sabiork;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
 import javax.ws.rs.core.Response;
 import javax.xml.stream.XMLStreamException;
-
-import org.sbml.jsbml.JSBML;
-import org.sbml.jsbml.KineticLaw;
-import org.sbml.jsbml.Model;
-import org.sbml.jsbml.Reaction;
-import org.sbml.jsbml.SBMLDocument;
-
-import javafx.beans.InvalidationListener;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 
 /**
  * Result of the given web service query.

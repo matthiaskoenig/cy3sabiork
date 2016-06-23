@@ -1,8 +1,7 @@
-package org.cy3sabiork;
+package org.cy3sabiork.oven;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,9 +10,9 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
+
+import org.cy3sabiork.SabioQuery;
 
 
 /**

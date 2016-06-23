@@ -55,24 +55,27 @@ import org.cy3sabiork.SabioQueryResult;
 import org.cy3sabiork.SabioSBMLReader;
 
 import netscape.javascript.JSObject;
-// http://mvnrepository.com/artifact/com.sun.webkit/webview-deps/1.3
-
-// import org.cy3sabiork.gui.JSObject;
-//import com.sun.webkit.dom.JSObject;
 
 
-// TODO: get terms and respective suggestions from file, i.e.
-//		restrict the keywords and searchTerms to available values
-// TODO: add example queries in HTML
-
+/** 
+ * The javafx controller for the GUI.
+ * 
+ * The GUI is created with JavaFX SceneBuilder from the 
+ *  /gui/query.fxml
+ * For GUI changes load the fxml in the SceneBuilder and update it.
+ * 
+ * The HTML part can be debugged separately, i.e. with respective 
+ * HTML/JS/CSS tools.
+ */
 @SuppressWarnings("restriction")
 public class QueryFXMLController implements Initializable{
 		
-	// minimal logger
+	// minimal logger for the GUI
+	// TODO: refactor the logger in a separate class
 	public static final String LOG_INFO = "[INFO]";
 	public static final String LOG_WARNING = "[WARNING]";
 	public static final String LOG_ERROR = "[ERROR]";
-	public final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss"); // "yyyy/MM/dd HH:mm:ss"
+	public final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 	
 	public OpenBrowser openBrowser;
 	public SabioSBMLReader sbmlReader;
@@ -91,10 +94,9 @@ public class QueryFXMLController implements Initializable{
 	// -- Log --
 	@FXML private TextArea log;
 	
-	
 	// --- Query Builder ---
     @FXML private TextField keyword;
-    @FXML private ListView keywordList;
+    @FXML private ListView<String> keywordList;
     @FXML private TextField term;
     @FXML private Text termDescription;
     @FXML private Button addKeywordButton;
@@ -349,6 +351,13 @@ public class QueryFXMLController implements Initializable{
 		webView.getEngine().load(infoURI);
     }
     
+    /** Get information for KineticLaw in WebView. */
+	private void setInfoForKineticLaw(Integer kid){
+		String lawURI = SabioQuery.PREFIX_KINETIC_LAW_INFO + kid.toString();
+		logInfo("Load information for Kinetic Law <" + kid + ">");
+		webView.getEngine().load(lawURI);
+	}
+    
     /** Focus given scene Node. */
     private void focusNode(Node node){
         Platform.runLater(new Runnable() {
@@ -461,12 +470,25 @@ public class QueryFXMLController implements Initializable{
 	            new ChangeListener<SabioKineticLaw>() {
 	                public void changed(ObservableValue<? extends SabioKineticLaw> ov, 
 	                    SabioKineticLaw oldValue, SabioKineticLaw newValue) {
-	                		Integer kid = newValue.getId();	
-	                		String lawURI = SabioQuery.PREFIX_KINETIC_LAW_INFO + kid.toString();
-	                		logInfo("Load information for Kinetic Law <" + kid + ">");
-	                		webView.getEngine().load(lawURI);
+	                		Integer kid = newValue.getId();
+	                		setInfoForKineticLaw(kid);
 	            }
 	        });
+		
+		entryTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+		    @Override 
+		    public void handle(MouseEvent event) {
+		        if (event.isPrimaryButtonDown() && event.getClickCount() == 1) {
+		        	Object selected = entryTable.getSelectionModel().getSelectedItem();
+		        	if (selected != null){
+		        		Integer kid = ((SabioKineticLaw) selected).getId();
+		        		setInfoForKineticLaw(kid);
+		        	}                   
+		        }
+		    }
+		});
+		
+
 		
 		//-----------------------
 		// Webengine & Webview

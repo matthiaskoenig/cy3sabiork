@@ -1,3 +1,4 @@
+
 package org.cy3sabiork.oven;
 
 import java.applet.Applet;
@@ -111,6 +112,7 @@ public abstract class JSObject {
      * @return JSObject for the window containing the given applet.
      */
     public static JSObject getWindow(Applet applet) throws JSException {
+
         throw new JSException("Unexpected error: This method should not be used unless loaded from plugin.jar");
 
     }

@@ -1,4 +1,4 @@
-package org.cy3sabiork.gui;
+package org.cy3sabiork.oven;
 
 import java.awt.Font;
 import java.io.IOException;

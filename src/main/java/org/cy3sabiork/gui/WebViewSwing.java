@@ -67,12 +67,9 @@ public class WebViewSwing {
 			
 			FXMLLoader loader = new FXMLLoader(WebViewSwing.class.getResource("/gui/query.fxml"));
 			ScrollPane root = loader.load();
-			// ScrollPane root = FXMLLoader.load(WebViewSwing.class.getResource("/gui/query.fxml"));
 
 			QueryFXMLController controller = loader.getController();
 			controller.initData(openBrowser, sbmlReader);
-			
-			
 		    Scene scene = new Scene(root);
 		    
 		    // from appDirectory
@@ -101,14 +98,20 @@ public class WebViewSwing {
         });
     }
     
-    /** Testing the GUI without Cytoscape specific functionality. */
+    /** 
+     * Testing the GUI without Cytoscape specific functionality.
+     * Run this main to use the SABIO-RK webservice without the
+     * Cytoscape backend.
+     * Allows to test functionality which currently cannot be backed
+     * in the OSGI bundles. 
+     */
     public static void main(String[] args) {
-    	// ! Necessary to provide access to file resources in a consistent
+    	// It is ecessary to provide access to file resources in a consistent
     	// way in bundle and non-bundle context.
-    	// This is handled by the ResourceExtractor.
+    	// The solution is the use of the ResourceExtractor to use local files.
+    	
     	File appDirectory = new File("src/main/resources");
     	ResourceExtractor.setAppDirectory(appDirectory);
-    	System.out.println(appDirectory.getAbsolutePath());
     	
     	// GUI launch without Cytoscape
     	launch(null, null, null);

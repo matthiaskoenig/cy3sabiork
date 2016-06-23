@@ -1,9 +1,8 @@
 package org.cy3sabiork;
 
-import javafx.beans.property.SimpleStringProperty;
-
 import java.util.ArrayList;
-
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javax.xml.stream.XMLStreamException;
 
 import org.sbml.jsbml.JSBML;
@@ -12,12 +11,9 @@ import org.sbml.jsbml.Model;
 import org.sbml.jsbml.Reaction;
 import org.sbml.jsbml.SBMLDocument;
 
-import javafx.beans.property.SimpleIntegerProperty;
-
 
 @SuppressWarnings("restriction")
 public class SabioKineticLaw {
-	
 	private final SimpleIntegerProperty count;
     private final SimpleIntegerProperty id;
     private final SimpleStringProperty organism;
@@ -49,8 +45,11 @@ public class SabioKineticLaw {
     	return reaction.get();
     }
     
-	/** Read the kineticLaws from the given SBML; 
-	 * @throws XMLStreamException */
+	/** 
+	 * Read SabioKineticLaws from given SBML. 
+	 * 
+	 * Information to populate the results panel is parsed here. 
+	 */
 	public static ArrayList<SabioKineticLaw> parseKineticLaws(String sbml){
 		ArrayList<SabioKineticLaw> list = new ArrayList<SabioKineticLaw>();
 		if (sbml == null){

@@ -23,7 +23,6 @@ public class SabioAction extends AbstractCyAction{
 	private OpenBrowser openBrowser;
 	private SabioSBMLReader sbmlReader;
 	
-	
 	/** 
 	 * Constructor. 
 	 * Requires functionality for open links in external browser and
@@ -65,7 +64,7 @@ public class SabioAction extends AbstractCyAction{
 		// Open JavaFX GUI
 		WebViewSwing.launch(frame, openBrowser, sbmlReader);
 		
-		// Open old dialog GUI
+		// Open old JPanel based Dialog
 		// SabioDialog.launch(frame, sbmlReader);
 	}
 	

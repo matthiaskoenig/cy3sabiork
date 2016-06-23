@@ -287,7 +287,7 @@ public class QueryFXMLController implements Initializable{
     			logger.error("No SBML in request result.");
     		}
     	} else {
-    		logger.error("No SBMLReader available in controller.");;
+    		logger.error("No SBMLReader available in controller.");
     	}
     }
     

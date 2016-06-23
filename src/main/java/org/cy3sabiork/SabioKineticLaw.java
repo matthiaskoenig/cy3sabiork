@@ -1,6 +1,8 @@
 package org.cy3sabiork;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javax.xml.stream.XMLStreamException;
@@ -43,6 +45,36 @@ public class SabioKineticLaw {
     }
     public String getReaction(){
     	return reaction.get();
+    }
+    
+    
+    /* 
+     * Parses the Kinetic Law Ids from given text string. 
+     */
+    public static HashSet<Integer> parseIds(String text){
+    	HashSet<Integer> ids = new HashSet<Integer>();
+		
+    	// unify separators
+    	text = text.replace("\n", ",");
+    	text = text.replace("\t", ",");
+    	text = text.replace(" ", ",");
+    	text = text.replace(";", ",");
+    	
+    	String[] tokens = text.split(",");
+    	for (String t : tokens){
+        	// single entry parsing
+    		if (t.length() == 0){
+    			continue;
+    		}
+    		
+        	try {
+        		Integer kineticLaw = Integer.parseInt(t);
+        		ids.add(kineticLaw);
+        	} catch (NumberFormatException e) {
+        		System.out.println("Kinetic Law Id could not be parsed from token: <" + t + ">");
+        	}
+    	}
+    	return ids;
     }
     
 	/** 

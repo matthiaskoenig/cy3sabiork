@@ -158,7 +158,7 @@ public class QueryFXMLController implements Initializable{
     		logger.warn("A list of Kinetic Law Ids is required.");
     		return;
     	}
-    	HashSet<Integer> ids = parseIds(text);
+    	HashSet<Integer> ids = SabioKineticLaw.parseIds(text);
     	if (ids.isEmpty()){
     		logger.error("No Kinetic Law Ids could be parsed from input: <" + entry.getText() + ">. Ids should be separated by ' ', ',', or ';'.");
     	}
@@ -179,18 +179,10 @@ public class QueryFXMLController implements Initializable{
 	    }
     }
     
-
     /**
-     * Query the SABIO-RK web services with the current.
-     * 
-     * Uses the current query string.
+     * Run SABIO-RK web service query.
      */
     @FXML protected void handleQueryAction(ActionEvent event) {
-    	// check if already a query thread is running
-    	// FIXME: handle overlapping queries, i.e. a query started before last finished.
-    	if (queryThread != null && queryThread.isAlive()){}
-    	
-    
     	// necessary to run long running request in separate 
     	// thread to allow GUI updates.
     	// GUI updates have to be passed to the JavaFX Thread using runLater()
@@ -267,11 +259,13 @@ public class QueryFXMLController implements Initializable{
             }
         };
         queryThread.start();
-
     }
     
+    /*
+     * Reset GUI to original state.
+     */
     @FXML protected void handleResetAction(ActionEvent event) {
-    	logger.info("Query information cleared.");
+    	logger.info("Reset GUI.");
     	queryText.clear();
     	keyword.clear();
     	term.clear();
@@ -291,11 +285,10 @@ public class QueryFXMLController implements Initializable{
     }
     
     /**
-     * Load the SABIO-RK entries in Cytoscape.
+     * Load SABIO-RK entries in Cytoscape.
      */
     @FXML protected void handleLoadAction(ActionEvent event) {
     	logger.info("Loading Kinetic Laws in Cytoscape ...");
-    	
     	if (sbmlReader != null){
     		String sbml = queryResult.getSBML();
     		if (sbml != null){
@@ -325,7 +318,6 @@ public class QueryFXMLController implements Initializable{
     // --------------------------------------------------------------------
     // GUI helpers
     // --------------------------------------------------------------------
-    
     /** Set help information. */
     private void setHelp(){
 		String infoURI = ResourceExtractor.fileURIforResource("/gui/info.html");
@@ -363,6 +355,7 @@ public class QueryFXMLController implements Initializable{
     	});	
     }
 	
+    /** Set GUI elements for query status visible. */
     private void showQueryStatus(Boolean show){
     	Platform.runLater(new Runnable() {
             @Override
@@ -375,6 +368,7 @@ public class QueryFXMLController implements Initializable{
         });
     }
     
+    /** Set progress in progress indicator. */
     private void setProgress(double progress){
     	Platform.runLater(new Runnable() {
             @Override
@@ -384,12 +378,13 @@ public class QueryFXMLController implements Initializable{
         });
     }
     
-    private void openURLinExternalBrowser(String text){
+    /** Open url in external browser. */
+    private void openURLinExternalBrowser(String url){
     	if (openBrowser != null){
-	    	logger.info("Open in external browser <" + text +">");    		  
+	    	logger.info("Open in external browser <" + url +">");    		  
     		SwingUtilities.invokeLater(new Runnable() {
     		     public void run() {
-    		    	 openBrowser.openURL(text);    	 
+    		    	 openBrowser.openURL(url);    	 
     		     }
     		});	 
         } else {
@@ -404,7 +399,7 @@ public class QueryFXMLController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		logger = new Logger(this.log);
 		
-		
+		// set images from resources
 		imageSabioLogo.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/header-sabiork.png")));
 		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/search-sabiork.png")));
 		imageHelp.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/icon-help.png")));
@@ -471,8 +466,6 @@ public class QueryFXMLController implements Initializable{
 		    }
 		});
 		
-
-		
 		//-----------------------
 		// Webengine & Webview
 		//-----------------------
@@ -480,7 +473,6 @@ public class QueryFXMLController implements Initializable{
 		setHelp();
 		webView.setZoom(1.0);
 		
-
 		// Handle all links by opening external browser
 		// http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/
 		webEngine.locationProperty().addListener(new ChangeListener<String>(){
@@ -501,9 +493,7 @@ public class QueryFXMLController implements Initializable{
                  }
          });
 
-		
-		// Handle WebView -> Java upcalls
-		// process page loading
+		// WebView Javascript -> Java upcalls using JavaApp
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener<State>() {
                 @Override
@@ -536,7 +526,6 @@ public class QueryFXMLController implements Initializable{
             public void handle(KeyEvent ke) {
 				if (ke.getCode() == KeyCode.ENTER){
 					addKeywordButton.fire();
-					
 				}
             }
         });
@@ -592,34 +581,7 @@ public class QueryFXMLController implements Initializable{
 	}
 	
 	
-    /* 
-     * Parses the Kinetic Law Ids from given text string. 
-     */
-    private HashSet<Integer> parseIds(String text){
-    	HashSet<Integer> ids = new HashSet<Integer>();
-		
-    	// unify separators
-    	text = text.replace("\n", ",");
-    	text = text.replace("\t", ",");
-    	text = text.replace(" ", ",");
-    	text = text.replace(";", ",");
-    	
-    	String[] tokens = text.split(",");
-    	for (String t : tokens){
-        	// single entry parsing
-    		if (t.length() == 0){
-    			continue;
-    		}
-    		
-        	try {
-        		Integer kineticLaw = Integer.parseInt(t);
-        		ids.add(kineticLaw);
-        	} catch (NumberFormatException e) {
-        		logger.error("Kinetic Law Id could not be parsed from token: <" + t + ">");
-        	}
-    	}
-    	return ids;
-    }
+
 	
 
 }

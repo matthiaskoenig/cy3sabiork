@@ -392,6 +392,21 @@ public class QueryFXMLController implements Initializable{
         }
     }
     
+    /* 
+	 * Check if given link is an external link.
+	 * File links, and links to kineticLawInformation are opened in the WebView.
+	 */
+	private Boolean isExternalLink(String link){
+		Boolean external = true;
+		
+		if (link.startsWith("http://sabiork.h-its.org/kineticLawEntry.jsp")){
+			external = false;
+		} else if (link.startsWith("file:///")){
+			external = false;
+		}
+		return external;
+	}
+    
     // --------------------------------------------------------------------
     // Init
     // --------------------------------------------------------------------
@@ -399,15 +414,16 @@ public class QueryFXMLController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		logger = new Logger(this.log);
 		
-		// set images from resources
+		// ---------------------------
+		// Images
+		// ---------------------------
 		imageSabioLogo.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/header-sabiork.png")));
 		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/search-sabiork.png")));
 		imageHelp.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/icon-help.png")));
 		
-		
-		setProgress(1.0);
-		
-		// ListView<String> termsListView = new ListView<String>();
+		// ---------------------------
+		// ListView of Keywords
+		// ---------------------------
 		ObservableList<String> items = FXCollections.observableArrayList (
 		    "EntryID", "Pathway", 
 		    "Tissue", "Organism", "CellularLocation",
@@ -420,7 +436,6 @@ public class QueryFXMLController implements Initializable{
 		    "SignallingEvent", "SignallingModification");
 		keywordList.setItems(items);
 	
-		
 		keywordList.getSelectionModel().selectedItemProperty().addListener(
             new ChangeListener<String>() {
                 public void changed(ObservableValue<? extends String> ov, 
@@ -444,15 +459,6 @@ public class QueryFXMLController implements Initializable{
 		tissueCol.setCellValueFactory(new PropertyValueFactory<SabioKineticLaw,String>("tissue"));
 		reactionCol.setCellValueFactory(new PropertyValueFactory<SabioKineticLaw,String>("reaction"));
 		
-		entryTable.getSelectionModel().selectedItemProperty().addListener(
-	            new ChangeListener<SabioKineticLaw>() {
-	                public void changed(ObservableValue<? extends SabioKineticLaw> ov, 
-	                    SabioKineticLaw oldValue, SabioKineticLaw newValue) {
-	                		Integer kid = newValue.getId();
-	                		setInfoForKineticLaw(kid);
-	            }
-	        });
-		
 		entryTable.setOnMousePressed(new EventHandler<MouseEvent>() {
 		    @Override 
 		    public void handle(MouseEvent event) {
@@ -465,6 +471,17 @@ public class QueryFXMLController implements Initializable{
 		        }
 		    }
 		});
+		/*
+		// SelectionChange Listener
+		entryTable.getSelectionModel().selectedItemProperty().addListener(
+	            new ChangeListener<SabioKineticLaw>() {
+	                public void changed(ObservableValue<? extends SabioKineticLaw> ov, 
+	                    SabioKineticLaw oldValue, SabioKineticLaw newValue) {
+	                		Integer kid = newValue.getId();
+	                		setInfoForKineticLaw(kid);
+	            }
+	        });
+		*/
 		
 		//-----------------------
 		// Webengine & Webview
@@ -475,25 +492,28 @@ public class QueryFXMLController implements Initializable{
 		
 		// Handle all links by opening external browser
 		// http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/
+		// FIXME: this is a bad hack, should behave similar to HyperLinkListener in JTextPane
 		webEngine.locationProperty().addListener(new ChangeListener<String>(){
              @Override
              public void changed(ObservableValue<? extends String> observable, final String oldValue, final String newValue){
-            	 	 // Links to open in external browser
-                     if (isExternalLink(newValue)){
-                         Platform.runLater(new Runnable(){
-                             @Override
-                             public void run(){
-                            	 // reload the old page
-                                 webView.getEngine().load(oldValue);
-                             }
-                         });
-                         // open the destination URl in the default browser
-                         openURLinExternalBrowser(newValue);
-                     }
+        	 	 // Links to open in external browser
+                 if (isExternalLink(newValue)){
+                     Platform.runLater(new Runnable(){
+                         @Override
+                         public void run(){
+                        	 // reload old page
+                             webView.getEngine().load(oldValue);
+                         }
+                     });
+                     // open url
+                     openURLinExternalBrowser(newValue);
                  }
+             }
          });
 
 		// WebView Javascript -> Java upcalls using JavaApp
+		// FIXME: currently not working due to netscape.javascript issue
+		//     see: https://github.com/matthiaskoenig/cy3sabiork/issues/12
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener<State>() {
                 @Override
@@ -506,14 +526,10 @@ public class QueryFXMLController implements Initializable{
                 }
             }
         );
-        //-----------------------
-		
-
-		// hide elements on first loading
-		showQueryStatus(false);
-		
-		
-		// -- KeyEvents --
+        
+		//-----------------------
+		// KeyEvents
+		//-----------------------
 		keyword.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
 				if (ke.getCode() == KeyCode.ENTER){
@@ -548,12 +564,17 @@ public class QueryFXMLController implements Initializable{
 		    @Override
 		    public void changed(ObservableValue<?> observable, Object oldValue,
 		            Object newValue) {
+		    	// FIXME: this is not working like expected
 		        log.setScrollTop(Double.MAX_VALUE); //this will scroll to the bottom
 		        //use Double.MIN_VALUE to scroll to the top
 		    }
 		});
 		
-		// Query SABIO-RK status
+		//-----------------------
+		// SabioStatus
+		//-----------------------
+		showQueryStatus(false);
+
 		setProgress(-1);
 		String status = SabioQuery.getSabioStatus();
 		if (status.equals("UP")){
@@ -561,27 +582,4 @@ public class QueryFXMLController implements Initializable{
 		}	
 	}
 	
-	// --- HELPERS ------------------------------------------------------------
-	
-	/* 
-	 * Helper function to decide which links are opened in external
-	 * browser.
-	 */
-	private Boolean isExternalLink(String link){
-		Boolean external = true;
-		
-		if (link.startsWith("http://sabiork.h-its.org/kineticLawEntry.jsp")){
-			// Kinetic law information
-			external = false;
-		} else if (link.startsWith("file:///")){
-			// Links to file resources
-			external = false;
-		}
-		return external;
-	}
-	
-	
-
-	
-
 }

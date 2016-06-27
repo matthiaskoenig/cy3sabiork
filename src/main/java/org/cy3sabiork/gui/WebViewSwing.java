@@ -42,7 +42,7 @@ public class WebViewSwing {
         
         // use values from Scene Builder
         int width = 1400;
-        int height = 1000;
+        int height = 990;
         
         final JFXPanel fxPanel = new JFXPanel();
         

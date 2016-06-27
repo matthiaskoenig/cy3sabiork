@@ -45,6 +45,7 @@ import javafx.collections.ObservableList;
 import netscape.javascript.JSObject;
 
 import org.cytoscape.util.swing.OpenBrowser;
+import org.controlsfx.control.textfield.TextFields;
 import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioKineticLaw;
 import org.cy3sabiork.SabioQuery;
@@ -437,6 +438,10 @@ public class QueryFXMLController implements Initializable{
                         focusNode(term);
             }
         });
+		
+		TextFields.bindAutoCompletion(
+	            keyword,
+	            "Hey", "Hello", "Hello World", "Apple", "Cool", "Costa", "Cola", "Coca Cola");
 		
 		// ---------------------------
 		// Table for SabioKineticLaws

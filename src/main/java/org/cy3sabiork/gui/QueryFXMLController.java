@@ -3,6 +3,7 @@ package org.cy3sabiork.gui;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.TreeSet;
 
 import javax.swing.SwingUtilities;
 
@@ -46,6 +47,7 @@ import netscape.javascript.JSObject;
 
 import org.cytoscape.util.swing.OpenBrowser;
 import org.controlsfx.control.textfield.TextFields;
+import org.cy3sabiork.QuerySuggestions;
 import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioKineticLaw;
 import org.cy3sabiork.SabioQuery;
@@ -412,19 +414,15 @@ public class QueryFXMLController implements Initializable{
 		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/search-sabiork.png")));
 		imageHelp.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/icon-help.png")));
 		
+		
+		QuerySuggestions suggestions = QuerySuggestions.loadFromResource(QuerySuggestions.RESOURCE);
+		suggestions.print();
+		TreeSet<String> keywordSet = suggestions.getKeywords();
+		
 		// ---------------------------
 		// ListView of Keywords
 		// ---------------------------
-		ObservableList<String> items = FXCollections.observableArrayList (
-		    "EntryID", "Pathway", 
-		    "Tissue", "Organism", "CellularLocation",
-		    "AnyRole", "Substrate", "Product", "Inhibitor", "Catalyst", "Cofactor", "Activator", "OtherModifier",
-		    "Enzymename", "ECNumber", 
-		    "Parametertype", "KineticMechanismType", "AssociatedSpecies",
-		    "SabioReactionID", "SabioCompoundID", "InChI", "KeggReactionID", "PubChemID",
-		    "KeggCompoundID", "ChebiID", "UniProtKB_AC", "GOTerm", "SBOTerm",
-		    "Title", "Author", "Year", "Organization", "PubMedID", "DataIdentifier",
-		    "SignallingEvent", "SignallingModification");
+		ObservableList<String> items = FXCollections.observableArrayList(keywordSet);
 		keywordList.setItems(items);
 	
 		keywordList.getSelectionModel().selectedItemProperty().addListener(
@@ -439,9 +437,7 @@ public class QueryFXMLController implements Initializable{
             }
         });
 		
-		TextFields.bindAutoCompletion(
-	            keyword,
-	            "Hey", "Hello", "Hello World", "Apple", "Cool", "Costa", "Cola", "Coca Cola");
+		TextFields.bindAutoCompletion(keyword, keywordSet);
 		
 		// ---------------------------
 		// Table for SabioKineticLaws
@@ -533,6 +529,15 @@ public class QueryFXMLController implements Initializable{
             public void handle(KeyEvent ke) {
 				if (ke.getCode() == KeyCode.ENTER){
 					focusNode(term);
+					// TODO: set keywords for searchTerm
+					String key = keyword.getText();
+					TreeSet<String> termSet = suggestions.getSuggestionsForKeyword(key);
+					
+					logger.info("Autocomplete set for <" + key + ">");
+					System.out.println(termSet);
+					TextFields.bindAutoCompletion(term, termSet);
+					
+					
 				}
             }
         });

@@ -9,93 +9,135 @@
           content="cy3sabiork: A Cytoscape app for visualization of kinetic information from SABIO-RK">
     <meta name="author" content="Matthias Koenig">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/css/main.css">
+
 
     <!-- Latest compiled and minified CSS -->
+
     <link rel="stylesheet" href="css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
     <!-- Optional theme -->
+    <!--
     <link rel="stylesheet" href="css/bootstrap-theme.min.css"
           integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+     -->
+
+    <link rel="stylesheet" href="css/cy3sabiork.css">
+
 </head>
 
 <body>
 
 <div class="container">
     <h1>cy3sabiork</h1>
-    <h2>A Cytoscape app for visualizing kinetic data from SABIO-RK</h2>
-    <div class="table-responsive">
-        <table class="table">
-            <tr><td><strong>Web services</strong></td><td><a href="http://sabiork.h-its.org/layouts/content/webservices.gsp">http://sabiork.h-its.org/layouts/content/webservices.gsp</a></td></tr>
-        <tr><td><strong>Homepage</strong></td><td><a href="https://github.com/matthiaskoenig/cy3sabiork">https://github.com/matthiaskoenig/cy3sabiork</a></td></tr>
-            <tr><td><strong>Forum</strong></td><td><a href="https://groups.google.com/forum/#!forum/cysbml-cyfluxviz">https://groups.google.com/forum/#!forum/cysbml-cyfluxviz</a></td></tr>
-            <tr><td><strong>Issues</strong></td><td><a href="https://github.com/matthiaskoenig/cy3sabiork/issues">https://github.com/matthiaskoenig/cy3sbml/issues</a></td></tr>
-            <tr><td><strong>Email</strong></td><td><a href="mailto:konigmatt@googlemail.com">konigmatt@googlemail.com</a></td></tr>
-            <tr><td><strong>Developer:</strong></td><td><a href="https://www.livermetabolism.com/contact/">Matthias K&ouml;nig</a></td></tr>
+    <p>A Cytoscape app for visualizing kinetic data from <a href="http://sabiork.h-its.org">SABIO-RK</a>.</p>
 
+        <table class="table table-striped table-condensed">
+            <tr>
+                <td><strong>Web services</strong></td>
+                <td><a href="http://sabiork.h-its.org/layouts/content/webservices.gsp">http://sabiork.h-its.org/layouts/content/webservices.gsp</a></td>
+            </tr>
+            <tr>
+                <td><strong>Homepage</strong></td>
+                <td><a href="https://github.com/matthiaskoenig/cy3sabiork">https://github.com/matthiaskoenig/cy3sabiork</a></td>
+            </tr>
+            <tr>
+                <td><strong>Forum</strong></td>
+                <td><a href="https://groups.google.com/forum/#!forum/cysbml-cyfluxviz">https://groups.google.com/forum/#!forum/cysbml-cyfluxviz</a>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Issues</strong></td>
+                <td><a href="https://github.com/matthiaskoenig/cy3sabiork/issues">https://github.com/matthiaskoenig/cy3sabiork/issues</a></td>
+            </tr>
+            <tr>
+                <td><strong>Email</strong></td>
+                <td><a href="mailto:konigmatt@googlemail.com">konigmatt@googlemail.com</a></td>
+            </tr>
+            <tr>
+                <td><strong>Developer:</strong></td>
+                <td><a href="https://www.livermetabolism.com/contact.html">Matthias K&ouml;nig</a></td>
+            </tr>
         </table>
-    </div>
 
     <h2>Introduction</h2>
-    <p><strong>cy3sabiork</strong> provides access to <a href="http://sabiork.h-its.org">SABIO-RK</a> information via web services with the typical workflow consisting of three steps:
+    <p><strong>cy3sabiork</strong> provides access to SABIO-RK information via
+        web services with the typical workflow consisting of three steps:
+    <ol>
+        <li><strong>Searching entries in SABIO-RK</strong><br/>
+            Kinetic entries are retrieved from SABIO-RK via calls to the RESTful web service or via searching the web
+            interface and exporting selected entries as SBML. Queries can be created via the Query Builder or by search
+            via Kinetic Law Ids. After building and running the query the SBML is retrieved from SABIO-RK and the
+            results table is populated with the Kinetic Law Entries for the given query. Clicking on the entries on the
+            table provides detailed information about the Kinetic Law.
+        </li>
+        <li><strong>Loading entries</strong><br/>
+            After running the query the query results can be loaded into Cytoscape. Two graphs are generated per query,
+            one for the species-reaction network, a second one for the Kinetic Information.
+        </li>
+        <li><strong>Visual exploration of results</strong><br/>
+            The kinetic graphs for the imported entries allow the exploration of the kinetic information and
+            annotations.
+        </li>
+    </ol>
+    </p>
 
-        <ol>
-    <li><strong>Searching entries in SABIO-RK</strong><br />
-        Kinetic entries are retrieved from SABIO-RK via calls to the RESTful web service or via searching the web interface and exporting selected entries as SBML. Queries can be created via the Query Builder or by search via Kinetic Law Ids. After building and running the query the SBML is retrieved from SABIO-RK and the results table is populated with the Kinetic Law Entries for the given query. Clicking on the entries on the table provides detailed information about the Kinetic Law.
-        </li>
-    <li><strong>Loading entries</strong><br />
-        After running the query the query results can be loaded into Cytoscape. Two graphs are generated per query, one for the species-reaction network, a second one for the Kinetic Information.
-        </li>
-    <li><strong>Visual exploration of results</strong><br />
-        The kinetic graphs for the imported entries allow the exploration of the kinetic information and annotations.
-    </li>
-</ol>
-</p>
     <p>
-    <img src="images/cy3sabiork-workflow.png" width="700"/>
-</p>
+        <img src="images/cy3sabiork-workflow.png" width="700"/>
+    </p>
 
-    <p>Below an overview for the kinetic information and visualization for a single SABIO-RK Kinetic Law entry. The entry 14792 for galactokinase (EC:2.7.1.6, UniProtKB:P51570) was retrieved via the web service query <a href="http://sabiork.h-its.org/sabioRestWebServices/kineticLaws/14792">http://sabiork.h-its.org/sabioRestWebServices/kineticLaws/14792</a> (<code>kineticLaws/14792</code>) and than loaded with cy3sabiork.
-        </p>
-<p>
+    <p>Below an overview for the kinetic information and visualization for a single SABIO-RK Kinetic Law entry. The
+        entry 14792 for galactokinase (EC:2.7.1.6, UniProtKB:P51570) was retrieved via the web service query <code>kineticLaws/14792</code>
+        (<a href="http://sabiork.h-its.org/sabioRestWebServices/kineticLaws/14792">http://sabiork.h-its.org/sabioRestWebServices/kineticLaws/14792</a>).
+        The kinetic information can be accessed by clicking on the entries in the results table.
+    </p>
+    <p>
         <img src="images/cy3sabiork-kineticEntry.png" width="700"/><br/>
-<ol>
-    <li>Resulting species-reaction-modifier graph for kinetic law 14792. The galacokinase enzyme catalyzes the conversion of D-Galactose + ATP → α-D-Galactose 1-phosphate + ADP (see also Substrates, Products and Modifiers in A)</li>
-    <li>kinetic graph with additional nodes for kinetic law, parameters and localization</li>
-    <li>Selecting nodes in the graphs provides access to the annotation information and links to databases. In the example the kinetic law information is displayed in the Results Panel.</li>
-    <li>MIRIAM annotations with respective links to databases are available via the Results Panel</li>
-    <li>Additional SABIO-RK annotations in XML for the experimental conditions are displayed in this section.</li>
+    <ol>
+        <li>Resulting species-reaction-modifier graph for kinetic law 14792. The galacokinase enzyme catalyzes the
+            conversion of D-Galactose + ATP → α-D-Galactose 1-phosphate + ADP (see also Substrates, Products and
+            Modifiers in A)
+        </li>
+        <li>kinetic graph with additional nodes for kinetic law, parameters and localization</li>
+        <li>Selecting nodes in the graphs provides access to the annotation information and links to databases. In the
+            example the kinetic law information is displayed in the Results Panel.
+        </li>
+        <li>MIRIAM annotations with respective links to databases are available via the Results Panel</li>
+        <li>Additional SABIO-RK annotations in XML for the experimental conditions are displayed in this section.</li>
     </ol>
     </p>
 
     <h2>Kinetic Law Entries</h2>
     <p>
-    Entries for given Kinetic Law Ids can be retrieved via the Kinetic Law Entries tab.
-        </p>
+        Entries for given Kinetic Law Ids can be retrieved via the Kinetic Law Entries tab.
+    </p>
     <p>For instance retrieving a single entry via
-    <code>kineticLaws/14792</code> or multiple entries via <code>kineticLaws?kinlawids=48020,49160,44091,48027</code>.
+        <code>kineticLaws/14792</code> or multiple entries via
+        <code>kineticLaws?kinlawids=48020,49160,44091,48027</code>.
     </p>
 
     <h2>Query Builder</span></h2>
-    <p>SABIO-RK entries can be searched based on combinations of keyword:term searches. The keywords are identical to those used in the web interface for forming queries. Multiple keyword:term fields may be combined using the AND operator to form complex queries.
-        </p><p>
-
-    For instance find all Kinetic Law Entries for spleen in Homo sapiens: <code><a class="query">Tissue:"spleen" AND Organism:"Homo sapiens"</a></code>
+    <p>SABIO-RK entries can be searched based on combinations of keyword:term searches. The keywords are identical to
+        those used in the web interface for forming queries. Multiple keyword:term fields may be combined using the AND
+        operator to form complex queries.
+    </p>
+    <p>For instance find all Kinetic Law Entries for spleen in Homo sapiens: <code><a class="query">Tissue:"spleen" AND
+        Organism:"Homo sapiens"</a></code>
     </p>
 
     <h3>Keywords</h3>
     <p>
         The following keywords may be used to form queries to search for entries:
     </p>
-    <div class="table-responsive">
-        <table class="table">
+    <div class="table-responsive table-condensed">
+        <table class="table table-striped">
             <tr>
                 <td><strong>Entry</strong></td>
                 <td></td>
             </tr>
             <tr>
                 <td><em>EntryID</em></td>
-                <td>SABIO-RK entry ID (e.g. <code><a class="query">EntryID:"123"</a></code>)</td>
+                <td>SABIO-RK entry ID (e.g. <code>EntryID:"123"</code>)</td>
             </tr>
 
             <tr>
@@ -291,7 +333,7 @@
             </tr>
         </table>
     </div>
-    
+
 </div>
 
 
@@ -322,10 +364,10 @@
                 // var text = text.replace(/"/g, '&quot;');
 
                 // attach the q-prefix
-                var query = '/searchKineticLaws/sbml?q=' + text;
+                var query = 'searchKineticLaws/sbml?q=' + text;
 
                 // debug
-                alert(query);
+                // alert(query);
 
                 // call Java code
                 app.query = query;

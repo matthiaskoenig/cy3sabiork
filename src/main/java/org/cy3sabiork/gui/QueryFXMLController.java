@@ -64,8 +64,7 @@ import org.cy3sabiork.SabioSBMLReader;
  */
 @SuppressWarnings("restriction")
 public class QueryFXMLController implements Initializable{
-	private OpenBrowser openBrowser;
-	private SabioSBMLReader sbmlReader;
+	private WebViewSwing webViewSwing;
 	
 	// browser
 	@FXML private ImageView imageSabioLogo;
@@ -92,6 +91,7 @@ public class QueryFXMLController implements Initializable{
     @FXML private TextArea queryText;
     @FXML private Button queryButton;
     @FXML private Button clearButton;
+    // @FXML private TextField history;
     
     @FXML private ProgressIndicator progressIndicator;
     @FXML private Text statusCode;
@@ -113,10 +113,6 @@ public class QueryFXMLController implements Initializable{
     private SabioQueryResult queryResult;
     Thread queryThread = null;
     
-    public void initData(OpenBrowser openBrowser, SabioSBMLReader sbmlReader){
-    	this.openBrowser = openBrowser;
-    	this.sbmlReader = sbmlReader;
-    }
     
     /** 
      * Adds keyword:searchTerm to the query.
@@ -242,6 +238,10 @@ public class QueryFXMLController implements Initializable{
                 		}
                 		time.setText(duration + " [ms]");    	
                         queryButton.setDisable(false);
+                        
+                        // add query to history
+                        WebViewSwing.queryHistory.add(queryString);
+                        logger.info("query added to history: <" + queryString +">");
                     }
                 });
         		setProgress(1);    	
@@ -278,11 +278,11 @@ public class QueryFXMLController implements Initializable{
      */
     @FXML protected void handleLoadAction(ActionEvent event) {
     	logger.info("Loading Kinetic Laws in Cytoscape ...");
-    	if (sbmlReader != null){
+    	if (webViewSwing.sbmlReader != null){
     		String sbml = queryResult.getSBML();
     		if (sbml != null){
     			logger.info("... loading ...");
-    			sbmlReader.loadNetworkFromSBML(sbml);	
+    			webViewSwing.sbmlReader.loadNetworkFromSBML(sbml);	
     		} else {
     			logger.error("No SBML in request result.");
     		}
@@ -369,11 +369,11 @@ public class QueryFXMLController implements Initializable{
     
     /** Open url in external browser. */
     private void openURLinExternalBrowser(String url){
-    	if (openBrowser != null){
+    	if (webViewSwing.openBrowser != null){
 	    	logger.info("Open in external browser <" + url +">");    		  
     		SwingUtilities.invokeLater(new Runnable() {
     		     public void run() {
-    		    	 openBrowser.openURL(url);    	 
+    		    	 webViewSwing.openBrowser.openURL(url);    	 
     		     }
     		});	 
         } else {
@@ -397,7 +397,7 @@ public class QueryFXMLController implements Initializable{
 	}
     
     // --------------------------------------------------------------------
-    // Init
+    // Initialize
     // --------------------------------------------------------------------
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -460,8 +460,8 @@ public class QueryFXMLController implements Initializable{
 		        }
 		    }
 		});
-		/*
-		// SelectionChange Listener
+		
+		// SelectionChange Listener (Important if selection via error keys change)
 		entryTable.getSelectionModel().selectedItemProperty().addListener(
 	            new ChangeListener<SabioKineticLaw>() {
 	                public void changed(ObservableValue<? extends SabioKineticLaw> ov, 
@@ -470,7 +470,6 @@ public class QueryFXMLController implements Initializable{
 	                		setInfoForKineticLaw(kid);
 	            }
 	        });
-		*/
 		
 		//-----------------------
 		// Webengine & Webview

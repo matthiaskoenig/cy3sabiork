@@ -16,15 +16,23 @@ import javafx.scene.control.ScrollPane;
 
 
 import org.cy3sabiork.ResourceExtractor;
+import org.cy3sabiork.SabioQueryHistory;
 import org.cy3sabiork.SabioSBMLReader;
 import org.cy3sabiork.gui.QueryFXMLController;
 import org.cytoscape.util.swing.OpenBrowser;
 
+/** 
+ * 
+ * TODO: make singleton class which can store the state (for history of calls)
+ * TODO: provide possibility to close
+ *
+ */
 
 @SuppressWarnings("restriction")
 public class WebViewSwing {
 	public static OpenBrowser openBrowser;
 	public static SabioSBMLReader sbmlReader;
+	public static SabioQueryHistory queryHistory;
 	
 	private static void initAndShowGUI(final JFrame parentFrame) {
         // This method is invoked on the EDT thread
@@ -33,8 +41,8 @@ public class WebViewSwing {
         dialog.setTitle("SABIO-RK Web Services");
         
         // use values from Scene Builder
-        int width = 1450;
-        int height = 940;
+        int width = 1400;
+        int height = 1000;
         
         final JFXPanel fxPanel = new JFXPanel();
         
@@ -69,7 +77,8 @@ public class WebViewSwing {
 			ScrollPane root = loader.load();
 
 			QueryFXMLController controller = loader.getController();
-			controller.initData(openBrowser, sbmlReader);
+			
+			// controller.initData();
 		    Scene scene = new Scene(root);
 		    
 		    // from appDirectory

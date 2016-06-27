@@ -37,7 +37,7 @@ public class SabioQuery {
 	 * This handles the required query cleaning/escaping and returns the
 	 * response of the query.
 	 */
-	private static Response executeQuery(String query){
+	public static Response executeQuery(String query){
 		try {
 			// Create URI after required replacements (as long as SABIO-RK has no proper encoding)
 			query = query.replace(" ", "%20");

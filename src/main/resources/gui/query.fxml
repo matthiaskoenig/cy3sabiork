@@ -79,7 +79,7 @@
                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Text>
-                              <TextArea fx:id="entry" layoutX="33.0" layoutY="44.0" prefHeight="222.0" prefWidth="200.0" />
+                              <TextArea fx:id="entry" layoutX="33.0" layoutY="44.0" prefHeight="222.0" prefWidth="200.0" wrapText="true" />
                               <ImageView fitHeight="170.0" fitWidth="350.0" layoutX="250.0" layoutY="98.0" opacity="0.66" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="https://raw.githubusercontent.com/matthiaskoenig/cy3sabiork/develop/src/main/resources/gui/images/search-sabiork.png" />

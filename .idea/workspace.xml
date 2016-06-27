@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a6c8cf9e-4828-4351-bd09-aee02d06742b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cy3sabiork/gui/QueryFXMLController.java" afterPath="$PROJECT_DIR$/src/main/java/org/cy3sabiork/gui/QueryFXMLController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/gui/info.html" afterPath="$PROJECT_DIR$/src/main/resources/gui/info.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/gui/query.fxml" afterPath="$PROJECT_DIR$/src/main/resources/gui/query.fxml" />
     </list>
     <ignored path="cy3sabiork.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,8 +29,8 @@
       <file leaf-file-name="info.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/gui/info.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="602">
-              <caret line="341" column="16" selection-start-line="341" selection-start-column="16" selection-end-line="341" selection-end-column="16" />
+            <state relative-caret-position="504">
+              <caret line="126" column="49" selection-start-line="126" selection-start-column="49" selection-end-line="126" selection-end-column="49" />
               <folding>
                 <element signature="n#style#0;n#col#0;n#colgroup#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#col#1;n#colgroup#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -308,12 +310,12 @@
       <updated>1466491719652</updated>
       <workItem from="1466491721351" duration="1230000" />
       <workItem from="1467030023654" duration="6287000" />
-      <workItem from="1467036663147" duration="423000" />
+      <workItem from="1467036663147" duration="1505000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7940000" />
+    <option name="totallyTimeSpent" value="9022000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="112" y="157" width="1710" height="1000" extended-state="0" />
@@ -390,8 +392,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/gui/info.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="341" column="16" selection-start-line="341" selection-start-column="16" selection-end-line="341" selection-end-column="16" />
+        <state relative-caret-position="504">
+          <caret line="126" column="49" selection-start-line="126" selection-start-column="49" selection-end-line="126" selection-end-column="49" />
           <folding>
             <element signature="n#style#0;n#col#0;n#colgroup#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#col#1;n#colgroup#0;n#table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />

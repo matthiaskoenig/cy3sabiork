@@ -507,9 +507,14 @@ public class QueryFXMLController implements Initializable{
                 @Override
                 public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {    
                 	if (newState == State.SUCCEEDED) {
-                		System.out.println("JavaScript object attached.");
-                        JSObject win = (JSObject) webEngine.executeScript("window");
-                        win.setMember("app", new JavaApp());                             
+                		try{
+                			JSObject win = (JSObject) webEngine.executeScript("window");
+                            win.setMember("app", new JavaApp());	
+                		} catch(NoClassDefFoundError e){
+                			System.out.println("netscape.javascript not accessible in Cytoscape: see https://groups.google.com/forum/#!topic/cytoscape-helpdesk/Sl_MwfmLTx0");
+                		}
+                		
+                                                     
                 	}
                 }
             }

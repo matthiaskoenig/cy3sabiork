@@ -32,10 +32,10 @@
     <h1>cy3sabiork</h1>
     <p>A Cytoscape app for visualizing kinetic data from <a href="http://sabiork.h-its.org">SABIO-RK</a>.</p>
 
-        <table class="table table-striped table-condensed">
+        <table class="table table-striped table-condensed table-hover">
             <colgroup>
-                <col span="1" style="width: 150;">
-                <col span="1" style="width: 350;">
+                <col span="1" style="width: 25%;">
+                <col span="1" style="width: 75%;">
             </colgroup>
             <tbody>
             <tr>
@@ -60,7 +60,7 @@
                 <td><a href="mailto:konigmatt@googlemail.com">konigmatt@googlemail.com</a></td>
             </tr>
             <tr>
-                <td><strong>Developer:</strong></td>
+                <td><strong>Developer</strong></td>
                 <td><a href="https://www.livermetabolism.com/contact.html">Matthias K&ouml;nig</a></td>
             </tr>
             </tbody>
@@ -136,10 +136,10 @@
         The following keywords may be used to form queries to search for entries:
     </p>
 
-        <table class="table table-striped table-condensed">
+        <table class="table table-striped table-condensed table-hover">
             <colgroup>
-                <col span="1" style="width: 150;">
-                <col span="1" style="width: 350;">
+                <col span="1" style="width: 25%;">
+                <col span="1" style="width: 75%;">
             </colgroup>
             <tbody>
             <tr>
@@ -147,24 +147,23 @@
                 <td></td>
             </tr>
             <tr>
-                <td><em>EntryID</em></td>
+                <td><code>EntryID</code></td>
                 <td>SABIO-RK entry ID (e.g. <code>EntryID:"123"</code>)</td>
             </tr>
-
             <tr>
                 <td><strong>Reaction/Pathway </strong></td>
                 <td></td>
             </tr>
             <tr>
-                <td><em>Pathway</em></td>
+                <td><code>Pathway</code></td>
                 <td>The name of the reaction pathway (e.g. <code>Pathway:"urea cycle"</code>)</td>
             </tr>
             <tr>
-                <td><em>KeggReactionID</em></td>
+                <td><code>KeggReactionID</code></td>
                 <td>KEGG ID for the reaction (e.g. <code>KeggReactionID:"R00782"</code>)</td>
             </tr>
             <tr>
-                <td><em>SabioReactionID</em></td>
+                <td><code>SabioReactionID</code></td>
                 <td>SABIO-RK ID for the reaction (e.g. <code>SabioReactionID:"14"</code>)</td>
             </tr>
 
@@ -173,113 +172,110 @@
                 <td></td>
             </tr>
             <tr>
-                <td><em>AnyRole</em></td>
+                <td><code>AnyRole</code></td>
                 <td>Compound found in any role in a reaction (e.g. <code>AnyRole:"oxygen"</code>)</td>
             </tr>
             <tr>
-                <td><em>Substrate</em></td>
+                <td><code>Substrate</code></td>
                 <td>Compound acting as a substrate in a reaction (e.g. <code>Substrate:"ATP"</code>)</td>
             </tr>
             <tr>
-                <td><em>Product</em></td>
+                <td><code>Product</code></td>
                 <td>Compound acting as a product in a reaction</td>
             </tr>
             <tr>
-                <td><em>Inhibitor</em></td>
+                <td><code>Inhibitor</code></td>
                 <td>Compound acting as an inhibitor modifier in a reaction</td>
             </tr>
             <tr>
-                <td><em>Catalyst</em></td>
+                <td><code>Catalyst</code></td>
                 <td>Compound acting as a catalyst modifier in a reaction</td>
             </tr>
             <tr>
-                <td><em>Cofactor</em></td>
+                <td><code>Cofactor</code></td>
                 <td>Compound acting as a cofactor in a reaction</td>
             </tr>
             <tr>
-                <td><em>Activator</em></td>
+                <td><code>Activator</code></td>
                 <td>Compound acting as an activator in a reaction</td>
             </tr>
             <tr>
-                <td><em>OtherModifier</em></td>
+                <td><code>OtherModifier</code></td>
                 <td>Compound acting as a modifier not specified above, in a reaction</td>
             </tr>
             <tr>
-                <td><em>PubChemID</em></td>
+                <td><code>PubChemID</code></td>
                 <td>PubChem ID of a compound</td>
             </tr>
             <tr>
-                <td><em>KeggID</em></td>
+                <td><code>KeggID</code></td>
                 <td>KEGG ID of a compound</td>
             </tr>
             <tr>
-                <td><em>ChebiID</em></td>
+                <td><code>ChebiID</code></td>
                 <td>Chebi ID of a compound</td>
             </tr>
             <tr>
-                <td><em>SabioCompoundID</em></td>
+                <td><code>SabioCompoundID</code></td>
                 <td></td>
             </tr>
-
             <tr>
                 <td><strong>Enzyme</strong></td>
                 <td></td>
             </tr>
             <tr>
-                <td><em>Enzymename</em></td>
+                <td><code>Enzymename</code></td>
                 <td>An enzyme may included in the search parameters by name (e.g.
                     <code>Enzymename:"galactokinase"</code>)
                 </td>
             </tr>
             <tr>
-                <td><em>ECNumber</em></td>
+                <td><code>ECNumber</code></td>
                 <td>An enzyme may included in the search parameters by EC Class number (e.g.
-                    <code>ECNumber:1.1.1.2</code>)
+                    <code>ECNumber:"1.1.1.2"</code>)
                 </td>
             </tr>
             <tr>
-                <td><em>UniProtKB_AC</em></td>
-                <td>Protein as listed in UniProtKB (e.g. <code>UniProtKB_AC:A1VCV2</code>)</td>
+                <td><code>UniProtKB_AC</code></td>
+                <td>Protein as listed in UniProtKB (e.g. <code>UniProtKB_AC:"A1VCV2"</code>)</td>
             </tr>
             <tr>
-                <td><em>EnzymeType</em></td>
+                <td><code>EnzymeType</code></td>
                 <td>Type of the enzyme, only valid queries are <code>EnzymeType:"mutant"</code> or <code>EnzymeType:"wildtype"</code>
                 </td>
             </tr>
-
             <tr>
                 <td><strong>Biological Source</strong></td>
                 <td></td>
             </tr>
             <tr>
-                <td><em>Tissue</em></td>
+                <td><code>Tissue</code></td>
                 <td>The name of the tissue (e.g. <code>Tissue:"liver"</code>)</td>
             </tr>
             <tr>
-                <td><em>Organism</em></td>
+                <td><code>Organism</code></td>
                 <td>The name of the organism (e.g. <code>Organism:"homo sapiens"</code>)</td>
             </tr>
             <tr>
-                <td><em>CellularLocation</em></td>
+                <td><code>CellularLocation</code></td>
                 <td>Location within the cell that a kinetic reaction takes place (e.g. <code>CellularLocation:"leucoplast"</code>)
                 </td>
             </tr>
-
             <tr>
                 <td><strong>Kinetic Data</strong></td>
                 <td></td>
             </tr>
             <tr>
-                <td><em>Parametertype</em></td>
+                <td><code>Parametertype</code></td>
                 <td>Experimental parameter specified in the kinetic law entry (e.g. <code>Parametertype:"Vmax"</code>)
                 </td>
             </tr>
             <tr>
-                <td><em>KineticMechanismType</em></td>
+                <td><code>KineticMechanismType</code></td>
                 <td>Mechanism for the kinetic data (e.g. <code>KineticMechanismType:"rapid equilibrium"</code>)</td>
             </tr>
             <tr>
-                <td><em>AssociatedSpecies</em></td>
+                <td><code>AssociatedSpecies</code></td>
                 <td>Species which is associated with a parameter (e.g. <code>AssociatedSpecies:"ATP"</code></td>
             </tr>
 
@@ -288,31 +284,31 @@
                 <td></td>
             </tr>
             <tr>
-                <td><em>Title</em></td>
+                <td><code>Title</code></td>
                 <td>Publication within which the kinetic law data is published, by title</td>
             </tr>
             <tr>
-                <td><em>Author</em></td>
+                <td><code>Author</code></td>
                 <td>Publication within which the kinetic law data is published, by author (e.g. <code>Author:"Shelton
                     E"</code>)
                 </td>
             </tr>
             <tr>
-                <td><em>Year</em></td>
-                <td>Year of publication (e.g. <code>"Year:2010")</code></td>
+                <td><code>Year</code></td>
+                <td>Year of publication (e.g. <code>Year:"2010")</code></td>
             </tr>
             <tr>
-                <td><em>PubMedID</em></td>
-                <td>Publication within which the kinetic law data is published, by PubMed ID (e.g. <code>PubMedID:13538975</code>)
+                <td><code>PubMedID</code></td>
+                <td>Publication within which the kinetic law data is published, by PubMed ID (e.g. <code>PubMedID:"13538975"</code>)
                 </td>
             </tr>
             <tr>
-                <td><em>InfosourceType</em></td>
+                <td><code>InfosourceType</code></td>
                 <td>Source of the data, valid queries are <code>InfosourceType:"Journal"</code> or <code>InfosourceType:"direct
                     submission"</code></td>
             </tr>
             <tr>
-                <td><em>DateSubmitted</em></td>
+                <td><code>DateSubmitted</code></td>
                 <td>Earliest possible date from which the entry exists in SABIO-RK (e.g. <code>DateSubmitted:"27/10/2010"</code>)
                 </td>
             </tr>
@@ -322,11 +318,11 @@
                 <td></td>
             </tr>
             <tr>
-                <td><em>TemperatureRange</em></td>
+                <td><code>TemperatureRange</code></td>
                 <td>Range of temperatures (e.g. <code>TemperatureRange:"[36.9 TO 37.1]"</code>)</td>
             </tr>
             <tr>
-                <td><em>pHValueRange</em></td>
+                <td><code>pHValueRange</code></td>
                 <td>Range of pH values (e.g. <code>pHValueRange:"[6.9 TO 7.1]"</code>)</td>
             </tr>
 
@@ -335,11 +331,11 @@
                 <td></td>
             </tr>
             <tr>
-                <td><em>hasKineticData</em></td>
+                <td><code>hasKineticData</code></td>
                 <td>Entry specifies a rate equation (e.g. <code>hasKineticData:"true"</code>)</td>
             </tr>
             <tr>
-                <td><em>IsRecombinant</em></td>
+                <td><code>IsRecombinant</code></td>
                 <td>Entry has recombinant data (e.g. <code>IsRecombinant:"false"</code>)</td>
             </tr>
             </tbody>

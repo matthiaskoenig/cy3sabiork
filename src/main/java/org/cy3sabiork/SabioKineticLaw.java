@@ -7,11 +7,15 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javax.xml.stream.XMLStreamException;
 
+import org.sbml.jsbml.CVTerm;
+import org.sbml.jsbml.CVTerm.Qualifier;
 import org.sbml.jsbml.JSBML;
 import org.sbml.jsbml.KineticLaw;
 import org.sbml.jsbml.Model;
+import org.sbml.jsbml.ModifierSpeciesReference;
 import org.sbml.jsbml.Reaction;
 import org.sbml.jsbml.SBMLDocument;
+import org.sbml.jsbml.Species;
 
 
 @SuppressWarnings("restriction")
@@ -101,20 +105,11 @@ public class SabioKineticLaw {
 		Model model = doc.getModel();
 		Integer count = 1;
 		for (Reaction r : model.getListOfReactions()){
-			KineticLaw law = r.getKineticLaw();
-			// FIXME: bad hack to get the id, necessary to read the XML
-			String metaId = law.getMetaId();
-			String[] tokens = metaId.split("_");
-			Integer kid = Integer.parseInt(tokens[tokens.length-1]);
-			
-			
-			// BQB_HAS_TAXON in RDF
-			String organism = "-";
-			String tissue = "-";
-			
-			String reaction = r.toString();
-			
-			r.toString();
+
+			Integer kid = getKineticLawIdFromReaction(r);
+			String organism = getOrganismFromReaction(r);
+			String tissue = getTissueFromReaction(r);
+			String reaction = getDescriptionFromReaction(r);
 			
 			list.add(new SabioKineticLaw(count, kid, organism, tissue, reaction));
 			
@@ -122,5 +117,58 @@ public class SabioKineticLaw {
 		}
 		return list;
 	}
-       
+	
+	/** Parse SABIO-RK kinetic law id from reaction. */
+	private static Integer getKineticLawIdFromReaction(Reaction r){
+		KineticLaw law = r.getKineticLaw();
+		// FIXME: bad hack to get the id, necessary to read the XML
+		String metaId = law.getMetaId();
+		String[] tokens = metaId.split("_");
+		Integer kid = Integer.parseInt(tokens[tokens.length-1]);
+		return kid;
+	}
+	
+    
+	/** Parse reaction description from reaction. */
+	private static String getDescriptionFromReaction(Reaction r){
+		String description = r.toString();
+		for (ModifierSpeciesReference modifier: r.getListOfModifiers()){
+			Species species = modifier.getSpeciesInstance();
+			if (species.isSetName()){
+				description = species.getName();
+				break;
+			}
+		}
+		return description;
+	}
+	
+	/** Parse organism information from reaction annotation. */
+	private static String getOrganismFromReaction(Reaction r){
+		// BQB_HAS_TAXON in RDF
+		String organism = "-";
+		for (CVTerm cv: r.getCVTerms()){
+			if (cv.isSetBiologicalQualifierType() && cv.getBiologicalQualifierType() == Qualifier.BQB_HAS_TAXON){
+				if (cv.getResourceCount() > 0){
+					String uri = cv.getResourceURI(0);
+					String[] tokens = uri.split("/");
+					organism = tokens[tokens.length-1];
+					break;
+				}
+			}
+		}
+		
+		return organism;
+	}
+	
+	/** 
+	 * Parse tissue information from reaction annotation. 
+	 * Currently not encoded in SBML.
+	 */
+	private static String getTissueFromReaction(Reaction r){
+		String tissue = "-";
+		return tissue;
+	}
+	
+	
+	
 }

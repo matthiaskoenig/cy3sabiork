@@ -9,6 +9,7 @@ import java.io.IOException;
 import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
 import org.cytoscape.work.SynchronousTaskManager;
 import org.cytoscape.work.TaskIterator;
+import org.cytoscape.work.TaskManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,11 +19,11 @@ public class SabioSBMLReader {
 	
 	private LoadNetworkFileTaskFactory factory;
 	@SuppressWarnings("rawtypes")
-	private SynchronousTaskManager taskManager;
+	private TaskManager taskManager;
 	
 	/* Helper class to read SBML graphs. */
 	@SuppressWarnings("rawtypes")
-	public SabioSBMLReader(LoadNetworkFileTaskFactory factory, SynchronousTaskManager taskManager){
+	public SabioSBMLReader(LoadNetworkFileTaskFactory factory, TaskManager taskManager){
 		this.factory = factory;
 		this.taskManager = taskManager;
 	}

@@ -19,7 +19,7 @@ import org.cytoscape.service.util.AbstractCyActivator;
 import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
 import org.cytoscape.util.swing.OpenBrowser;
 import org.cytoscape.work.SynchronousTaskManager;
-
+import org.cytoscape.work.TaskManager;
 import org.cy3sbml.BundleInformation;
 import org.cy3sbml.SBMLReaderTask;
 import org.cy3sabiork.SabioAction;
@@ -64,8 +64,9 @@ public class CyActivator extends AbstractCyActivator {
 			
 			// SBML reader
 			final SynchronousTaskManager synchronousTaskManager = getService(bc, SynchronousTaskManager.class);
+			final  TaskManager taskManager = getService(bc, TaskManager.class);
 			final LoadNetworkFileTaskFactory loadNetworkFileTaskFactory = getService(bc, LoadNetworkFileTaskFactory.class);
-			SabioSBMLReader sbmlReader = new SabioSBMLReader(loadNetworkFileTaskFactory, synchronousTaskManager);
+			SabioSBMLReader sbmlReader = new SabioSBMLReader(loadNetworkFileTaskFactory, taskManager);
 		
 			// init actions
 			SabioAction sabioAction = new SabioAction(cySwingApplication, openBrowser, sbmlReader);

@@ -282,7 +282,8 @@ public class QueryFXMLController implements Initializable{
     		String sbml = queryResult.getSBML();
     		if (sbml != null){
     			logger.info("... loading ...");
-    			webViewSwing.sbmlReader.loadNetworkFromSBML(sbml);	
+    			webViewSwing.sbmlReader.loadNetworkFromSBML(sbml);
+    			logger.info("Networks loaded in Cytoscape. Close Dialog for exploring.");
     		} else {
     			logger.error("No SBML in request result.");
     		}

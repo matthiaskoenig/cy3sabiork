@@ -26,7 +26,11 @@ import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.ws.rs.core.Response;
@@ -34,6 +38,35 @@ import javax.ws.rs.core.Response;
 /** Manages the available keyword suggestions. */
 public class QuerySuggestions implements Serializable {
 	public static final String RESOURCE = "/gui/suggestions.ser";
+	public static final Map<String, String> KEYWORD_MAP;
+	public static final Set<String> ENZYMETYPE_SUGGESTIONS;
+	static {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("AnyRole", "Compound");
+        map.put("Substrate", "Compound");
+        map.put("Product", "Compound");
+        map.put("Inhibitor", "Compound");
+        map.put("Catalyst", "Compound");
+        map.put("Cofactor", "Compound");
+        map.put("OtherModifier", "Compound");
+        map.put("AnyRole", "Compound");
+        map.put("Enzymename", "Enzyme");
+        map.put("PubMedID", "PubmedID");
+        map.put("KeggCompoundID", "KEGGCompoundID");
+        map.put("KeggReactionID", "KEGGReactionID");
+        map.put("SabioCompoundID", "SABIOCompoundID");
+        map.put("SabioReactionID", "SABIOReactionID");
+        map.put("ChebiID", "CHEBICompoundID");
+        map.put("PubChemID", "PUBCHEMCompoundID");
+        KEYWORD_MAP = Collections.unmodifiableMap(map);
+        
+        Set<String> set = new HashSet<String>();
+        set.add("wildtype");
+        set.add("mutant");
+        ENZYMETYPE_SUGGESTIONS = Collections.unmodifiableSet(set);
+    }
+	
+	
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -53,10 +86,8 @@ public class QuerySuggestions implements Serializable {
 			return suggestions.get(key);	
 		} else {
 			return (new TreeSet<String>());
-		}
-				
+		}			
 	}
-	
 	
 	/** Update the keyword suggestions by querying all keywords. */
 	private void update(){
@@ -68,7 +99,16 @@ public class QuerySuggestions implements Serializable {
 			
 			TreeSet<String> values = retrieveSuggestionsForField(key);
 			String tagName = key.substring(0, (key.length()-1));
+			
+			// where to store the suggestions
 			suggestions.put(tagName, values);
+			for (String keyword: KEYWORD_MAP.keySet()){
+				String skey = KEYWORD_MAP.get(keyword);
+				// System.out.println(skey + " : " + tagName);
+				if (skey.equals(tagName)){
+					suggestions.put(keyword, values);
+				}
+			}
 		}
 	}
 	
@@ -185,7 +225,7 @@ public class QuerySuggestions implements Serializable {
 		
 		QuerySuggestions suggestions = null; 
 		
-		if (false){
+		if (true){
 			// get the current values and store in RESOURCE
 			suggestions = new QuerySuggestions();
 			suggestions.saveToFile(RESOURCE);			

@@ -6,13 +6,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.DocumentBuilder;
 
 import org.cy3sabiork.gui.WebViewSwing;
-import org.cy3sbml.SBMLManager;
-import org.cy3sbml.mapping.SBML2NetworkMapper;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.w3c.dom.Node;
-import org.w3c.dom.Element;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -155,7 +152,8 @@ public class QuerySuggestions implements Serializable {
 	public static QuerySuggestions loadFromResource(String resource){
 		
 		QuerySuggestions suggestions = null;
-		URL url = WebViewSwing.class.getResource(resource);
+		// This does not work in the context
+		URL url = QuerySuggestions.class.getResource(resource);
 		
 		File file;
 	    InputStream inputStream;
@@ -187,7 +185,7 @@ public class QuerySuggestions implements Serializable {
 		
 		QuerySuggestions suggestions = null; 
 		
-		if (true){
+		if (false){
 			// get the current values and store in RESOURCE
 			suggestions = new QuerySuggestions();
 			suggestions.saveToFile(RESOURCE);			

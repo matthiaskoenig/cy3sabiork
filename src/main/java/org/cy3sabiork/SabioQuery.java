@@ -104,7 +104,11 @@ public class SabioQuery {
 		// success
 		if (response != null && response.getStatus() == 200){
 			String countString = response.readEntity(String.class);
-			count = Integer.parseInt(countString);
+			try {
+				count = Integer.parseInt(countString);
+			} catch (NumberFormatException e){
+				count = 0;
+			}
 		}
 		return count;
 	}

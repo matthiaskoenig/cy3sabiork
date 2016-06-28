@@ -67,6 +67,17 @@ This work was supported by the Federal Ministry of Education and Research (BMBF,
 We thank the SABIO-RK team for their support. We thank the SBML and Cytoscape community for their support and help.
 
 ## Change Log
+**v0.3.1** [2016-06-28]
+
+- JavaFX based GUI
+- autocomplete fields with suggestions
+- WebView for Kinetic Information
+- Query results window
+- Full support of web services
+- SBML information parsed in results table
+- multiple bug fixes
+- updated JSBML dependencies
+
 **v0.3.0** [2016-06-07]
 
 - ported to Cytoscape 3

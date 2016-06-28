@@ -13,7 +13,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -32,8 +31,6 @@ import javafx.scene.web.WebView;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 
 import javafx.application.Platform;
@@ -45,7 +42,6 @@ import javafx.collections.ObservableList;
 
 import netscape.javascript.JSObject;
 
-import org.cytoscape.util.swing.OpenBrowser;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import org.cy3sabiork.QuerySuggestions;
@@ -53,7 +49,6 @@ import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioKineticLaw;
 import org.cy3sabiork.SabioQuery;
 import org.cy3sabiork.SabioQueryResult;
-import org.cy3sabiork.SabioSBMLReader;
 
 
 /** 
@@ -68,7 +63,6 @@ import org.cy3sabiork.SabioSBMLReader;
  */
 @SuppressWarnings("restriction")
 public class QueryFXMLController implements Initializable{
-	private WebViewSwing webViewSwing;
 	
 	private QuerySuggestions suggestions;
 	
@@ -288,12 +282,13 @@ public class QueryFXMLController implements Initializable{
      */
     @FXML protected void handleLoadAction(ActionEvent event) {
     	logger.info("Loading Kinetic Laws in Cytoscape ...");
-    	if (webViewSwing.sbmlReader != null){
+    	if (WebViewSwing.sbmlReader != null){
     		String sbml = queryResult.getSBML();
     		if (sbml != null){
     			logger.info("... loading ...");
-    			webViewSwing.sbmlReader.loadNetworkFromSBML(sbml);
-    			logger.info("Networks loaded in Cytoscape. Close Dialog for exploring.");
+    			WebViewSwing.sbmlReader.loadNetworkFromSBML(sbml);
+    			logger.info("Networks loaded in Cytoscape. Dialog closed.");
+    			WebViewSwing.dialog.setVisible(false);
     		} else {
     			logger.error("No SBML in request result.");
     		}
@@ -380,11 +375,11 @@ public class QueryFXMLController implements Initializable{
     
     /** Open url in external browser. */
     private void openURLinExternalBrowser(String url){
-    	if (webViewSwing.openBrowser != null){
+    	if (WebViewSwing.openBrowser != null){
 	    	logger.info("Open in external browser <" + url +">");    		  
     		SwingUtilities.invokeLater(new Runnable() {
     		     public void run() {
-    		    	 webViewSwing.openBrowser.openURL(url);    	 
+    		    	 WebViewSwing.openBrowser.openURL(url);    	 
     		     }
     		});	 
         } else {

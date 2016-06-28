@@ -21,10 +21,6 @@ import org.cy3sabiork.SabioSBMLReader;
 import org.cy3sabiork.gui.QueryFXMLController;
 import org.cytoscape.util.swing.OpenBrowser;
 
-/** 
- * TODO: make singleton class which can store the state (for history of calls)
- * TODO: provide possibility to close
- */
 
 @SuppressWarnings("restriction")
 public class WebViewSwing {
@@ -32,10 +28,18 @@ public class WebViewSwing {
 	public static SabioSBMLReader sbmlReader;
 	public static SabioQueryHistory queryHistory;
 	
+	/* Single reused instance of dialog */
+	public static JDialog dialog;
+	
 	private static void initAndShowGUI(final JFrame parentFrame) {
         // This method is invoked on the EDT thread
 		
-        JDialog dialog = new JDialog(parentFrame);
+		if (dialog != null){
+			dialog.setVisible(true);
+			return;
+		}
+		
+        dialog = new JDialog(parentFrame);
         dialog.setTitle("SABIO-RK Web Services");
         
         // use values from Scene Builder

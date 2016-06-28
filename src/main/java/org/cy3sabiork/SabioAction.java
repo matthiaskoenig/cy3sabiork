@@ -7,10 +7,11 @@ import javax.swing.JFrame;
 
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.application.swing.CySwingApplication;
+import org.cytoscape.util.swing.OpenBrowser;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.cy3sabiork.gui.SabioDialog;
+import org.cy3sabiork.gui.WebViewSwing;
 
 /**
  * Test access to the cy3sbml instance information.
@@ -19,20 +20,25 @@ public class SabioAction extends AbstractCyAction{
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(SabioAction.class);
 	private CySwingApplication cySwingApplication;
+	private OpenBrowser openBrowser;
+	private SabioSBMLReader sbmlReader;
 	
-	public static SabioSBMLReader sbmlReader;
-	
-	public SabioAction(CySwingApplication cySwingApplication){
+	/** 
+	 * Constructor. 
+	 * Requires functionality for open links in external browser and
+	 * for reading SBML into networks.
+	 */
+	public SabioAction(CySwingApplication cySwingApplication, OpenBrowser openBrowser, SabioSBMLReader sbmlReader){
 		super("SabioRKAction");
 		this.cySwingApplication = cySwingApplication;
+		this.openBrowser = openBrowser;
+		this.sbmlReader = sbmlReader;
 		
-		/*
-		ImageIcon icon = new ImageIcon(getClass().getResource("/images/logo-sabiork.png"));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/gui/images/logo-sabiork-compact.png"));
 		putValue(LARGE_ICON_KEY, icon);
 		
-		this.putValue(SHORT_DESCRIPTION, "cyfluxviz action");
-		setToolbarGravity((float) 500.0);
-		*/
+		this.putValue(SHORT_DESCRIPTION, "SABIO-RK web services");
+		setToolbarGravity((float) 80.0);
 	}
 	
 	public boolean insertSeparatorBefore(){
@@ -46,16 +52,20 @@ public class SabioAction extends AbstractCyAction{
 		return false;
 	}
 	
+	public OpenBrowser getOpenBrowser(){
+		return this.openBrowser;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		logger.debug("SabioAction performed.");
-		// Open the dialog
 		JFrame frame = this.cySwingApplication.getJFrame();
-		SabioDialog sabioRKDialog = new SabioDialog(frame, sbmlReader);
-	    sabioRKDialog.setVisible(true);
+		
+		// Open JavaFX GUI
+		WebViewSwing.launch(frame, openBrowser, sbmlReader);
+		
+		// Open old JPanel based Dialog
+		// SabioDialog.launch(frame, sbmlReader);
 	}
 	
-	public static void setSabioSBMLReader(SabioSBMLReader sbmlReader){
-		SabioAction.sbmlReader = sbmlReader;
-	}
 }

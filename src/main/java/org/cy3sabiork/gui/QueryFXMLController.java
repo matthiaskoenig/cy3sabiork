@@ -121,10 +121,11 @@ public class QueryFXMLController implements Initializable{
      * Adds keyword:searchTerm to the query.
      */
     @FXML protected void handleAddKeywordAction(ActionEvent event) {
-    	String selectedItem = (String) keywordList.getSelectionModel().getSelectedItem();
+    	// String selectedItem = (String) keywordList.getSelectionModel().getSelectedItem();
+    	String selectedItem = keyword.getText();
     	String searchTerm = term.getText();
     	
-    	if (selectedItem == null){
+    	if (selectedItem == null || selectedItem.length()==0){
     		logger.warn("No keyword selected. Select keyword and search term in the Query Builder.");
     		return;
     	}
@@ -527,6 +528,7 @@ public class QueryFXMLController implements Initializable{
 		//-----------------------
 		keyword.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
+            	
 				if (ke.getCode() == KeyCode.ENTER){
 					focusNode(term);
 					// TODO: set keywords for searchTerm
@@ -536,8 +538,12 @@ public class QueryFXMLController implements Initializable{
 					logger.info("Autocomplete set for <" + key + ">");
 					System.out.println(termSet);
 					TextFields.bindAutoCompletion(term, termSet);
-					
-					
+				}else{
+					// check if keyword in list, if yes select
+					String key = keyword.getText();
+					if (suggestions.getKeywords().contains(keyword.getText()) ){
+						keywordList.getSelectionModel().select(key);
+					}
 				}
             }
         });

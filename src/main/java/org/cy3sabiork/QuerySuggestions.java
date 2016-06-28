@@ -37,6 +37,10 @@ import javax.ws.rs.core.Response;
 
 /** Manages the available keyword suggestions. */
 public class QuerySuggestions implements Serializable {
+	enum Mode {
+		SAVE, LOAD
+	}
+	
 	public static final String RESOURCE = "/gui/suggestions.ser";
 	public static final Map<String, String> KEYWORD_MAP;
 	public static final Set<String> ENZYMETYPE_SUGGESTIONS;
@@ -169,23 +173,16 @@ public class QuerySuggestions implements Serializable {
 	}
 	
 	
-	private void saveToFile(String resource){
+	private void saveToFile(String path){
 		try {
-			URL url = WebViewSwing.class.getResource(resource);
-			
-	        FileOutputStream fileOut;
-	        File file = new File(url.toURI());
-			fileOut = new FileOutputStream(file.getAbsolutePath());
+	        File file = new File(path);
+	        FileOutputStream fileOut = new FileOutputStream(file.getAbsolutePath());
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	        out.writeObject(this);
 	        out.close();
 	        fileOut.close();
-		} catch (FileNotFoundException e1) {
+		} catch (IOException e1) {
 			e1.printStackTrace();
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
 		}
 	}
 	
@@ -220,18 +217,27 @@ public class QuerySuggestions implements Serializable {
 	}
 	
 	
-	/** Create the latest suggestions and serialize to file. */
+	/** 
+	 * Create the latest suggestions and serialize to file.
+	 * The suggestions  
+	 */
 	public static void main(String[] args){
 		
-		QuerySuggestions suggestions = null; 
+		// Change mode for loading or saving
+		// Mode mode = Mode.SAVE;
+		Mode mode = Mode.LOAD;
 		
-		if (true){
+		System.out.println("-------------------------------------------------");
+		System.out.println(mode);
+		System.out.println("-------------------------------------------------");
+		QuerySuggestions suggestions = null; 
+		if (mode == Mode.SAVE){
 			// get the current values and store in RESOURCE
 			suggestions = new QuerySuggestions();
-			suggestions.saveToFile(RESOURCE);			
+			suggestions.saveToFile("/home/mkoenig/git/cy3sabiork/src/main/resources" + RESOURCE);			
+		} else if (mode == Mode.LOAD){
+			suggestions = QuerySuggestions.loadFromResource(RESOURCE);	
 		}
-
-		suggestions = QuerySuggestions.loadFromResource(RESOURCE);
 		suggestions.print();
 	}
 	

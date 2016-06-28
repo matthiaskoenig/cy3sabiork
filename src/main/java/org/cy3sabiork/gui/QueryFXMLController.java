@@ -70,11 +70,7 @@ import org.cy3sabiork.SabioSBMLReader;
 public class QueryFXMLController implements Initializable{
 	private WebViewSwing webViewSwing;
 	
-	private static final QuerySuggestions suggestions;
-	static {
-		String fileURI = ResourceExtractor.fileURIforResource(QuerySuggestions.RESOURCE);
-		suggestions = QuerySuggestions.loadFromResource(fileURI);
-	}
+	private QuerySuggestions suggestions;
 	
 	// browser
 	@FXML private ImageView imageSabioLogo;
@@ -93,6 +89,7 @@ public class QueryFXMLController implements Initializable{
     @FXML private Text termDescription;
     @FXML private Button addKeywordButton;
     private AutoCompletionBinding<String> termBinding;
+    private AutoCompletionBinding<String> keywordBinding;
     
     // --- Kinetic Law entries ---
     @FXML private TextArea entry;
@@ -252,8 +249,9 @@ public class QueryFXMLController implements Initializable{
                         queryButton.setDisable(false);
                         
                         // add query to history
-                        WebViewSwing.queryHistory.add(queryString);
-                        logger.info("query added to history: <" + queryString +">");
+                        // TODO: implement
+                        // WebViewSwing.queryHistory.add(queryString);
+                        // logger.info("query added to history: <" + queryString +">");
                     }
                 });
         		setProgress(1);    	
@@ -416,6 +414,9 @@ public class QueryFXMLController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		logger = new Logger(this.log);
 		
+		String fileURI = ResourceExtractor.fileURIforResource(QuerySuggestions.RESOURCE);
+		suggestions = QuerySuggestions.loadFromResource(fileURI);
+		
 		// ---------------------------
 		// Images
 		// ---------------------------
@@ -528,13 +529,13 @@ public class QueryFXMLController implements Initializable{
         });
 		
 		// autocomplete on keywords
-		AutoCompletionBinding<String> keywordBinding = TextFields.bindAutoCompletion(keyword, suggestions.getKeywords());
+		keywordBinding = TextFields.bindAutoCompletion(keyword, suggestions.getKeywords());
 		keywordBinding.setOnAutoCompleted(e -> {
 			// select in list on autocomplete
 			keywordList.getSelectionModel().select(keyword.getText());
 			}
-		);
-				
+		);	
+		
 		keyword.setOnKeyPressed(ke -> {
 			// check if keyword in list, if yes select in list
 			String key = keyword.getText();

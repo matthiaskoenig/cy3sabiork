@@ -33,11 +33,11 @@
                                           <Tooltip text="List of available search keywords." />
                                        </tooltip>
                                     </ListView>
-                                    <TextField fx:id="term" layoutX="243.0" layoutY="44.0" prefHeight="25.0" prefWidth="225.0">
+                                    <TextField fx:id="term" layoutX="243.0" layoutY="44.0" prefHeight="26.0" prefWidth="242.0">
                                  <tooltip>
                                     <Tooltip text="Search Term for given Keyword." />
                                  </tooltip></TextField>
-                                    <Button fx:id="addKeywordButton" layoutX="481.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleAddKeywordAction" prefHeight="26.0" prefWidth="70.0" text="Add">
+                                    <Button fx:id="addKeywordButton" layoutX="495.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleAddKeywordAction" prefHeight="26.0" prefWidth="70.0" text="Add">
                                        <tooltip>
                                           <Tooltip text="Add keyword:searchTerm to the web service query." />
                                        </tooltip>

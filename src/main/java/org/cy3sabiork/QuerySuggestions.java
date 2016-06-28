@@ -52,6 +52,7 @@ public class QuerySuggestions implements Serializable {
         map.put("Inhibitor", "Compound");
         map.put("Catalyst", "Compound");
         map.put("Cofactor", "Compound");
+        map.put("Activator", "Compound");
         map.put("OtherModifier", "Compound");
         map.put("AnyRole", "Compound");
         map.put("Enzymename", "Enzyme");
@@ -86,11 +87,7 @@ public class QuerySuggestions implements Serializable {
 	}
 	
 	public TreeSet<String> getSuggestionsForKeyword(String key){
-		if (suggestions.containsKey(key)){
-			return suggestions.get(key);	
-		} else {
-			return (new TreeSet<String>());
-		}			
+		return suggestions.get(key);				
 	}
 	
 	/** Update the keyword suggestions by querying all keywords. */
@@ -116,6 +113,7 @@ public class QuerySuggestions implements Serializable {
 		}
 	}
 	
+	/** Print suggestion information to console. */
 	public void print(){
 		System.out.println("-------------------------------------------------");
 		for (String s: keywords){
@@ -123,8 +121,8 @@ public class QuerySuggestions implements Serializable {
 		}
 		System.out.println("-------------------------------------------------");
 		
-		for (String key: suggestions.keySet()){
-			System.out.print("<" + key + "> : " + suggestions.get(key).size());
+		for (String key: new TreeSet<String>(suggestions.keySet())){
+			System.out.print(key + " : " + suggestions.get(key).size());
 			System.out.println();
 		}
 	}
@@ -232,7 +230,7 @@ public class QuerySuggestions implements Serializable {
 		System.out.println("-------------------------------------------------");
 		QuerySuggestions suggestions = null; 
 		if (mode == Mode.SAVE){
-			// get the current values and store in RESOURCE
+			// get current values and store in RESOURCE
 			suggestions = new QuerySuggestions();
 			suggestions.saveToFile("/home/mkoenig/git/cy3sabiork/src/main/resources" + RESOURCE);			
 		} else if (mode == Mode.LOAD){

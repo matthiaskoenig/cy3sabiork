@@ -46,6 +46,7 @@ import javafx.collections.ObservableList;
 import netscape.javascript.JSObject;
 
 import org.cytoscape.util.swing.OpenBrowser;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import org.cy3sabiork.QuerySuggestions;
 import org.cy3sabiork.ResourceExtractor;
@@ -69,6 +70,14 @@ import org.cy3sabiork.SabioSBMLReader;
 public class QueryFXMLController implements Initializable{
 	private WebViewSwing webViewSwing;
 	
+	private static final QuerySuggestions suggestions;
+	static {
+		suggestions = QuerySuggestions.loadFromResource(QuerySuggestions.RESOURCE);
+		suggestions.print();
+	}
+	
+	
+	
 	// browser
 	@FXML private ImageView imageSabioLogo;
 	@FXML private ImageView imageSabioSearch;
@@ -85,6 +94,7 @@ public class QueryFXMLController implements Initializable{
     @FXML private TextField term;
     @FXML private Text termDescription;
     @FXML private Button addKeywordButton;
+    private AutoCompletionBinding<String> termBinding;
     
     // --- Kinetic Law entries ---
     @FXML private TextArea entry;
@@ -137,7 +147,7 @@ public class QueryFXMLController implements Initializable{
     		return;
     	}
     	if (query.contains(addition)){
-    		logger.info("keyword:term already in query.");
+    		logger.info("<" + selectedItem + ":" + searchTerm + "> already in query.");
     		return;
     	}
     	
@@ -146,7 +156,7 @@ public class QueryFXMLController implements Initializable{
     	} else {
     		queryText.setText(SabioQuery.PREFIX_QUERY + addition);
     	}
-    	logger.info("<" + addition +"> added to query");
+    	logger.info("<" + addition +"> added to query.");
     }
     
     /**
@@ -412,34 +422,17 @@ public class QueryFXMLController implements Initializable{
 		// Images
 		// ---------------------------
 		imageSabioLogo.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/header-sabiork.png")));
-		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/search-sabiork.png")));
+		imageSabioLogo.setOnMousePressed(me -> {
+			openURLinExternalBrowser("http://sabiork.h-its.org/");
+	    });
+		
 		imageHelp.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/icon-help.png")));
+		imageHelp.setOnMousePressed(me -> {
+            setHelp();
+	    });
 		
-		
-		QuerySuggestions suggestions = QuerySuggestions.loadFromResource(QuerySuggestions.RESOURCE);
-		suggestions.print();
-		TreeSet<String> keywordSet = suggestions.getKeywords();
-		
-		// ---------------------------
-		// ListView of Keywords
-		// ---------------------------
-		ObservableList<String> items = FXCollections.observableArrayList(keywordSet);
-		keywordList.setItems(items);
-	
-		keywordList.getSelectionModel().selectedItemProperty().addListener(
-            new ChangeListener<String>() {
-                public void changed(ObservableValue<? extends String> ov, 
-                    String oldValue, String newValue) {
-                		// set keyword in field
-                        keyword.setText(newValue);
-                        
-                        // focus term field
-                        focusNode(term);
-            }
-        });
-		
-		TextFields.bindAutoCompletion(keyword, keywordSet);
-		
+		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/search-sabiork.png")));
+
 		// ---------------------------
 		// Table for SabioKineticLaws
 		// ---------------------------
@@ -451,17 +444,14 @@ public class QueryFXMLController implements Initializable{
 		tissueCol.setCellValueFactory(new PropertyValueFactory<SabioKineticLaw,String>("tissue"));
 		reactionCol.setCellValueFactory(new PropertyValueFactory<SabioKineticLaw,String>("reaction"));
 		
-		entryTable.setOnMousePressed(new EventHandler<MouseEvent>() {
-		    @Override 
-		    public void handle(MouseEvent event) {
-		        if (event.isPrimaryButtonDown() && event.getClickCount() == 1) {
-		        	Object selected = entryTable.getSelectionModel().getSelectedItem();
-		        	if (selected != null){
-		        		Integer kid = ((SabioKineticLaw) selected).getId();
-		        		setInfoForKineticLaw(kid);
-		        	}                   
-		        }
-		    }
+		entryTable.setOnMousePressed(me -> {
+	        if (me.isPrimaryButtonDown() && me.getClickCount() == 1) {
+	        	Object selected = entryTable.getSelectionModel().getSelectedItem();
+	        	if (selected != null){
+	        		Integer kid = ((SabioKineticLaw) selected).getId();
+	        		setInfoForKineticLaw(kid);
+	        	}                   
+	        }
 		});
 		
 		// SelectionChange Listener (Important if selection via error keys change)
@@ -515,61 +505,88 @@ public class QueryFXMLController implements Initializable{
                             win.setMember("app", new JavaApp());	
                 		} catch(NoClassDefFoundError e){
                 			System.out.println("netscape.javascript not accessible in Cytoscape: see https://groups.google.com/forum/#!topic/cytoscape-helpdesk/Sl_MwfmLTx0");
-                		}
-                		
-                                                     
+                		}                        
                 	}
                 }
             }
         );
         
-		//-----------------------
-		// KeyEvents
-		//-----------------------
-		keyword.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-            	
-				if (ke.getCode() == KeyCode.ENTER){
-					focusNode(term);
-					// TODO: set keywords for searchTerm
-					String key = keyword.getText();
-					TreeSet<String> termSet = suggestions.getSuggestionsForKeyword(key);
-					
-					logger.info("Autocomplete set for <" + key + ">");
-					System.out.println(termSet);
-					TextFields.bindAutoCompletion(term, termSet);
-				}else{
-					// check if keyword in list, if yes select
-					String key = keyword.getText();
-					if (suggestions.getKeywords().contains(keyword.getText()) ){
-						keywordList.getSelectionModel().select(key);
-					}
-				}
+		// ---------------------------
+		// Keywords (List & Text)
+		// ---------------------------
+		ObservableList<String> items = FXCollections.observableArrayList(suggestions.getKeywords());
+		keywordList.setItems(items);
+	
+		keywordList.getSelectionModel().selectedItemProperty().addListener(
+            new ChangeListener<String>() {
+                public void changed(ObservableValue<? extends String> ov, 
+                    String oldValue, String newValue) {
+                		logger.info("Keyword <" + newValue + "> selected.");
+                		// set keyword in field
+                        keyword.setText(newValue);
+                        // focus term field
+                        focusNode(term);
             }
         });
 		
-		term.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-				if (ke.getCode() == KeyCode.ENTER){
-					addKeywordButton.fire();
-				}
-            }
+		// autocomplete on keywords
+		AutoCompletionBinding<String> keywordBinding = TextFields.bindAutoCompletion(keyword, suggestions.getKeywords());
+		keywordBinding.setOnAutoCompleted(e -> {
+			// select in list on autocomplete
+			keywordList.getSelectionModel().select(keyword.getText());
+			}
+		);
+				
+		keyword.setOnKeyPressed(ke -> {
+			// check if keyword in list, if yes select in list
+			String key = keyword.getText();
+			if (suggestions.getKeywords().contains(keyword.getText()) ){
+				keywordList.getSelectionModel().select(key);
+			} else if (ke.getCode() == KeyCode.ENTER){
+				focusNode(term);
+			}
         });
 		
-		imageSabioLogo.setOnMousePressed(new EventHandler<MouseEvent>() {
-	        @Override
-	        public void handle(MouseEvent event) {
-	            openURLinExternalBrowser("http://sabiork.h-its.org/");
-	        }
-	    });
+		// ---------------------------
+		// Term
+		// ---------------------------
+		// dynamical autocomplete
+		term.focusedProperty().addListener(new ChangeListener<Boolean>(){
+		    @Override
+		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+		    {
+		        if (newPropertyValue){
+		            System.out.println("Textfield on focus");
+		    		// update dynamic autocomplete on terms
+                    TreeSet<String> termSet = suggestions.getSuggestionsForKeyword(keyword.getText());
+                    if (termSet != null){
+                    	if (termBinding != null){
+                    		termBinding.dispose();
+                    	}
+                    	termBinding = TextFields.bindAutoCompletion(term, termSet);
+    					termBinding.setOnAutoCompleted(e -> {
+    						// add entry on autocomplete
+    						focusNode(addKeywordButton);
+    						}
+    					);	
+                    } else {
+                    	if (termBinding != null){
+                    		termBinding.dispose();
+                    	}
+                    }
+		        }
+		    }
+		});
 		
-		imageHelp.setOnMousePressed(new EventHandler<MouseEvent>() {
-	        @Override
-	        public void handle(MouseEvent event) {
-	            setHelp();
-	        }
-	    });
+		term.setOnKeyPressed(ke -> {
+			if (ke.getCode() == KeyCode.ENTER){
+				addKeywordButton.fire();
+			}
+        });
 		
+		// ---------------------------
+		// Logging
+		// ---------------------------
 		log.textProperty().addListener(new ChangeListener<Object>() {
 		    @Override
 		    public void changed(ObservableValue<?> observable, Object oldValue,

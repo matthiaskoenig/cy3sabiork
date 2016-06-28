@@ -22,10 +22,8 @@ import org.cy3sabiork.gui.QueryFXMLController;
 import org.cytoscape.util.swing.OpenBrowser;
 
 /** 
- * 
  * TODO: make singleton class which can store the state (for history of calls)
  * TODO: provide possibility to close
- *
  */
 
 @SuppressWarnings("restriction")

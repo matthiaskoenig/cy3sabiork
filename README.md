@@ -8,7 +8,7 @@
 [![alt tag](docs/images/logo-sabiork.png)](http://sabio.villa-bosch.de/)  
 
 ![alt tag](docs/images/cy3sabiork-workflow.png)  
-**Figure 1** Workflow overview.
+**Figure 1**: Workflow overview.
 
 **Support & Forum**: https://groups.google.com/forum/#!forum/cysbml-cyfluxviz  
 **Issue Tracker**: https://github.com/matthiaskoenig/cy3sabiork/issues  
@@ -31,8 +31,14 @@ in the Cytoscape app folder
 `CytoscapeConfiguration/3/apps/installed/`
 
 ## Screenshot
+![alt tag](docs/images/cy3sabiork-gui.png)  
+**Figure 2**: GUI overview.
+
 ![alt tag](docs/images/cy3sabiork-v0.3.0-screenshot.png)  
-**Figure 2** Reaction kinetic networks based on SABIO-RK RESTful queries. cy3sbml provides access to annotation information.
+**Figure 3**: Reaction kinetic networks based on SABIO-RK RESTful queries. cy3sbml provides access to annotation information.
+
+![alt tag](docs/images/cy3sabiork-galactose_metabolism.png)  
+**Figure 4**: Reaction kinetic network for Human galactose metabolism.
 
 ## Build instructions
 Clone the repository and build with `maven`

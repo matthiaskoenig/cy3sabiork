@@ -7,22 +7,23 @@
   
 [![alt tag](docs/images/logo-sabiork.png)](http://sabio.villa-bosch.de/)  
 
-**Support & Forum**: https://groups.google.com/forum/#!forum/cysbml-cyfluxviz  
-**Bug Tracker**: https://github.com/matthiaskoenig/cy3sabiork/issues  
+![alt tag](docs/images/cy3sabiork-workflow.png)  
+**Figure 1** Workflow overview.
 
-## Features
-- Accessing SABIO-RK data via search interface in Cytoscape
+**Support & Forum**: https://groups.google.com/forum/#!forum/cysbml-cyfluxviz  
+**Issue Tracker**: https://github.com/matthiaskoenig/cy3sabiork/issues  
 
 ## License
 * Source Code: [GPLv3](http://opensource.org/licenses/GPL-3.0)
 * Documentation: [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/)
 
 ## Install
+**cy3sabiork** is available via the [Cytoscape App Store](http://apps.cytoscape.org/apps/cy3sabiork).
 * install [Cytoscape v3.4.0](http://www.cytoscape.org/download.html) or higher
-* install cy3sbml and cy3sabiork via the Cytoscape app store  
+* install cy3sbml and cy3sabiork via the app store  
 `Apps -> App Manager`
 
-Alternatively
+For a manual install
 * download latest versions of [cy3sbml](https://github.com/matthiaskoenig/cy3sbml/releases/latest) and [cy3sabiork](https://github.com/matthiaskoenig/cy3sabiork/releases/latest) and move the downloaded jar files  
 `cy3sbml-vx.x.x.jar`  
 `cy3sabiork-vx.x.x.jar`  
@@ -31,7 +32,7 @@ in the Cytoscape app folder
 
 ## Screenshot
 ![alt tag](docs/images/cy3sabiork-v0.3.0-screenshot.png)  
-**Figure 1** Reaction kinetic networks based on SABIO-RK RESTful queries. cy3sbml provides access to annotation information.
+**Figure 2** Reaction kinetic networks based on SABIO-RK RESTful queries. cy3sbml provides access to annotation information.
 
 ## Build instructions
 Clone the repository and build with `maven`

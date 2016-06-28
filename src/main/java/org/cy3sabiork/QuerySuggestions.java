@@ -184,25 +184,18 @@ public class QuerySuggestions implements Serializable {
 		}
 	}
 	
-	public static QuerySuggestions loadFromResource(String resource){
-		
+	/**
+	 * Load the earlier retrieved suggestions. 
+	 */
+	public static QuerySuggestions loadFromResource(String fileURI){	
 		QuerySuggestions suggestions = null;
-		// This does not work in the context
-		URL url = QuerySuggestions.class.getResource(resource);
-		
-		File file;
-	    InputStream inputStream;
-	    ObjectInput input;
+	
 		try {
-			file = new File(url.toURI());
-			inputStream = new FileInputStream(file.getAbsolutePath());
+			InputStream inputStream = new URL(fileURI).openStream();
 			InputStream buffer = new BufferedInputStream(inputStream);
-			input = new ObjectInputStream (buffer);
+			ObjectInput input = new ObjectInputStream(buffer);
 			
-			suggestions = (QuerySuggestions)input.readObject();
-		} catch (URISyntaxException e) {
-			
-				e.printStackTrace();
+			suggestions = (QuerySuggestions) input.readObject();
 				
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
@@ -214,12 +207,16 @@ public class QuerySuggestions implements Serializable {
 		return suggestions;
 	}
 	
-	
 	/** 
 	 * Create the latest suggestions and serialize to file.
-	 * The suggestions  
 	 */
 	public static void main(String[] args){
+    	File appDirectory = new File("src/main/resources");
+    	ResourceExtractor.setAppDirectory(appDirectory);
+    	
+    	String fileURI = ResourceExtractor.fileURIforResource(RESOURCE);
+    	System.out.println(fileURI);
+		
 		
 		// Change mode for loading or saving
 		// Mode mode = Mode.SAVE;
@@ -234,7 +231,7 @@ public class QuerySuggestions implements Serializable {
 			suggestions = new QuerySuggestions();
 			suggestions.saveToFile("/home/mkoenig/git/cy3sabiork/src/main/resources" + RESOURCE);			
 		} else if (mode == Mode.LOAD){
-			suggestions = QuerySuggestions.loadFromResource(RESOURCE);	
+			suggestions = QuerySuggestions.loadFromResource(fileURI);	
 		}
 		suggestions.print();
 	}

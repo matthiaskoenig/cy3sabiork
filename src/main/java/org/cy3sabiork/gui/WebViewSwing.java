@@ -105,6 +105,7 @@ public class WebViewSwing {
         });
     }
     
+    
     /** 
      * Testing the GUI without Cytoscape specific functionality.
      * Run this main to use the SABIO-RK webservice without the

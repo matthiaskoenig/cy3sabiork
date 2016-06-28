@@ -72,11 +72,9 @@ public class QueryFXMLController implements Initializable{
 	
 	private static final QuerySuggestions suggestions;
 	static {
-		suggestions = QuerySuggestions.loadFromResource(QuerySuggestions.RESOURCE);
-		suggestions.print();
+		String fileURI = ResourceExtractor.fileURIforResource(QuerySuggestions.RESOURCE);
+		suggestions = QuerySuggestions.loadFromResource(fileURI);
 	}
-	
-	
 	
 	// browser
 	@FXML private ImageView imageSabioLogo;
@@ -553,12 +551,11 @@ public class QueryFXMLController implements Initializable{
 		// dynamical autocomplete
 		term.focusedProperty().addListener(new ChangeListener<Boolean>(){
 		    @Override
-		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-		    {
-		        if (newPropertyValue){
-		            System.out.println("Textfield on focus");
+		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean ov, Boolean nv){
+		        // textfield focused
+		    	if (nv){
 		    		// update dynamic autocomplete on terms
-                    TreeSet<String> termSet = suggestions.getSuggestionsForKeyword(keyword.getText());
+		    		TreeSet<String> termSet = suggestions.getSuggestionsForKeyword(keyword.getText());
                     if (termSet != null){
                     	if (termBinding != null){
                     		termBinding.dispose();

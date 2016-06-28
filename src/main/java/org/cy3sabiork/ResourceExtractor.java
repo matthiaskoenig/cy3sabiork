@@ -36,9 +36,8 @@ public class ResourceExtractor {
 		ResourceExtractor.appDirectory = appDirectory;
 	}
 	
-	/* 
-	 * Replacement of
-	 * 	getClass().getResource("/gui/info.html");
+	/** 
+	 * Replacement of getClass().getResource("/gui/info.html");
 	 * which does not work for bundle resources in context of JavaFX. 
 	 */
 	public static String getResource(String resource){

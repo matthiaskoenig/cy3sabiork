@@ -21,7 +21,7 @@
 	<groupId>org.cy3sabiork</groupId>
 	<artifactId>cy3sabiork</artifactId>
 	<packaging>bundle</packaging>
-	<version>0.3.5</version>
+	<version>0.3.2</version>
 	<name>cy3sabiork</name>
 	<description>A Cytoscape app to visualize kinetic data from SABIO-RK.</description>
 

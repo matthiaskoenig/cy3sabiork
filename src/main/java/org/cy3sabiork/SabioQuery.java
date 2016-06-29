@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.Set;
 
+import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
@@ -45,12 +46,19 @@ public class SabioQuery {
 			URI uri = new java.net.URI(SabioQuery.SABIORK_RESTFUL_URL + "/" + query);
 			
 			// Create client
+			
 			Client client = ClientBuilder.newClient();
 			WebTarget requestTarget = client.target(uri);
 			System.out.println("URI: " + requestTarget.getUri());			
 			
 			// Invoke request
-			Invocation.Builder invocationBuilder = requestTarget.request(MediaType.TEXT_XML_TYPE);
+			
+			//Invocation.Builder invocationBuilder = requestTarget.request(MediaType.TEXT_XML_TYPE);
+			Invocation.Builder invocationBuilder = requestTarget.request("text/html; charset=UTF-8");
+			// Necessary to set the media type to UTF-8 to work on windows
+			// 
+			//invocationBuilder = invocationBuilder.accept("text/html; charset=UTF-8");
+			
 			Response response = invocationBuilder.get();
 			return response;
 			

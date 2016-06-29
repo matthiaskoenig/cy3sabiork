@@ -85,6 +85,7 @@ public class SabioKineticLaw {
 	 * Read SabioKineticLaws from given SBML. 
 	 * 
 	 * Information to populate the results panel is parsed here. 
+	 * This uses directly the response string.
 	 */
 	public static ArrayList<SabioKineticLaw> parseKineticLaws(String sbml){
 		ArrayList<SabioKineticLaw> list = new ArrayList<SabioKineticLaw>();

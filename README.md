@@ -10,6 +10,7 @@
 ![alt tag](docs/images/cy3sabiork-workflow.png)  
 **Figure 1**: Workflow overview.
 
+**App Store**: http://apps.cytoscape.org/apps/cy3sabiork  
 **Support & Forum**: https://groups.google.com/forum/#!forum/cysbml-cyfluxviz  
 **Issue Tracker**: https://github.com/matthiaskoenig/cy3sabiork/issues  
 

@@ -1,21 +1,35 @@
 package org.cy3sabiork.rest;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URI;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Variant;
 
 import org.apache.commons.io.IOUtils;
 import org.cy3sabiork.SabioQueryResult;
+import org.glassfish.jersey.CommonProperties;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientRequest;
+import org.glassfish.jersey.client.ClientResponse;
+import org.glassfish.jersey.logging.LoggingFeature;
+
 
 
 /**
@@ -55,18 +69,48 @@ public class SabioQuery {
 			query = query.replace("\"", "%22");
 			URI uri = new java.net.URI(SabioQuery.SABIORK_RESTFUL_URL + "/" + query);
 			
-			// Create client
+			// create client
+			ClientConfig clientConfig = new ClientConfig();
+			clientConfig.property(CommonProperties.FEATURE_AUTO_DISCOVERY_DISABLE, false);
+			clientConfig.property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_CLIENT, LoggingFeature.Verbosity.PAYLOAD_ANY);
+
+			Logger logger = Logger.getLogger(SabioQuery.class.getName());
+			Feature feature = new LoggingFeature(logger, Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY, null);
+			Client client = ClientBuilder.newClient(clientConfig)
+										 .register(feature);
+
 			
-			Client client = ClientBuilder.newClient();
+			/*
 			WebTarget requestTarget = client.target(uri);
-			System.out.println("URI: " + requestTarget.getUri());			
+			Invocation.Builder invocationBuilder = requestTarget
+														.request(MediaType.APPLICATION_XML)
+														.header("Content-Type","application/xml; charset=UTF-8");
+														// .accept(MediaType.APPLICATION_XML)
+														// .acceptEncoding("UTF-8");
 			
-			// Invoke request
+			 Response response = invocationBuilder.get();
+			 */
+			// http://stackoverflow.com/questions/6860661/jersey-print-the-actual-request
+			Response response = client
+					 .target(uri)
+					 .request("application/xml;charset=UTF-8")
+					 .accept("application/xml;charset=UTF-8")
+					 .header("Content-Type","application/xml;charset=UTF-8")
+					 .get();
 			
-			//Invocation.Builder invocationBuilder = requestTarget.request(MediaType.TEXT_XML_TYPE);
-			Invocation.Builder invocationBuilder = requestTarget.request("text/html; charset=UTF-8");
+			/*
+			Response response = client
+					 .target(uri)
+					 .request(MediaType.APPLICATION_XML)
+					 .accept(MediaType.APPLICATION_XML)
+					 .header("Content-Type","application/xml;charset=UTF-8")
+					 .get();
+			*/
 			
-			Response response = invocationBuilder.get();
+			//response.ok().header("Content-Type", "application/json;charset=UTF-8").build();
+			// String contentType = response.getMediaType();
+			// response.getHeaders().putSingle("Content-Type", contentType.toString() + ";charset=UTF-8");
+			
 			return response;
 			
 		} catch (Exception e) {
@@ -79,22 +123,70 @@ public class SabioQuery {
 	 * Read the response entity in string.
 	 * Necessary to take care of the encoding, otherwise issues on win7. 
 	 * 
-	 * This could also be handled via an interceptor:
+	 *  This must probably be handled via an interceptor:
 	 *  Interceptors are used primarily for modification of entity input and output streams.
 	 *  see https://jersey.java.net/documentation/latest/filters-and-interceptors.html
+	 *  
+	 *  - InputStream delivers bytes
+     *  - Readers deliver chars in some encoding
+     *  - new InputStreamReader(inputStream) uses the operating system encoding
+     +  - new InputStreamReader(inputStream, "UTF-8") uses the given encoding (here UTF-8)
+
 	 */
 	public static String readEntityInString(Response response){
+		String content = response.readEntity(String.class);
+		
+		/*
+		String content = null;
 		InputStream inputStream = (InputStream) response.getEntity();
-		StringWriter writer = new StringWriter();
+
+		// String content = getStringFromInputStream(inputStream);
 		try {
-			IOUtils.copy(inputStream, writer, StandardCharsets.UTF_8);
-		} catch (IOException e) {
+			content = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String content = writer.toString();
+			e1.printStackTrace();
+		} 
+		*/
+		
+		// Somehow the above seems still to be in win encoding
+		// ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(content);
+		
+		// Force UTF-8
+		// byte[] ptext = content.getBytes(StandardCharsets.UTF_8);
+		// content = new String(ptext, StandardCharsets.UTF_8); 
+		
 		return content;
 	}
+	
+	/* Convert InputStream to String with encoding. */
+	/*
+	private static String getStringFromInputStream(InputStream is) {
+		BufferedReader br = null;
+		StringBuilder sb = new StringBuilder();
+
+		String line;
+		try {
+
+			br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return sb.toString();
+	}
+	*/
 	
 	/** 
 	 * Check status of the SABIO-RK webservice. 

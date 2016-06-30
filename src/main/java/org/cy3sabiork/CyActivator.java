@@ -1,6 +1,9 @@
 package org.cy3sabiork;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.ws.rs.core.Response;
@@ -14,6 +17,7 @@ import org.cytoscape.service.util.AbstractCyActivator;
 import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
 import org.cytoscape.util.swing.OpenBrowser;
 import org.cytoscape.work.TaskManager;
+import org.glassfish.jersey.client.ClientResponse;
 import org.cy3sbml.BundleInformation;
 import org.cy3sabiork.SabioAction;
 import org.cy3sabiork.rest.SabioQuery;
@@ -71,14 +75,38 @@ public class CyActivator extends AbstractCyActivator {
 			resourceHandler.extract();
 			logger.info("----------------------------");
 			
+			// ----------------- Testing --------------------------
 			// TestRestful.newQuery("kineticLaws/123");
 			String query = "kineticLaws/123";
 			Response response = SabioQuery.executeQuery("kineticLaws/123");
 			String sbml = SabioQuery.readEntityInString(response);
-			JSBML.readSBMLFromString(sbml);
-			
-			// SabioQueryResult result = new SabioQueryResult(query, response);
-			// result.getKineticLaws();
+    	    
+    	    // Read SBML
+    	    JSBML.readSBMLFromString(sbml);
+    	    
+    	    /*
+    	    File testFile = new File(appDirectory, "testEncoding.xml");
+    	    System.out.println("-->" + testFile.getAbsolutePath());
+    	    BufferedWriter writer = null;
+    	    try{
+    	        writer = new BufferedWriter( new FileWriter(testFile.getAbsolutePath()));
+    	        writer.write(sbml);
+    	    }
+    	    catch ( IOException e){
+    	    	e.printStackTrace();
+    	    }
+    	    finally {
+    	        try {
+    	            if ( writer != null)
+    	            writer.close( );
+    	        }
+    	        catch ( IOException e)
+    	        {
+    	        }
+    	    }
+    	    */
+    	    
+    	    
 			
 		} catch (Throwable e){
 			logger.error("Could not start server!", e);

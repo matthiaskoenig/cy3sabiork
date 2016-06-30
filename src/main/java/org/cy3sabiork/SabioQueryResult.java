@@ -5,6 +5,7 @@ import javax.ws.rs.core.Response;
 import javax.xml.stream.XMLStreamException;
 
 import org.cy3sabiork.rest.SabioQuery;
+import org.glassfish.jersey.client.ClientResponse;
 
 /**
  * Result of the given web service query.
@@ -12,18 +13,16 @@ import org.cy3sabiork.rest.SabioQuery;
 public class SabioQueryResult {
 
 	final private String query;
-	final private Response response;
 	final private Integer status;
 	final private String sbml;
 	
 	public SabioQueryResult(final String query, final Response response){
 		this.query = query;
-		this.response = response;
 		this.status = response.getStatus();
 		
 		if (success()) {
 			// Create SBML from response
-			this.sbml = SabioQuery.readEntityInString(this.response);
+			this.sbml = SabioQuery.readEntityInString(response);
 			
 		} else {
 			System.out.println("Request failed with status code: " + status);
@@ -41,9 +40,6 @@ public class SabioQueryResult {
 		return query;
 	}
 	
-	public Response getResponse(){
-		return response;
-	}
 	
 	public String getSBML(){
 		return sbml;

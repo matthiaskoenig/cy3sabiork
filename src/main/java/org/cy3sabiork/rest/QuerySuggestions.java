@@ -1,12 +1,13 @@
-package org.cy3sabiork;
+package org.cy3sabiork.rest;
 
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.DocumentBuilder;
 
+import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.gui.WebViewSwing;
-import org.cy3sabiork.rest.SabioQuery;
+import org.glassfish.jersey.client.ClientResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;

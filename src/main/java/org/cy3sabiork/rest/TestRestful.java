@@ -2,6 +2,7 @@ package org.cy3sabiork.rest;
 
 
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.client.ClientResponse;
 
 /** Querying the SABIO-RK web service. */
 public class TestRestful {

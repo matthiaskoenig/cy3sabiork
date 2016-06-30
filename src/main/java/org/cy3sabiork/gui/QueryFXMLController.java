@@ -44,10 +44,10 @@ import netscape.javascript.JSObject;
 
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
-import org.cy3sabiork.QuerySuggestions;
 import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioKineticLaw;
 import org.cy3sabiork.SabioQueryResult;
+import org.cy3sabiork.rest.QuerySuggestions;
 import org.cy3sabiork.rest.SabioQuery;
 
 

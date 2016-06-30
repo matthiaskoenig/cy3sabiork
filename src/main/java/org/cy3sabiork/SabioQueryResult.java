@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import javax.ws.rs.core.Response;
 import javax.xml.stream.XMLStreamException;
 
+import org.cy3sabiork.rest.SabioQuery;
+
 /**
  * Result of the given web service query.
  */
@@ -20,10 +22,9 @@ public class SabioQueryResult {
 		this.status = response.getStatus();
 		
 		if (success()) {
-			this.sbml = response.readEntity(String.class);	
-			// System.out.println("--------------------------------------------");
-			// System.out.println(this.sbml);
-			// System.out.println("--------------------------------------------");
+			// Create SBML from response
+			this.sbml = SabioQuery.readEntityInString(this.response);
+			
 		} else {
 			System.out.println("Request failed with status code: " + status);
 			
@@ -55,7 +56,7 @@ public class SabioQueryResult {
 	/** Read the kineticLaws from the given SBML; 
 	 * @throws XMLStreamException */
 	public ArrayList<SabioKineticLaw> getKineticLaws(){
-		return SabioKineticLaw.parseKineticLaws(this.sbml);
+		return SabioKineticLaw.parseKineticLaws(sbml);
 	}
 	
 	

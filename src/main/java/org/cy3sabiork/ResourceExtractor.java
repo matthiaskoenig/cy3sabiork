@@ -12,6 +12,8 @@ import java.util.Enumeration;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class extracts the bundle resources to given app directory.
@@ -21,6 +23,8 @@ import org.osgi.framework.BundleContext;
  * not support the acces via bundle: uris.
  */
 public class ResourceExtractor {
+	private static Logger logger = LoggerFactory.getLogger(ResourceExtractor.class);
+	
 	/* Resources made available via the ResourceExtractor. */
 	public final String GUI_RESOURCES = "/gui/";   
 	
@@ -72,13 +76,13 @@ public class ResourceExtractor {
 					"Files not extracted");
 			return;
 		}
-		System.out.println("-------------------------------------------------");
-		System.out.println("Extract bundle resources");
-		System.out.println("-------------------------------------------------");
+		logger.debug("-------------------------------------------------");
+		logger.debug("Extract bundle resources");
+		logger.debug("-------------------------------------------------");
 		// bundle root
 		Bundle bundle = bc.getBundle();
 		URL rootURL = bundle.getEntry("/");
-		System.out.println("bundle root: " + rootURL);
+		logger.debug("bundle root: " + rootURL);
 		
 		/* FIXME: we don't care about existing resources, just overwriting them
 		 * This will accumulate files with versions and should be cleaned up.
@@ -93,7 +97,7 @@ public class ResourceExtractor {
 					deleteAll(destination);
 		*/
 		extractDirectory(rootURL, GUI_RESOURCES);
-		System.out.println("-------------------------------------------------");
+		logger.debug("-------------------------------------------------");
 	}
 	
 	/* 
@@ -126,7 +130,7 @@ public class ResourceExtractor {
 						    throw new IllegalStateException("Couldn't create dir: " + parent);
 						}
 						
-						System.out.println(" --> " + outFile.getAbsolutePath());
+						logger.debug(" --> " + outFile.getAbsolutePath());
 						OutputStream outputStream = new FileOutputStream(outFile);
 				
 						int read = 0;

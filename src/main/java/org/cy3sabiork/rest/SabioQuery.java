@@ -1,10 +1,12 @@
-package org.cy3sabiork;
+package org.cy3sabiork.rest;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
-import java.util.Set;
 
-import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
@@ -12,10 +14,18 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.io.IOUtils;
+import org.cy3sabiork.SabioQueryResult;
+
 
 /**
  * Performing SabioRK queries.
- * Necessary to give feedback to the user about the status of the query.
+ * 
+ * This is the web service client class performing the queries.
+ * see https://jersey.java.net/documentation/latest/client.html
+ * 
+ * A resource in the JAX-RS client API is an instance of the Java class WebTarget
+ * and encapsulates an URI. The fixed set of HTTP methods can be invoked based on the WebTarget.
  * 
  * FIXME: reuse the created client instead of static access
  * 		 (client connection building and init creates additional overhead)
@@ -55,9 +65,6 @@ public class SabioQuery {
 			
 			//Invocation.Builder invocationBuilder = requestTarget.request(MediaType.TEXT_XML_TYPE);
 			Invocation.Builder invocationBuilder = requestTarget.request("text/html; charset=UTF-8");
-			// Necessary to set the media type to UTF-8 to work on windows
-			// 
-			//invocationBuilder = invocationBuilder.accept("text/html; charset=UTF-8");
 			
 			Response response = invocationBuilder.get();
 			return response;
@@ -66,6 +73,27 @@ public class SabioQuery {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	/** 
+	 * Read the response entity in string.
+	 * Necessary to take care of the encoding, otherwise issues on win7. 
+	 * 
+	 * This could also be handled via an interceptor:
+	 *  Interceptors are used primarily for modification of entity input and output streams.
+	 *  see https://jersey.java.net/documentation/latest/filters-and-interceptors.html
+	 */
+	public static String readEntityInString(Response response){
+		InputStream inputStream = (InputStream) response.getEntity();
+		StringWriter writer = new StringWriter();
+		try {
+			IOUtils.copy(inputStream, writer, StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String content = writer.toString();
+		return content;
 	}
 	
 	/** 

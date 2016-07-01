@@ -194,7 +194,7 @@ public class QueryFXMLController implements Initializable{
         		// information about long running full queries
         		if (queryString.startsWith(SabioQueryJersey.PREFIX_QUERY)){
         			logger.info("GET COUNT <"+ queryString + ">");
-                	Integer count = SabioQueryJersey.performCountQuery(queryString);
+                	Integer count = new SabioQueryJersey().performCountQuery(queryString);
                 	setEntryCount(count);
                 	logger.info("<" + count + "> Kinetic Law Entries for query in SABIO-RK.");
         		}
@@ -203,7 +203,7 @@ public class QueryFXMLController implements Initializable{
         		long startTime = System.currentTimeMillis();
         		logger.info("GET <"+ queryString + ">");
         		logger.info("... waiting for SABIO-RK response ...");
-        		queryResult = SabioQueryJersey.performQuery(queryString);
+        		queryResult = new SabioQueryJersey().performQuery(queryString);
         		Integer restReturnStatus = queryResult.getStatus();
         		long endTime = System.currentTimeMillis();
         		long duration = (endTime - startTime);
@@ -593,7 +593,7 @@ public class QueryFXMLController implements Initializable{
 		showQueryStatus(false);
 
 		setProgress(-1);
-		String status = SabioQueryJersey.getSabioStatus();
+		String status = new SabioQueryJersey().getSabioStatus();
 		if (status.equals("UP")){
 			setProgress(1.0);
 		}	

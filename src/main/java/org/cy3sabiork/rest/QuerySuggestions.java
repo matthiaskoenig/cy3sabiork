@@ -175,17 +175,17 @@ public class QuerySuggestions implements Serializable {
 	}
 	
 	private TreeSet<String> retrieveKeywords(){
-		SabioQueryResult result = SabioQueryJersey.performQuery("searchKineticLaws");
+		SabioQueryResult result = new SabioQueryJersey().performQuery("searchKineticLaws");
 		return parseXMLFields(result.getXML(), "field");
 	}
 	
 	private TreeSet<String> retrieveSuggestionFields(){
-		SabioQueryResult result = SabioQueryJersey.performQuery("suggestions");
+		SabioQueryResult result = new SabioQueryJersey().performQuery("suggestions");
 		return parseXMLFields(result.getXML(), "field");
 	}
 	
 	private TreeSet<String> retrieveSuggestionsForField(String field){	
-		SabioQueryResult result = SabioQueryJersey.performQuery("suggestions/" + field);
+		SabioQueryResult result = new SabioQueryJersey().performQuery("suggestions/" + field);
 		String tagName = field.substring(0, (field.length()-1));
 		return parseXMLFields(result.getXML(), tagName);
 	}

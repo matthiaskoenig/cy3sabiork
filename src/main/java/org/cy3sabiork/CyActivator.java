@@ -73,7 +73,7 @@ public class CyActivator extends AbstractCyActivator {
 			
 			
 			// ----------------- Testing --------------------------
-			SabioQueryResult result = SabioQueryJersey.performQuery("kineticLaws/123");
+			SabioQueryResult result = new SabioQueryJersey().performQuery("kineticLaws/123");
 			String sbml = result.getXML();
     	    
     	    File testFile = new File(appDirectory, "testEncoding.xml");

@@ -7,14 +7,18 @@ import java.util.TreeSet;
 
 import javax.swing.SwingUtilities;
 
-import javafx.concurrent.Worker.State;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
+import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextField;
@@ -23,32 +27,26 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
-
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-
-import javafx.scene.control.cell.PropertyValueFactory;
-
 import javafx.scene.input.KeyCode;
 
 import javafx.application.Platform;
-import javafx.scene.control.ProgressIndicator;
-
-import javafx.fxml.Initializable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import netscape.javascript.JSObject;
 
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
-import org.cy3sabiork.QuerySuggestions;
 import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioKineticLaw;
-import org.cy3sabiork.SabioQuery;
 import org.cy3sabiork.SabioQueryResult;
+import org.cy3sabiork.rest.QuerySuggestions;
+import org.cy3sabiork.rest.SabioQuery;
+import org.cy3sabiork.rest.SabioQueryUniRest;
 
 
 /** 
@@ -197,7 +195,7 @@ public class QueryFXMLController implements Initializable{
         		// information about long running full queries
         		if (queryString.startsWith(SabioQuery.PREFIX_QUERY)){
         			logger.info("GET COUNT <"+ queryString + ">");
-                	Integer count = SabioQuery.performCountQuery(queryString);
+                	Integer count = new SabioQueryUniRest().performCountQuery(queryString);
                 	setEntryCount(count);
                 	logger.info("<" + count + "> Kinetic Law Entries for query in SABIO-RK.");
         		}
@@ -206,7 +204,7 @@ public class QueryFXMLController implements Initializable{
         		long startTime = System.currentTimeMillis();
         		logger.info("GET <"+ queryString + ">");
         		logger.info("... waiting for SABIO-RK response ...");
-        		queryResult = SabioQuery.performQuery(queryString);
+        		queryResult = new SabioQueryUniRest().performQuery(queryString);
         		Integer restReturnStatus = queryResult.getStatus();
         		long endTime = System.currentTimeMillis();
         		long duration = (endTime - startTime);
@@ -283,7 +281,7 @@ public class QueryFXMLController implements Initializable{
     @FXML protected void handleLoadAction(ActionEvent event) {
     	logger.info("Loading Kinetic Laws in Cytoscape ...");
     	if (WebViewSwing.sbmlReader != null){
-    		String sbml = queryResult.getSBML();
+    		String sbml = queryResult.getXML();
     		if (sbml != null){
     			logger.info("... loading ...");
     			WebViewSwing.sbmlReader.loadNetworkFromSBML(sbml);
@@ -596,7 +594,7 @@ public class QueryFXMLController implements Initializable{
 		showQueryStatus(false);
 
 		setProgress(-1);
-		String status = SabioQuery.getSabioStatus();
+		String status = new SabioQueryUniRest().getSabioStatus();
 		if (status.equals("UP")){
 			setProgress(1.0);
 		}	

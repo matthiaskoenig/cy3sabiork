@@ -2,12 +2,12 @@ package org.cy3sabiork;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
-import org.cytoscape.work.SynchronousTaskManager;
 import org.cytoscape.work.TaskIterator;
 import org.cytoscape.work.TaskManager;
 import org.slf4j.Logger;
@@ -32,14 +32,17 @@ public class SabioSBMLReader {
 	public void loadNetworkFromSBML(String sbml){
 		logger.debug("Load SBML for kinetic information");
 		try{
-			// temp file
-    	    File temp = File.createTempFile("sabiork-temp", ".xml"); 
-    	    BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
-    	    bw.write(sbml);
-    	    bw.close();
-    	    
+			// write with encoding
+			File tmpFile = File.createTempFile("test", ".xml");
+			Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tmpFile), "UTF-8"));
+	    	try {
+	    	    out.write(sbml);
+	    	} finally {
+	    	    out.close();
+	    	}
+			
     	    // execute task
-    		TaskIterator taskIterator = factory.createTaskIterator(temp);
+    		TaskIterator taskIterator = factory.createTaskIterator(tmpFile);
     		taskManager.execute(taskIterator);
     		
     	}catch(IOException e){

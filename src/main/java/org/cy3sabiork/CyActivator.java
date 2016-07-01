@@ -1,31 +1,21 @@
 package org.cy3sabiork;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 import org.osgi.framework.BundleContext;
-import org.sbml.jsbml.JSBML;
-import org.sbml.jsbml.Model;
-import org.sbml.jsbml.SBMLDocument;
 import org.cytoscape.application.CyApplicationConfiguration;
 import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.application.swing.CySwingApplication;
-import org.cytoscape.application.swing.CytoPanelComponent;
 import org.cytoscape.service.util.AbstractCyActivator;
 import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
 import org.cytoscape.util.swing.OpenBrowser;
-import org.cytoscape.work.SynchronousTaskManager;
 import org.cytoscape.work.TaskManager;
 import org.cy3sbml.BundleInformation;
-import org.cy3sbml.SBMLReaderTask;
 import org.cy3sabiork.SabioAction;
-import org.cy3sabiork.oven.SabioPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /** Main entry point for OSGI. */
 public class CyActivator extends AbstractCyActivator {
@@ -63,7 +53,6 @@ public class CyActivator extends AbstractCyActivator {
 			final OpenBrowser openBrowser = getService(bc, OpenBrowser.class);
 			
 			// SBML reader
-			final SynchronousTaskManager synchronousTaskManager = getService(bc, SynchronousTaskManager.class);
 			final  TaskManager taskManager = getService(bc, TaskManager.class);
 			final LoadNetworkFileTaskFactory loadNetworkFileTaskFactory = getService(bc, LoadNetworkFileTaskFactory.class);
 			SabioSBMLReader sbmlReader = new SabioSBMLReader(loadNetworkFileTaskFactory, taskManager);
@@ -75,13 +64,11 @@ public class CyActivator extends AbstractCyActivator {
 			// Extract all resource files for JavaFX (no bundle access)
 			final ResourceExtractor resourceHandler = new ResourceExtractor(bc, appDirectory);
 			resourceHandler.extract();
-		
-			// Sabio Panel
-			// SabioPanel sabioPanel = SabioPanel.getInstance(cySwingApplication, sabioAction);
-			// registerService(bc, sabioPanel, CytoPanelComponent.class, new Properties());
-			// SabioPanel.getInstance().activate();
-			
 			logger.info("----------------------------");
+			
+			// JSBMLBugUTF8.testReading();
+			
+			
 		} catch (Throwable e){
 			logger.error("Could not start server!", e);
 			e.printStackTrace();

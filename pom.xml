@@ -9,19 +9,19 @@
 		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
 		<osgi.api.version>4.2.0</osgi.api.version>
 		
-		<Cytoscape-App-Dependencies>cy3sbml;0.1.9</Cytoscape-App-Dependencies>
+		<Cytoscape-App-Dependencies>cy3sbml;0.2.0</Cytoscape-App-Dependencies>
 		<org.osgi.framework.system.packages.extra>javafx.animation,javafx.application,javafx.collections,javafx.embed.swing,javafx.geometry,javafx.scene,javafx.scene.layout,javafx.scene.transform,javax.swing,javax.swing.border,javafx.fxml,netscape.javascript,org.osgi.framework</org.osgi.framework.system.packages.extra>
 		<org.osgi.framework.bootdelegation>netscape.javascript</org.osgi.framework.bootdelegation>
 		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cytoscape.api.version>3.2.1</cytoscape.api.version>
+		<cytoscape.api.version>3.4.0</cytoscape.api.version>
 		
 	</properties>
 
 	<groupId>org.cy3sabiork</groupId>
 	<artifactId>cy3sabiork</artifactId>
 	<packaging>bundle</packaging>
-	<version>0.3.1</version>
+	<version>0.3.2</version>
 	<name>cy3sabiork</name>
 	<description>A Cytoscape app to visualize kinetic data from SABIO-RK.</description>
 
@@ -113,7 +113,7 @@
 						<Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>!${bundle.namespace}.*</Export-Package>
-						<Import-Package>org.cy3sbml.*;version="0.1.9";</Import-Package>
+						<Import-Package>org.cy3sbml.*;version="0.2.0";</Import-Package>
 						<Import-Package>netscape.javascript</Import-Package>
 						<Import-Package>*;resolution:=optional</Import-Package>
 						<Private-Package>${bundle.namespace}.*</Private-Package>
@@ -235,16 +235,39 @@
 		
 		<!--  Jersey RESTful -->
 		<dependency>
-		    <groupId>javax.ws.rs</groupId>
-		    <artifactId>javax.ws.rs-api</artifactId>
-		    <version>2.0.1</version>
-		</dependency>
-		<dependency>
 		    <groupId>org.glassfish.jersey.core</groupId>
 		    <artifactId>jersey-client</artifactId>
-		    <version>2.22.2</version>
+		    <version>2.23.1</version>
 		</dependency>
 		
+		<!--  UniRest -->
+		<dependency>
+		    <groupId>com.mashape.unirest</groupId>
+		    <artifactId>unirest-java</artifactId>
+		    <version>1.4.9</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpclient</artifactId>
+		  <version>4.3.6</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpasyncclient</artifactId>
+		  <version>4.0.2</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpmime</artifactId>
+		  <version>4.3.6</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.json</groupId>
+		  <artifactId>json</artifactId>
+		  <version>20140107</version>
+		</dependency>
+		
+		<!--  other -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>

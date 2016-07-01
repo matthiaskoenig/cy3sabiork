@@ -1,8 +1,6 @@
 package org.cy3sabiork;
 
 import java.util.ArrayList;
-import javax.ws.rs.core.Response;
-import javax.xml.stream.XMLStreamException;
 
 /**
  * Result of the given web service query.
@@ -10,25 +8,13 @@ import javax.xml.stream.XMLStreamException;
 public class SabioQueryResult {
 
 	final private String query;
-	final private Response response;
 	final private Integer status;
-	final private String sbml;
+	final private String xml;
 	
-	public SabioQueryResult(final String query, final Response response){
+	public SabioQueryResult(final String query, Integer status, String xml){
 		this.query = query;
-		this.response = response;
-		this.status = response.getStatus();
-		
-		if (success()) {
-			this.sbml = response.readEntity(String.class);	
-			// System.out.println("--------------------------------------------");
-			// System.out.println(this.sbml);
-			// System.out.println("--------------------------------------------");
-		} else {
-			System.out.println("Request failed with status code: " + status);
-			
-			this.sbml = null;
-		}
+		this.status = status;
+		this.xml = xml;
 	}
 	
 	/** Returns true if the request was successful. */
@@ -40,23 +26,20 @@ public class SabioQueryResult {
 		return query;
 	}
 	
-	public Response getResponse(){
-		return response;
-	}
-	
-	public String getSBML(){
-		return sbml;
+	public String getXML(){
+		return xml;
 	}
 	
 	public Integer getStatus(){
 		return status;
 	}
 	
-	/** Read the kineticLaws from the given SBML; 
-	 * @throws XMLStreamException */
+	/*
+	 * Read the kineticLaws from the given SBML. 
+	 * xml must not be SBML, i.e. some query results are xml but not SBML. 
+	 */
 	public ArrayList<SabioKineticLaw> getKineticLaws(){
-		return SabioKineticLaw.parseKineticLaws(this.sbml);
+		return SabioKineticLaw.parseKineticLaws(xml);
 	}
-	
 	
 }

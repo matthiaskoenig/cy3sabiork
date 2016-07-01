@@ -1,5 +1,11 @@
 package org.cy3sabiork;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -51,10 +57,7 @@ public class SabioKineticLaw {
     	return reaction.get();
     }
     
-    
-    /* 
-     * Parses the Kinetic Law Ids from given text string. 
-     */
+    /* Parses Kinetic Law Ids from given text string. */
     public static HashSet<Integer> parseIds(String text){
     	HashSet<Integer> ids = new HashSet<Integer>();
 		
@@ -85,35 +88,42 @@ public class SabioKineticLaw {
 	 * Read SabioKineticLaws from given SBML. 
 	 * 
 	 * Information to populate the results panel is parsed here. 
+	 * This uses directly the response string.
 	 */
 	public static ArrayList<SabioKineticLaw> parseKineticLaws(String sbml){
 		ArrayList<SabioKineticLaw> list = new ArrayList<SabioKineticLaw>();
 		if (sbml == null){
 			return list;
 		}
-		
-		// parse the entries from the SBML
-		SBMLDocument doc;
 		try {
-			doc = JSBML.readSBMLFromString(sbml);
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
-			return list;
-		}
-		
-		// necessary to read information from annotations
-		Model model = doc.getModel();
-		Integer count = 1;
-		for (Reaction r : model.getListOfReactions()){
+			// FIXME: workaround for reading
+			// SBMLDocument doc = JSBML.readSBMLFromString(sbml);
+			File tmpFile = File.createTempFile("test", ".xml");
+			Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tmpFile), "UTF-8"));
+	    	try {
+	    	    out.write(sbml);
+	    	} finally {
+	    	    out.close();
+	    	}
+	    	SBMLDocument doc = JSBML.readSBMLFromFile(tmpFile.getAbsolutePath());
+	    	
+			// necessary to read information from annotations
+			Model model = doc.getModel();
+			Integer count = 1;
+			for (Reaction r : model.getListOfReactions()){
 
-			Integer kid = getKineticLawIdFromReaction(r);
-			String organism = getOrganismFromReaction(r);
-			String tissue = getTissueFromReaction(r);
-			String reaction = getDescriptionFromReaction(r);
-			
-			list.add(new SabioKineticLaw(count, kid, organism, tissue, reaction));
-			
-			count++;
+				Integer kid = getKineticLawIdFromReaction(r);
+				String organism = getOrganismFromReaction(r);
+				String tissue = getTissueFromReaction(r);
+				String reaction = getDescriptionFromReaction(r);
+				
+				list.add(new SabioKineticLaw(count, kid, organism, tissue, reaction));
+				count++;
+			}
+	    	
+		} catch (IOException | XMLStreamException e1) {
+			e1.printStackTrace();
+			return list;
 		}
 		return list;
 	}

@@ -10,6 +10,7 @@
 ![alt tag](docs/images/cy3sabiork-workflow.png)  
 **Figure 1**: Workflow overview.
 
+**App Store**: http://apps.cytoscape.org/apps/cy3sabiork  
 **Support & Forum**: https://groups.google.com/forum/#!forum/cysbml-cyfluxviz  
 **Issue Tracker**: https://github.com/matthiaskoenig/cy3sabiork/issues  
 
@@ -67,6 +68,10 @@ This work was supported by the Federal Ministry of Education and Research (BMBF,
 We thank the SABIO-RK team for their support. We thank the SBML and Cytoscape community for their support and help.
 
 ## Change Log
+**v0.3.2** [2016-07-01]
+
+- fixes SBML reading bug on Windows
+
 **v0.3.1** [2016-06-28]
 
 - JavaFX based GUI

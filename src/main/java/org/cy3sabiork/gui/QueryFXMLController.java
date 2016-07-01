@@ -7,14 +7,18 @@ import java.util.TreeSet;
 
 import javax.swing.SwingUtilities;
 
-import javafx.concurrent.Worker.State;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
+import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextField;
@@ -23,22 +27,15 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
-
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-
-import javafx.scene.control.cell.PropertyValueFactory;
-
 import javafx.scene.input.KeyCode;
 
 import javafx.application.Platform;
-import javafx.scene.control.ProgressIndicator;
-
-import javafx.fxml.Initializable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import netscape.javascript.JSObject;
 

@@ -45,7 +45,8 @@ import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioKineticLaw;
 import org.cy3sabiork.SabioQueryResult;
 import org.cy3sabiork.rest.QuerySuggestions;
-import org.cy3sabiork.rest.SabioQueryJersey;
+import org.cy3sabiork.rest.SabioQuery;
+import org.cy3sabiork.rest.SabioQueryUniRest;
 
 
 /** 
@@ -137,10 +138,10 @@ public class QueryFXMLController implements Initializable{
     		return;
     	}
     	
-    	if (query.startsWith(SabioQueryJersey.PREFIX_QUERY)){
-    		queryText.setText(query + SabioQueryJersey.CONNECTOR_AND + addition);
+    	if (query.startsWith(SabioQuery.PREFIX_QUERY)){
+    		queryText.setText(query + SabioQuery.CONNECTOR_AND + addition);
     	} else {
-    		queryText.setText(SabioQueryJersey.PREFIX_QUERY + addition);
+    		queryText.setText(SabioQuery.PREFIX_QUERY + addition);
     	}
     	logger.info("<" + addition +"> added to query.");
     }
@@ -163,7 +164,7 @@ public class QueryFXMLController implements Initializable{
     	}
     	
     	// query for ids
-    	queryText.setText(SabioQueryJersey.queryStringFromIds(ids));
+    	queryText.setText(SabioQuery.queryStringFromIds(ids));
     }
     
     /**
@@ -192,9 +193,9 @@ public class QueryFXMLController implements Initializable{
         		
         		// query number of entries in case of q-Query to give
         		// information about long running full queries
-        		if (queryString.startsWith(SabioQueryJersey.PREFIX_QUERY)){
+        		if (queryString.startsWith(SabioQuery.PREFIX_QUERY)){
         			logger.info("GET COUNT <"+ queryString + ">");
-                	Integer count = new SabioQueryJersey().performCountQuery(queryString);
+                	Integer count = new SabioQueryUniRest().performCountQuery(queryString);
                 	setEntryCount(count);
                 	logger.info("<" + count + "> Kinetic Law Entries for query in SABIO-RK.");
         		}
@@ -203,7 +204,7 @@ public class QueryFXMLController implements Initializable{
         		long startTime = System.currentTimeMillis();
         		logger.info("GET <"+ queryString + ">");
         		logger.info("... waiting for SABIO-RK response ...");
-        		queryResult = new SabioQueryJersey().performQuery(queryString);
+        		queryResult = new SabioQueryUniRest().performQuery(queryString);
         		Integer restReturnStatus = queryResult.getStatus();
         		long endTime = System.currentTimeMillis();
         		long duration = (endTime - startTime);
@@ -318,7 +319,7 @@ public class QueryFXMLController implements Initializable{
     
     /** Get information for KineticLaw in WebView. */
 	private void setInfoForKineticLaw(Integer kid){
-		String lawURI = SabioQueryJersey.PREFIX_KINETIC_LAW_INFO + kid.toString();
+		String lawURI = SabioQuery.PREFIX_KINETIC_LAW_INFO + kid.toString();
 		logger.info("Load information for Kinetic Law <" + kid + ">");
 		webView.getEngine().load(lawURI);
 	}
@@ -593,7 +594,7 @@ public class QueryFXMLController implements Initializable{
 		showQueryStatus(false);
 
 		setProgress(-1);
-		String status = new SabioQueryJersey().getSabioStatus();
+		String status = new SabioQueryUniRest().getSabioStatus();
 		if (status.equals("UP")){
 			setProgress(1.0);
 		}	

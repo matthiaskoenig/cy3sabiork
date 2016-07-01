@@ -1,16 +1,17 @@
 package org.cy3sabiork.rest;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import javax.ws.rs.core.Response;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.request.GetRequest;
 
 public class TestUniRest {
 	/** Create client and perform query. 
@@ -32,15 +33,25 @@ public class TestUniRest {
 			System.out.println(uri.toString());
 			HttpResponse<String> response = Unirest.get(uri.toString())
 										.asString();
-					  				
 			System.out.println(response.getStatus());
 			String output = response.getBody();
-					  
-			
-			
 			System.out.println("--------------------------------------------");
 			System.out.println(output);
 			System.out.println("--------------------------------------------");
+			
+			
+			HttpResponse<InputStream> ioResponse = Unirest.get(uri.toString())
+														.asBinary();
+			InputStream inputStream = ioResponse.getRawBody();
+			
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+			String content = bufferedReader.lines().collect(Collectors.joining("\n"));
+			
+			System.out.println("--------------------------------------------");
+			System.out.println(content);
+			System.out.println("--------------------------------------------");
+			
+			
 			Unirest.shutdown();
 		} catch (UnirestException | URISyntaxException | IOException e){
 			e.printStackTrace();

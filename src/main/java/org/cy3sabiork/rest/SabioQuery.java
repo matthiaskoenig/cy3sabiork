@@ -31,7 +31,7 @@ public abstract class SabioQuery{
 	protected static URI uriFromQuery(String query) throws URISyntaxException{
 		query = query.replace(" ", "%20");
 		query = query.replace("\"", "%22");
-		URI uri = new java.net.URI(SabioQueryJersey.SABIORK_RESTFUL_URL + "/" + query);
+		URI uri = new java.net.URI(SabioQuery.SABIORK_RESTFUL_URL + "/" + query);
 		return uri;
 	}
 	
@@ -39,8 +39,8 @@ public abstract class SabioQuery{
 	 * Convert sbml to count query if necessary.
 	 */
 	protected static String convertToCountQuery(String query){
-		if (query.startsWith(SabioQueryJersey.PREFIX_QUERY)){
-			query = query.replace(SabioQueryJersey.PREFIX_QUERY, SabioQueryJersey.PREFIX_COUNT);
+		if (query.startsWith(SabioQuery.PREFIX_QUERY)){
+			query = query.replace(SabioQuery.PREFIX_QUERY, SabioQuery.PREFIX_COUNT);
 		}
 		return query;
 	}
@@ -50,7 +50,7 @@ public abstract class SabioQuery{
 	public static String queryStringFromIds(Collection<Integer> ids){
 		
 		if (ids.size() == 1){
-			return (SabioQueryJersey.PREFIX_LAW + ids.iterator().next());	
+			return (SabioQuery.PREFIX_LAW + ids.iterator().next());	
 		} else {
 			String idText = null;
 			for (Integer kid: ids){
@@ -60,7 +60,7 @@ public abstract class SabioQuery{
 					idText += "," + kid.toString();
 				}
 			}
-			return (SabioQueryJersey.PREFIX_LAWS + idText);
+			return (SabioQuery.PREFIX_LAWS + idText);
 	    }
 	}
 	

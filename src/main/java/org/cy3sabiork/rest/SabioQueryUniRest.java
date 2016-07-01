@@ -1,37 +1,47 @@
 package org.cy3sabiork.rest;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 import org.cy3sabiork.SabioQueryResult;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 
+/**
+ * UniRest based Sabio Queries.
+ */
 public class SabioQueryUniRest extends SabioQuery{
 
 	@Override
 	public SabioQueryResult performQuery(String query){
-		HttpResponse<String> response = executeQuery(query);
+		HttpResponse<InputStream> response = executeQuery(query);
 		if (response != null){
 			Integer status = response.getStatus();
 			String xml = null;
 			if (status == 200){
-				xml = response.getBody();
+				// xml = response.getBody();
+				xml = getStringBody(response);
 			}
 			return new SabioQueryResult(query, status, xml);	
 		}
 		return null;
 	}
 
+	
 	@Override
 	public Integer performCountQuery(String query) {
 		query = convertToCountQuery(query);
 		
-		HttpResponse<String> response = executeQuery(query);
+		HttpResponse<InputStream> response = executeQuery(query);
 		Integer count = -1;
 		// success
 		if (response != null && response.getStatus() == 200){
-			String countString = response.getBody();
+			String countString = getStringBody(response);
 			try {
 				count = Integer.parseInt(countString);
 			} catch (NumberFormatException e){
@@ -44,24 +54,38 @@ public class SabioQueryUniRest extends SabioQuery{
 	@Override
 	public String getSabioStatus() {
 		String status = "Down";
-		HttpResponse<String> response = executeQuery("status");
+		HttpResponse<InputStream> response = executeQuery("status");
 		if (response != null){
-			status = response.getBody();
+			status = getStringBody(response);
 		}
 		return status;
 	}
 	
-	private HttpResponse<String> executeQuery(String query){
+	private HttpResponse<InputStream> executeQuery(String query){
 		try {
 			URI uri = uriFromQuery(query);
-			HttpResponse<String> response = Unirest.get(uri.toString())
-												   .asString();
-			return response;
+			// HttpResponse<String> response = Unirest.get(uri.toString())
+			//									   .asString();
+			
+			HttpResponse<InputStream> ioResponse = Unirest.get(uri.toString())
+														  .header("Accept", "text/xml;charset=UTF-8")
+														  .header("Content-Type", "text/xml;charset=UTF-8")
+														   .asBinary();
+			return ioResponse;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	private String getStringBody(HttpResponse<InputStream> ioResponse){ 
+		InputStream inputStream = ioResponse.getRawBody();
+
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+		String content = bufferedReader.lines().collect(Collectors.joining("\n"));
+		
+		return content;
 	}
 
 }

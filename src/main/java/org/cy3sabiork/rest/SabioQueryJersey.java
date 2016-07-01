@@ -2,30 +2,20 @@ package org.cy3sabiork.rest;
 
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
-import java.util.Collection;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import java.util.stream.Collectors;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Feature;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Variant;
 
-import org.apache.commons.io.IOUtils;
+
 import org.cy3sabiork.SabioQueryResult;
-import org.glassfish.jersey.CommonProperties;
 import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.ClientRequest;
-import org.glassfish.jersey.client.ClientResponse;
 import org.glassfish.jersey.logging.LoggingFeature;
 
 

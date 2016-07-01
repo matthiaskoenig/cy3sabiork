@@ -6,8 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.framework.BundleContext;
 import org.sbml.jsbml.JSBML;
 import org.cytoscape.application.CyApplicationConfiguration;
@@ -17,11 +15,9 @@ import org.cytoscape.service.util.AbstractCyActivator;
 import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
 import org.cytoscape.util.swing.OpenBrowser;
 import org.cytoscape.work.TaskManager;
-import org.glassfish.jersey.client.ClientResponse;
 import org.cy3sbml.BundleInformation;
 import org.cy3sabiork.SabioAction;
 import org.cy3sabiork.rest.SabioQuery;
-import org.cy3sabiork.rest.TestRestful;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,16 +71,11 @@ public class CyActivator extends AbstractCyActivator {
 			resourceHandler.extract();
 			logger.info("----------------------------");
 			
+			
 			// ----------------- Testing --------------------------
-			// TestRestful.newQuery("kineticLaws/123");
-			String query = "kineticLaws/123";
-			Response response = SabioQuery.executeQuery("kineticLaws/123");
-			String sbml = SabioQuery.readEntityInString(response);
+			SabioQueryResult result = SabioQuery.performQuery("kineticLaws/123");
+			String sbml = result.getXML();
     	    
-    	    // Read SBML
-    	    JSBML.readSBMLFromString(sbml);
-    	    
-    	    /*
     	    File testFile = new File(appDirectory, "testEncoding.xml");
     	    System.out.println("-->" + testFile.getAbsolutePath());
     	    BufferedWriter writer = null;
@@ -100,13 +91,12 @@ public class CyActivator extends AbstractCyActivator {
     	            if ( writer != null)
     	            writer.close( );
     	        }
-    	        catch ( IOException e)
-    	        {
+    	        catch ( IOException e){
     	        }
     	    }
-    	    */
     	    
-    	    
+    	    // Read SBML
+    	    JSBML.readSBMLFromString(sbml);
 			
 		} catch (Throwable e){
 			logger.error("Could not start server!", e);

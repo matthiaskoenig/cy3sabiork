@@ -51,10 +51,7 @@ public class SabioKineticLaw {
     	return reaction.get();
     }
     
-    
-    /* 
-     * Parses the Kinetic Law Ids from given text string. 
-     */
+    /* Parses Kinetic Law Ids from given text string. */
     public static HashSet<Integer> parseIds(String text){
     	HashSet<Integer> ids = new HashSet<Integer>();
 		

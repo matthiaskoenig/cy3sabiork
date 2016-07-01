@@ -25,11 +25,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.DocumentBuilder;
 import org.xml.sax.SAXException;
 import org.cy3sabiork.ResourceExtractor;
+import org.cy3sabiork.SabioQueryResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 
-import javax.ws.rs.core.Response;
 
 /** 
  * Manage SABIO-RK query suggestions. 
@@ -175,22 +175,19 @@ public class QuerySuggestions implements Serializable {
 	}
 	
 	private TreeSet<String> retrieveKeywords(){
-		Response response = SabioQuery.executeQuery("searchKineticLaws");
-		String xml = response.readEntity(String.class);
-		return parseXMLFields(xml, "field");
+		SabioQueryResult result = SabioQuery.performQuery("searchKineticLaws");
+		return parseXMLFields(result.getXML(), "field");
 	}
 	
 	private TreeSet<String> retrieveSuggestionFields(){
-		Response response = SabioQuery.executeQuery("suggestions");
-		String xml = response.readEntity(String.class);
-		return parseXMLFields(xml, "field");
+		SabioQueryResult result = SabioQuery.performQuery("suggestions");
+		return parseXMLFields(result.getXML(), "field");
 	}
 	
 	private TreeSet<String> retrieveSuggestionsForField(String field){	
-		Response response = SabioQuery.executeQuery("suggestions/" + field);
-		String xml = response.readEntity(String.class);
+		SabioQueryResult result = SabioQuery.performQuery("suggestions/" + field);
 		String tagName = field.substring(0, (field.length()-1));
-		return parseXMLFields(xml, tagName);
+		return parseXMLFields(result.getXML(), tagName);
 	}
 	
 	/** Parse entries for given tag name. */

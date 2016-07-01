@@ -16,9 +16,9 @@ import javafx.scene.control.ScrollPane;
 
 
 import org.cy3sabiork.ResourceExtractor;
-import org.cy3sabiork.SabioQueryHistory;
 import org.cy3sabiork.SabioSBMLReader;
 import org.cy3sabiork.gui.QueryFXMLController;
+import org.cy3sabiork.oven.SabioQueryHistory;
 import org.cytoscape.util.swing.OpenBrowser;
 
 

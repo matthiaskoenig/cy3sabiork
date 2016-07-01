@@ -280,7 +280,7 @@ public class QueryFXMLController implements Initializable{
     @FXML protected void handleLoadAction(ActionEvent event) {
     	logger.info("Loading Kinetic Laws in Cytoscape ...");
     	if (WebViewSwing.sbmlReader != null){
-    		String sbml = queryResult.getSBML();
+    		String sbml = queryResult.getXML();
     		if (sbml != null){
     			logger.info("... loading ...");
     			WebViewSwing.sbmlReader.loadNetworkFromSBML(sbml);

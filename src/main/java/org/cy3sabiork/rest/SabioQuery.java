@@ -7,11 +7,18 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URI;
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -29,7 +36,6 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientRequest;
 import org.glassfish.jersey.client.ClientResponse;
 import org.glassfish.jersey.logging.LoggingFeature;
-
 
 
 /**
@@ -62,7 +68,7 @@ public class SabioQuery {
 	 * This handles the required query cleaning/escaping and returns the
 	 * response of the query.
 	 */
-	public static Response executeQuery(String query){
+	public static ClientResponse executeQuery(String query){
 		try {
 			// Create URI after required replacements (as long as SABIO-RK has no proper encoding)
 			query = query.replace(" ", "%20");
@@ -71,32 +77,25 @@ public class SabioQuery {
 			
 			// create client
 			ClientConfig clientConfig = new ClientConfig();
-			clientConfig.property(CommonProperties.FEATURE_AUTO_DISCOVERY_DISABLE, false);
+			//clientConfig.property(CommonProperties.FEATURE_AUTO_DISCOVERY_DISABLE, false);
 			clientConfig.property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_CLIENT, LoggingFeature.Verbosity.PAYLOAD_ANY);
 
-			Logger logger = Logger.getLogger(SabioQuery.class.getName());
+			// logging
+			Logger logger = Logger.getLogger(SabioQuery.class.getName());			
+			ConsoleHandler handler = new ConsoleHandler();
+			handler.setFormatter(new SimpleFormatter());
+			logger.addHandler(handler);
+			
 			Feature feature = new LoggingFeature(logger, Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY, null);
 			Client client = ClientBuilder.newClient(clientConfig)
 										 .register(feature);
 
-			
-			/*
-			WebTarget requestTarget = client.target(uri);
-			Invocation.Builder invocationBuilder = requestTarget
-														.request(MediaType.APPLICATION_XML)
-														.header("Content-Type","application/xml; charset=UTF-8");
-														// .accept(MediaType.APPLICATION_XML)
-														// .acceptEncoding("UTF-8");
-			
-			 Response response = invocationBuilder.get();
-			 */
-			// http://stackoverflow.com/questions/6860661/jersey-print-the-actual-request
-			Response response = client
+			ClientResponse response = client
 					 .target(uri)
-					 .request("application/xml;charset=UTF-8")
-					 .accept("application/xml;charset=UTF-8")
-					 .header("Content-Type","application/xml;charset=UTF-8")
-					 .get();
+					 .request("text/xml;charset=UTF-8")
+					 //.accept("application/xml;charset=UTF-8")
+					 .header("Content-Type","text/xml;charset=UTF-8")
+					 .get(ClientResponse.class);
 			
 			/*
 			Response response = client
@@ -106,11 +105,6 @@ public class SabioQuery {
 					 .header("Content-Type","application/xml;charset=UTF-8")
 					 .get();
 			*/
-			
-			//response.ok().header("Content-Type", "application/json;charset=UTF-8").build();
-			// String contentType = response.getMediaType();
-			// response.getHeaders().putSingle("Content-Type", contentType.toString() + ";charset=UTF-8");
-			
 			return response;
 			
 		} catch (Exception e) {
@@ -118,6 +112,30 @@ public class SabioQuery {
 			return null;
 		}
 	}
+	
+	/**
+	 * Parses the path and the parameters from the query string.
+	 * 
+	 * Query strings are of the form:
+	 * 		kineticLaws/123
+	 * 		searchKineticLaws/sbml?q=Tissue:spleen AND Organism:\"Homo sapiens\"
+	 * 		searchKineticLaws/sbml?q=Tissue:spleen%20AND%20Organism:%22homo%20sapiens%22
+	 */
+	public static SabioQueryResult performQuery(String query){
+		//logger.info("Perform Sabio-RK query");
+		ClientResponse response = executeQuery(query);
+		if (response != null){
+			Integer status = response.getStatus();
+			String xml = null;
+			if (status != 200){
+				// here String is retrieved from response
+				xml = SabioQuery.readEntityInString(response);
+			}
+			return new SabioQueryResult(query, status, xml);	
+		}
+		return null;
+	}
+	
 	
 	/** 
 	 * Read the response entity in string.
@@ -130,11 +148,27 @@ public class SabioQuery {
 	 *  - InputStream delivers bytes
      *  - Readers deliver chars in some encoding
      *  - new InputStreamReader(inputStream) uses the operating system encoding
-     +  - new InputStreamReader(inputStream, "UTF-8") uses the given encoding (here UTF-8)
-
+     *  - new InputStreamReader(inputStream, "UTF-8") uses the given encoding (here UTF-8)
 	 */
-	public static String readEntityInString(Response response){
+	private static String readEntityInString(ClientResponse response){
+		
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((InputStream) response.getEntity(), StandardCharsets.UTF_8));
+		String content = bufferedReader.lines().collect(Collectors.joining(""));
+		
+		// Somehow there are non UTF-8 characters in the response
+		/*
 		String content = response.readEntity(String.class);
+		CharsetDecoder utf8Decoder = Charset.forName("UTF-8").newDecoder();
+		utf8Decoder.onMalformedInput(CodingErrorAction.IGNORE);
+		utf8Decoder.onUnmappableCharacter(CodingErrorAction.IGNORE);
+		ByteBuffer bytes = Charset.forName("UTF-8").encode(content);
+		try {
+			CharBuffer parsed = utf8Decoder.decode(bytes);
+			content = parsed.toString();
+		} catch (CharacterCodingException e) {
+			e.printStackTrace();
+		}
+		*/
 		
 		/*
 		String content = null;
@@ -158,64 +192,20 @@ public class SabioQuery {
 		
 		return content;
 	}
-	
-	/* Convert InputStream to String with encoding. */
-	/*
-	private static String getStringFromInputStream(InputStream is) {
-		BufferedReader br = null;
-		StringBuilder sb = new StringBuilder();
-
-		String line;
-		try {
-
-			br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-			while ((line = br.readLine()) != null) {
-				sb.append(line);
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return sb.toString();
-	}
-	*/
-	
+		
 	/** 
 	 * Check status of the SABIO-RK webservice. 
 	 */
 	public static String getSabioStatus(){
 		String status = "Down";
-		Response response = executeQuery("status");
+		ClientResponse response = executeQuery("status");
 		if (response != null){
 			status = response.readEntity(String.class);
 		}
 		return status;
 	}
 	
-	/**
-	 * Parses the path and the parameters from the query string.
-	 * 
-	 * Query strings are of the form:
-	 * 		kineticLaws/123
-	 * 		searchKineticLaws/sbml?q=Tissue:spleen AND Organism:\"Homo sapiens\"
-	 * 		searchKineticLaws/sbml?q=Tissue:spleen%20AND%20Organism:%22homo%20sapiens%22
-	 */
-	public static SabioQueryResult performQuery(String query){
-		//logger.info("Perform Sabio-RK query");
-		Response response = executeQuery(query);
-		if (response != null){
-			return new SabioQueryResult(query, response);	
-		}
-		return null;
-	}
+
 	
 	/**
 	 * Perform query for count of kineticLaws.
@@ -227,7 +217,7 @@ public class SabioQuery {
 			query = query.replace(SabioQuery.PREFIX_QUERY, SabioQuery.PREFIX_COUNT);
 		}
 		
-		Response response = executeQuery(query);
+		ClientResponse response = executeQuery(query);
 		Integer count = -1;
 		// success
 		if (response != null && response.getStatus() == 200){

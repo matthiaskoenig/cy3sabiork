@@ -1,4 +1,4 @@
-package org.cy3sabiork;
+package org.cy3sabiork.oven;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -10,7 +10,8 @@ public class TestRestful {
 	/** Create client and perform query. */
 	public static int newQuery(String query) {
 		try {
-			ClientResponse response = SabioQuery.executeQuery(query);
+			Response response = null; 
+			String test = SabioQuery.executeQuery(query);
 
 			if (response.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "

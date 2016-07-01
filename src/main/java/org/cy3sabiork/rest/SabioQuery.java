@@ -68,7 +68,7 @@ public class SabioQuery {
 	 * This handles the required query cleaning/escaping and returns the
 	 * response of the query.
 	 */
-	public static ClientResponse executeQuery(String query){
+	public static String executeQuery(String query){
 		try {
 			// Create URI after required replacements (as long as SABIO-RK has no proper encoding)
 			query = query.replace(" ", "%20");
@@ -86,25 +86,21 @@ public class SabioQuery {
 			handler.setFormatter(new SimpleFormatter());
 			logger.addHandler(handler);
 			
-			Feature feature = new LoggingFeature(logger, Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY, null);
+			
+			Feature loggingFeature = new LoggingFeature(logger, Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY, null);
 			Client client = ClientBuilder.newClient(clientConfig)
-										 .register(feature);
-
-			ClientResponse response = client
+										 //.register(loggingFeature)
+										 .register(StringMessageBodyReader.class);
+			
+			Invocation.Builder builder = client
 					 .target(uri)
 					 .request("text/xml;charset=UTF-8")
 					 //.accept("application/xml;charset=UTF-8")
-					 .header("Content-Type","text/xml;charset=UTF-8")
-					 .get(ClientResponse.class);
+					 .header("Content-Type","text/xml;charset=UTF-8");
+					 
+			// Response response = builder.get();
+			String response = builder.get(String.class);
 			
-			/*
-			Response response = client
-					 .target(uri)
-					 .request(MediaType.APPLICATION_XML)
-					 .accept(MediaType.APPLICATION_XML)
-					 .header("Content-Type","application/xml;charset=UTF-8")
-					 .get();
-			*/
 			return response;
 			
 		} catch (Exception e) {
@@ -123,17 +119,24 @@ public class SabioQuery {
 	 */
 	public static SabioQueryResult performQuery(String query){
 		//logger.info("Perform Sabio-RK query");
-		ClientResponse response = executeQuery(query);
+		
+		
+		String response = executeQuery(query);
+		return new SabioQueryResult(query, 200, response);
+		/*
+		Response response = executeQuery(query);
 		if (response != null){
 			Integer status = response.getStatus();
 			String xml = null;
 			if (status != 200){
 				// here String is retrieved from response
-				xml = SabioQuery.readEntityInString(response);
+				// xml = SabioQuery.readEntityInString(response);
+				xml = response.readEntity(String.class);
 			}
 			return new SabioQueryResult(query, status, xml);	
 		}
 		return null;
+		*/
 	}
 	
 	
@@ -150,10 +153,15 @@ public class SabioQuery {
      *  - new InputStreamReader(inputStream) uses the operating system encoding
      *  - new InputStreamReader(inputStream, "UTF-8") uses the given encoding (here UTF-8)
 	 */
-	private static String readEntityInString(ClientResponse response){
+	private static String readEntityInString(Response response){
 		
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((InputStream) response.getEntity(), StandardCharsets.UTF_8));
+		return response.readEntity(String.class);
+		
+		/*
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.getEntityStream(), StandardCharsets.UTF_8));
 		String content = bufferedReader.lines().collect(Collectors.joining(""));
+		return content;
+		*/
 		
 		// Somehow there are non UTF-8 characters in the response
 		/*
@@ -190,7 +198,7 @@ public class SabioQuery {
 		// byte[] ptext = content.getBytes(StandardCharsets.UTF_8);
 		// content = new String(ptext, StandardCharsets.UTF_8); 
 		
-		return content;
+		
 	}
 		
 	/** 
@@ -198,14 +206,16 @@ public class SabioQuery {
 	 */
 	public static String getSabioStatus(){
 		String status = "Down";
-		ClientResponse response = executeQuery("status");
+		
+		status = executeQuery("status");
+		/*
+		Response response = executeQuery("status");
 		if (response != null){
 			status = response.readEntity(String.class);
 		}
+		*/
 		return status;
 	}
-	
-
 	
 	/**
 	 * Perform query for count of kineticLaws.
@@ -217,7 +227,20 @@ public class SabioQuery {
 			query = query.replace(SabioQuery.PREFIX_QUERY, SabioQuery.PREFIX_COUNT);
 		}
 		
-		ClientResponse response = executeQuery(query);
+		String response = executeQuery(query);
+		Integer count = -1;
+		// success
+		
+		try {
+			count = Integer.parseInt(response);
+		} catch (NumberFormatException e){
+			count = 0;
+		}
+
+		return count;
+		
+		/*
+		Response response = executeQuery(query);
 		Integer count = -1;
 		// success
 		if (response != null && response.getStatus() == 200){
@@ -229,6 +252,7 @@ public class SabioQuery {
 			}
 		}
 		return count;
+		*/
 	}
 	
 	/** Generate query from ids. */

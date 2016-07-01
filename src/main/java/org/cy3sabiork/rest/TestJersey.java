@@ -4,10 +4,10 @@ package org.cy3sabiork.rest;
 import javax.ws.rs.core.Response;
 
 /** Querying the SABIO-RK web service. */
-public class TestRestful {
+public class TestJersey {
 			
 	/** Create client and perform query. */
-	public static int newQuery(String query) {
+	public static void newQuery(String query) {
 		try {
 			
 			Response response = (new SabioQueryJersey()).executeQuery(query);
@@ -24,10 +24,8 @@ public class TestRestful {
 			System.out.println(output);
 			System.out.println("--------------------------------------------");
 
-			return 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 1;
 		}
 	}
 	

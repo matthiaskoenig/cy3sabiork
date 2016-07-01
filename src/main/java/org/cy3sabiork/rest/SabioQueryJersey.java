@@ -70,11 +70,7 @@ public class SabioQueryJersey extends SabioQuery{
 	 * Perform query for count of kineticLaws.
 	 */
 	public Integer performCountQuery(String query){
-		
-	    // convert sbml to count query if required
-		if (query.startsWith(SabioQueryJersey.PREFIX_QUERY)){
-			query = query.replace(SabioQueryJersey.PREFIX_QUERY, SabioQueryJersey.PREFIX_COUNT);
-		}
+		query = convertToCountQuery(query);
 		
 		Response response = executeQuery(query);
 		Integer count = -1;
@@ -112,7 +108,7 @@ public class SabioQueryJersey extends SabioQuery{
 	 * 
 	 * This method should not be called from outside.
 	 */
-	protected static Response executeQuery(String query){
+	protected Response executeQuery(String query){
 		try {
 			URI uri = uriFromQuery(query);
 			

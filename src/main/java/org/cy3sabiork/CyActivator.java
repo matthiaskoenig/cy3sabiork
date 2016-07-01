@@ -18,6 +18,7 @@ import org.cytoscape.work.TaskManager;
 import org.cy3sbml.BundleInformation;
 import org.cy3sabiork.SabioAction;
 import org.cy3sabiork.rest.SabioQueryJersey;
+import org.cy3sabiork.rest.SabioQueryUniRest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,9 +74,15 @@ public class CyActivator extends AbstractCyActivator {
 			
 			
 			// ----------------- Testing --------------------------
-			SabioQueryResult result = new SabioQueryJersey().performQuery("kineticLaws/123");
+			// SabioQueryResult result = new SabioQueryJersey().performQuery("kineticLaws/123");
+			SabioQueryResult result = new SabioQueryUniRest().performQuery("kineticLaws/123");
+			
 			String sbml = result.getXML();
-    	    
+			
+			// Read SBML
+    	    JSBML.readSBMLFromString(sbml);
+			
+    	    /*
     	    File testFile = new File(appDirectory, "testEncoding.xml");
     	    System.out.println("-->" + testFile.getAbsolutePath());
     	    BufferedWriter writer = null;
@@ -94,9 +101,8 @@ public class CyActivator extends AbstractCyActivator {
     	        catch ( IOException e){
     	        }
     	    }
+    	    */
     	    
-    	    // Read SBML
-    	    JSBML.readSBMLFromString(sbml);
 			
 		} catch (Throwable e){
 			logger.error("Could not start server!", e);

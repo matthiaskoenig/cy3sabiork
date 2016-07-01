@@ -28,11 +28,21 @@ public abstract class SabioQuery{
 	 * Performs necessary replacements and sanitation of query, for 
 	 * instance fixing issues with encoding.
 	 */
-	public static URI uriFromQuery(String query) throws URISyntaxException{
+	protected static URI uriFromQuery(String query) throws URISyntaxException{
 		query = query.replace(" ", "%20");
 		query = query.replace("\"", "%22");
 		URI uri = new java.net.URI(SabioQueryJersey.SABIORK_RESTFUL_URL + "/" + query);
 		return uri;
+	}
+	
+	/**
+	 * Convert sbml to count query if necessary.
+	 */
+	protected static String convertToCountQuery(String query){
+		if (query.startsWith(SabioQueryJersey.PREFIX_QUERY)){
+			query = query.replace(SabioQueryJersey.PREFIX_QUERY, SabioQueryJersey.PREFIX_COUNT);
+		}
+		return query;
 	}
 	
 	

@@ -2,7 +2,6 @@ package org.cy3sabiork.rest;
 
 
 import javax.ws.rs.core.Response;
-import org.glassfish.jersey.client.ClientResponse;
 
 /** Querying the SABIO-RK web service. */
 public class TestRestful {
@@ -10,8 +9,7 @@ public class TestRestful {
 	/** Create client and perform query. */
 	public static int newQuery(String query) {
 		try {
-			Response response = null; 
-			String test = SabioQuery.executeQuery(query);
+			Response response = SabioQueryJersey.executeQuery(query);
 
 			if (response.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "
@@ -32,7 +30,7 @@ public class TestRestful {
 		}
 	}
 	
-	
+
 	/* Test the Restful API. */
 	public static void main(String[] args){				
 		newQuery("kineticLaws/123");

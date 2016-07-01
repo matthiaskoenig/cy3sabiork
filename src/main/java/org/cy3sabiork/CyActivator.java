@@ -17,7 +17,7 @@ import org.cytoscape.util.swing.OpenBrowser;
 import org.cytoscape.work.TaskManager;
 import org.cy3sbml.BundleInformation;
 import org.cy3sabiork.SabioAction;
-import org.cy3sabiork.rest.SabioQuery;
+import org.cy3sabiork.rest.SabioQueryJersey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,7 +73,7 @@ public class CyActivator extends AbstractCyActivator {
 			
 			
 			// ----------------- Testing --------------------------
-			SabioQueryResult result = SabioQuery.performQuery("kineticLaws/123");
+			SabioQueryResult result = SabioQueryJersey.performQuery("kineticLaws/123");
 			String sbml = result.getXML();
     	    
     	    File testFile = new File(appDirectory, "testEncoding.xml");

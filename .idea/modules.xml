@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/cy3sabiork.iml" filepath="$PROJECT_DIR$/.idea/cy3sabiork.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cy3sabiork.iml" filepath="$PROJECT_DIR$/cy3sabiork.iml" />
     </modules>
   </component>
 </project>

@@ -130,6 +130,28 @@
   url =         {http://dx.doi.org/10.1186/1752-0509-1-58}
 }
 
+@Article{Rodriguez2015,
+  author =      {Rodriguez, Nicolas and Thomas, Alex and Watanabe, Leandro and Vazirabad, Ibrahim Y. and Kofia, Victor and G{\'{o}}mez, Harold F. and Mittag, Florian and Matthes, Jakob and Rudolph, Jan and Wrzodek, Finja and Netz, Eugen and Diamantikos, Alexander and Eichner, Johannes and Keller, Roland and Wrzodek, Clemens and Fr{\"{o}}hlich, Sebastian and Lewis, Nathan E. and Myers, Chris J. and {Le Nov{\`{e}}re}, Nicolas and Palsson, Bernhard {\O}. and Hucka, Michael and Dr{\"{a}}ger, Andreas},
+  title =       {JSBML 1.0: providing a smorgasbord of options to encode systems biology models.},
+  journal =     {Bioinformatics},
+  year =        {2015},
+  volume =      {31},
+  number =      {20},
+  pages =       {3383--3386},
+  month =       {Oct},
+  abstract =    {JSBML, the official pure Java programming library for the Systems Biology Markup Language (SBML) format, has evolved with the advent of different modeling formalisms in systems biology and their ability to be exchanged and represented via extensions of SBML. JSBML has matured into a major, active open-source project with contributions from a growing, international team of developers who not only maintain compatibility with SBML, but also drive steady improvements to the Java interface and promote ease-of-use with end users.Source code, binaries and documentation for JSBML can be freely obtained under the terms of the LGPL 2.1 from the website http://sbml.org/Software/JSBML. More information about JSBML can be found in the user guide at http://sbml.org/Software/JSBML/docs/.jsbml-development@googlegroups.com or andraeger@eng.ucsd.eduSupplementary data are available at Bioinformatics online.},
+  doi =         {10.1093/bioinformatics/btv341},
+  file =        {:literature/Rodriguez2015.pdf:PDF},
+  institution = {University of California, San Diego, La Jolla, CA, USA, Center for Bioinformatics Tuebingen (ZBIT), University of Tuebingen, Tübingen, Germany.},
+  keywords =    {Computer Simulation; Models, Biological; Programming Languages; Software; Systems Biology},
+  language =    {eng},
+  medline-pst = {ppublish},
+  pii =         {btv341},
+  pmc =         {PMC4595895},
+  pmid =        {26079347},
+  url =         {http://dx.doi.org/10.1093/bioinformatics/btv341}
+}
+
 @Article{Rojas2007,
   author =      {Rojas, Isabel and Golebiewski, Martin and Kania, Renate and Krebs, Olga and Mir, Saqib and Weidemann, Andreas and Wittig, Ulrike},
   title =       {Storing and annotating of kinetic data.},
@@ -216,6 +238,7 @@
   __markedentry = {[mkoenig:6]},
   abstract =      {Cytoscape is an open source software project for integrating biomolecular interaction networks with high-throughput expression data and other molecular states into a unified conceptual framework. Although applicable to any system of molecular components and interactions, Cytoscape is most powerful when used in conjunction with large databases of protein-protein, protein-DNA, and genetic interactions that are increasingly available for humans and model organisms. Cytoscape's software Core provides basic functionality to layout and query the network; to visually integrate the network with expression profiles, phenotypes, and other molecular states; and to link the network to databases of functional annotations. The Core is extensible through a straightforward plug-in architecture, allowing rapid development of additional computational analyses and features. Several case studies of Cytoscape plug-ins are surveyed, including a search for interaction pathways correlating with changes in gene expression, a study of protein complexes involved in cellular recovery to DNA damage, inference of a combined physical/functional interaction network for Halobacterium, and an interface to detailed stochastic/kinetic gene regulatory models.},
   doi =           {10.1101/gr.1239303},
+  file =          {:literature/Shannon2003.pdf:PDF},
   institution =   {Institute for Systems Biology, Seattle, Washington 98103, USA.},
   keywords =      {Algorithms; Archaeal Proteins, chemistry/metabolism; Bacteriophage lambda, physiology; Computational Biology, methods; Halobacterium, chemistry/cytology/physiology; Internet; Models, Biological; Neural Networks (Computer); Phenotype; Software Design; Software, trends; Stochastic Processes},
   language =      {eng},

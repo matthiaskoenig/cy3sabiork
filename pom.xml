@@ -284,9 +284,7 @@
 			<artifactId>controlsfx</artifactId>
 			<version>8.40.10</version>
 		</dependency>
-		
-		
-		<!--  netscape.javascript -->
+
 		<dependency>
 		    <groupId>com.fasterxml.jackson.dataformat</groupId>
 		    <artifactId>jackson-dataformat-xml</artifactId>
@@ -309,9 +307,10 @@
   		<dependency>
 			<groupId>cy3sbml-dep</groupId>
 			<artifactId>cy3sbml</artifactId>
-			<version>0.1.9</version>
+			<version>0.2.1</version>
 		</dependency> 
-  		
+
+
   		<dependency>
   			<groupId>cy3sbml-dep</groupId>
   			<artifactId>jsbml</artifactId>
@@ -334,13 +333,7 @@
 			<artifactId>jigsaw</artifactId>
 			<version>2.2.6</version>
 		</dependency>
-		<!--
-		<dependency>
-   			<groupId>cy3sbml-dep</groupId>
-    		<artifactId>jigsaw-dateParser</artifactId>
-    		<version>0.1</version>
-   		</dependency> 
-   		-->
+
 		<dependency>
 			<groupId>org.biojava</groupId>
 			<artifactId>biojava-ontology</artifactId>

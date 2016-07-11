@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.cy3sabiork.rest.SabioQuery;
 
 public class TestUniRest {
 	/** Create client and perform query. 

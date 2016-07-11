@@ -68,6 +68,11 @@ This work was supported by the Federal Ministry of Education and Research (BMBF,
 We thank the SABIO-RK team for their support. We thank the SBML and Cytoscape community for their support and help.
 
 ## Change Log
+**v0.3.3** [2016-07-11]
+
+- bug fixes & cy3sbml update
+- release for zenodo DOI
+
 **v0.3.2** [2016-07-01]
 
 - fixes SBML reading bug on Windows

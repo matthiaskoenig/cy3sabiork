@@ -8,6 +8,7 @@
 # 	./maven_build.sh --cy3sbml no
 ################################################################################
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+CY3SBML_VERSION="0.2.1"
 
 while [[ $# > 1 ]]
 do
@@ -29,7 +30,7 @@ echo BUILD CY3SBML  = "${BUILD_CY3SBML}"
 if [ "$BUILD_CY3SBML" == "" ]; then
 	# Build cy3sbml latest develop from source
 	: "${CY3SBML?Need to set CY3SBML}"
-	CY3SBML_VERSION="0.1.9"
+	
 	cd $CY3SBML
 	mvn install -DskipTests
 

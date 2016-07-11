@@ -13,7 +13,12 @@ import org.cytoscape.work.TaskManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** Helper class to provide SBML reader functionality. */
+/**
+ * Helper class to provide SBML reader functionality.
+ *
+ * TODO: this functionality must be provided by cy3sbml, i.e.
+ * 		a helper class which allows other apps to easily read SBML.
+ */
 public class SabioSBMLReader {
 	private static final Logger logger = LoggerFactory.getLogger(CyActivator.class);
 	

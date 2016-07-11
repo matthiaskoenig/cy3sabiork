@@ -20,12 +20,12 @@ import org.slf4j.LoggerFactory;
  * This provides access to the local resources via 
  * file:// uris. 
  * Required to allow JavaFX access to bundle resources. JavaFX does currently
- * not support the acces via bundle: uris.
+ * not support the access via bundle: uris.
  */
 public class ResourceExtractor {
 	private static Logger logger = LoggerFactory.getLogger(ResourceExtractor.class);
 	
-	/* Resources made available via the ResourceExtractor. */
+	/** Resources made available via the ResourceExtractor. */
 	public final String GUI_RESOURCES = "/gui/";   
 	
 	private static File appDirectory;

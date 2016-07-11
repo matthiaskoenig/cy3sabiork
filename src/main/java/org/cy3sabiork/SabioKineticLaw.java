@@ -1,11 +1,5 @@
 package org.cy3sabiork;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -23,7 +17,11 @@ import org.sbml.jsbml.Reaction;
 import org.sbml.jsbml.SBMLDocument;
 import org.sbml.jsbml.Species;
 
-
+/**
+ * Class for the representation of Kinetic Entries from SABIO-RK.
+ *
+ * Used in the results table.
+ */
 @SuppressWarnings("restriction")
 public class SabioKineticLaw {
 	private final SimpleIntegerProperty count;
@@ -96,17 +94,8 @@ public class SabioKineticLaw {
 			return list;
 		}
 		try {
-			// FIXME: workaround for reading
-			// SBMLDocument doc = JSBML.readSBMLFromString(sbml);
-			File tmpFile = File.createTempFile("test", ".xml");
-			Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tmpFile), "UTF-8"));
-	    	try {
-	    	    out.write(sbml);
-	    	} finally {
-	    	    out.close();
-	    	}
-	    	SBMLDocument doc = JSBML.readSBMLFromFile(tmpFile.getAbsolutePath());
-	    	
+			SBMLDocument doc = JSBML.readSBMLFromString(sbml);
+
 			// necessary to read information from annotations
 			Model model = doc.getModel();
 			Integer count = 1;
@@ -121,7 +110,7 @@ public class SabioKineticLaw {
 				count++;
 			}
 	    	
-		} catch (IOException | XMLStreamException e1) {
+		} catch (XMLStreamException e1) {
 			e1.printStackTrace();
 			return list;
 		}
@@ -137,8 +126,7 @@ public class SabioKineticLaw {
 		Integer kid = Integer.parseInt(tokens[tokens.length-1]);
 		return kid;
 	}
-	
-    
+
 	/** Parse reaction description from reaction. */
 	private static String getDescriptionFromReaction(Reaction r){
 		String description = r.toString();
@@ -178,7 +166,5 @@ public class SabioKineticLaw {
 		String tissue = "-";
 		return tissue;
 	}
-	
-	
-	
+
 }

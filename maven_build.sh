@@ -8,7 +8,7 @@
 # 	./maven_build.sh --cy3sbml no
 ################################################################################
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-CY3SBML_VERSION="0.2.1"
+CY3SBML_VERSION="0.2.2"
 
 while [[ $# > 1 ]]
 do

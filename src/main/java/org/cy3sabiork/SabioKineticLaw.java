@@ -1,11 +1,5 @@
 package org.cy3sabiork;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -23,7 +17,11 @@ import org.sbml.jsbml.Reaction;
 import org.sbml.jsbml.SBMLDocument;
 import org.sbml.jsbml.Species;
 
-
+/**
+ * Class for the representation of Kinetic Entries from SABIO-RK.
+ *
+ * Used in the results table.
+ */
 @SuppressWarnings("restriction")
 public class SabioKineticLaw {
 	private final SimpleIntegerProperty count;

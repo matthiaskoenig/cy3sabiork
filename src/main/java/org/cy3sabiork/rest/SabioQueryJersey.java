@@ -31,7 +31,6 @@ import org.glassfish.jersey.logging.LoggingFeature;
  * FIXME: reuse the created client instead of static access
  * 		 (client connection building and init creates additional overhead)
  */
-
 public class SabioQueryJersey extends SabioQuery{
 
 	/**

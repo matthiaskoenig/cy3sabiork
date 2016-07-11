@@ -1,6 +1,8 @@
 package org.cy3sabiork.rest;
 
 
+import org.cy3sabiork.rest.SabioQueryJersey;
+
 import javax.ws.rs.core.Response;
 
 /** Querying the SABIO-RK web service. */

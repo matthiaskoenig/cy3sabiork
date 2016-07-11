@@ -8,7 +8,12 @@
 # 	./maven_build.sh --cy3sbml no
 ################################################################################
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+############################
 CY3SBML_VERSION="0.2.2"
+CORE_VERSION=1.2-SNAPSHOT
+TIDY_VERSION=1.2.1
+############################
 
 while [[ $# > 1 ]]
 do
@@ -37,6 +42,11 @@ if [ "$BUILD_CY3SBML" == "" ]; then
 	# install in local maven repo
 	mvn install:install-file -DgroupId=cy3sbml-dep -DartifactId=cy3sbml -Dversion=$CY3SBML_VERSION -Dfile=$CY3SBML/target/cy3sbml-$CY3SBML_VERSION.jar -Dpackaging=jar -DgeneratePom=true -DlocalRepositoryPath=$DIR/lib -DcreateChecksum=true
 fi
+
+
+mvn install:install-file -DgroupId=cy3sbml-dep -DartifactId=jsbml -Dversion=$CORE_VERSION -Dfile=$JSBMLCODE/core/build/jsbml-$CORE_VERSION.jar -Dpackaging=jar -DgeneratePom=true -DlocalRepositoryPath=$DIR/lib -DcreateChecksum=true
+
+mvn install:install-file -DgroupId=cy3sbml-dep -DartifactId=jsbml-tidy -Dversion=$TIDY_VERSION -Dfile=$JSBMLCODE/build/jsbml-tidy-$TIDY_VERSION.jar -Dpackaging=jar -DgeneratePom=true -DlocalRepositoryPath=$DIR/lib -DcreateChecksum=true
 
 cd $DIR
 mvn clean install 

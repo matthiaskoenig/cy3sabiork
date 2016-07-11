@@ -116,6 +116,7 @@
 						<Import-Package>org.cy3sbml.*;version="0.2.2";</Import-Package>
 						<Import-Package>netscape.javascript</Import-Package>
 						<Import-Package>*;resolution:=optional</Import-Package>
+
 						<Private-Package>${bundle.namespace}.*</Private-Package>
 						<Bundle-Activator>${bundle.namespace}.CyActivator</Bundle-Activator>
 						<Embed-Dependency>*;scope=!provided|test;groupId=!org.cytoscape</Embed-Dependency>
@@ -310,7 +311,6 @@
 			<version>0.2.2</version>
 		</dependency> 
 
-
   		<dependency>
   			<groupId>cy3sbml-dep</groupId>
   			<artifactId>jsbml</artifactId>
@@ -321,7 +321,7 @@
   			<artifactId>jsbml-tidy</artifactId>
   			<version>1.2.1</version>
   		</dependency>
-  		  
+
   		 <!-- JSBML dependencies -->
   		 <dependency>
 			<groupId>com.fasterxml.woodstox</groupId>

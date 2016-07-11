@@ -1,0 +1,748 @@
+%0 
+%0 Journal Article
+%A de Matos, Paula; Alc\'a,,ntara, Rafael; Dekker, Adriano; Ennis, Marcus; Hastings, Janna; Haug, Kenneth; Spiteri, Inmaculada; Turner, Steve & Steinbeck, Christoph
+%D 2010
+%T Chemical Entities of Biological Interest: an update.
+%E 
+%B Nucleic Acids Res
+%C 
+%I 
+%V 38
+%6
+%N Database issue
+%P D249-D254
+%& 
+%Y 
+%S 
+%7
+%8 Jan
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/deMatos2010.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/deMatos2010.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F deMatos2010
+%K Agrochemicals, chemistry; Animals; Biological Products, chemistry; Computational Biology, methods/trends; Databases, Factual; Dictionaries, Chemical; Humans; Information Storage and Retrieval, methods; Internet; Pharmaceutical Preparations, chemistry; Software; User-Computer Interface; Vocabulary, Controlled
+%X Chemical Entities of Biological Interest (ChEBI) is a freely available dictionary of molecular entities focused on 'small' chemical compounds. The molecular entities in question are either natural products or synthetic products used to intervene in the processes of living organisms. Genome-encoded macromolecules (nucleic acids, proteins and peptides derived from proteins by cleavage) are not as a rule included in ChEBI. In addition to molecular entities, ChEBI contains groups (parts of molecular entities) and classes of entities. ChEBI includes an ontological classification, whereby the relationships between molecular entities or classes of entities and their parents and/or children are specified. ChEBI is available online at http://www.ebi.ac.uk/chebi/. This article reports on new features in ChEBI since the last NAR report in 2007, including substructure and similarity searching, a submission tool for authoring of ChEBI datasets by the community and a 30-fold increase in the number of chemical structures stored in ChEBI.
+%Z 
+%U http://dx.doi.org/10.1093/nar/gkp886
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Dr\"a,,ger, Andreas; Rodriguez, Nicolas; Dumousseau, Marine; D\"o,,rr, Alexander; Wrzodek, Clemens; Le Nov\`e,,re, Nicolas; Zell, Andreas & Hucka, Michael
+%D 2011
+%T JSBML: a flexible Java library for working with SBML.
+%E 
+%B Bioinformatics
+%C 
+%I 
+%V 27
+%6
+%N 15
+%P 2167-2168
+%& 
+%Y 
+%S 
+%7
+%8 Aug
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Draeger2011.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Draeger2011.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Draeger2011
+%K Computer Simulation; Database Management Systems; Information Storage and Retrieval, methods; Models, Biological; Programming Languages; Software; Systems Biology, methods
+%X The specifications of the Systems Biology Markup Language (SBML) define standards for storing and exchanging computer models of biological processes in text files. In order to perform model simulations, graphical visualizations and other software manipulations, an in-memory representation of SBML is required. We developed JSBML for this purpose. In contrast to prior implementations of SBML APIs, JSBML has been designed from the ground up for the Java programming language, and can therefore be used on all platforms supported by a Java Runtime Environment. This offers important benefits for Java users, including the ability to distribute software as Java Web Start applications. JSBML supports all SBML Levels and Versions through Level 3 Version 1, and we have strived to maintain the highest possible degree of compatibility with the popular library libSBML. JSBML also supports modules that can facilitate the development of plugins for end user applications, as well as ease migration from a libSBML-based backend.Source code, binaries and documentation for JSBML can be freely obtained under the terms of the LGPL 2.1 from the website http://sbml.org/Software/JSBML.
+%Z 
+%U http://dx.doi.org/10.1093/bioinformatics/btr361
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Gremse, Marion; Chang, Antje; Schomburg, Ida; Grote, Andreas; Scheer, Maurice; Ebeling, Christian & Schomburg, Dietmar
+%D 2011
+%T The BRENDA Tissue Ontology (BTO): the first all-integrating ontology of all organisms for enzyme sources.
+%E 
+%B Nucleic Acids Res
+%C 
+%I 
+%V 39
+%6
+%N Database issue
+%P D507-D513
+%& 
+%Y 
+%S 
+%7
+%8 Jan
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Gremse2011.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Gremse2011.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Gremse2011
+%K Cell Line; Cells, classification/enzymology; Databases, Factual; Dictionaries as Topic; Enzymes; Systems Integration; User-Computer Interface; Vocabulary, Controlled
+%X BTO, the BRENDA Tissue Ontology (http://www.BTO.brenda-enzymes.org) represents a comprehensive structured encyclopedia of tissue terms. The project started in 2003 to create a connection between the enzyme data collection of the BRENDA enzyme database and a structured network of source tissues and cell types. Currently, BTO contains more than 4600 different anatomical structures, tissues, cell types and cell lines, classified under generic categories corresponding to the rules and formats of the Gene Ontology Consortium and organized as a directed acyclic graph (DAG). Most of the terms are endowed with comments on their derivation or definitions. The content of the ontology is constantly curated with ∼1000 new terms each year. Four different types of relationships between the terms are implemented. A versatile web interface with several search and navigation functionalities allows convenient online access to the BTO and to the enzymes isolated from the tissues. Important areas of applications of the BTO terms are the detection of enzymes in tissues and the provision of a solid basis for text-mining approaches in this field. It is widely used by lab scientists, curators of genomic and biochemical databases and bioinformaticians. The BTO is freely available at http://www.obofoundry.org.
+%Z 
+%U http://dx.doi.org/10.1093/nar/gkq968
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Hucka, M.; Finney, A.; Sauro, H. M.; Bolouri, H.; Doyle, J. C.; Kitano, H.; Arkin, A. P.; Bornstein, B. J.; Bray, D.; Cornish-Bowden, A.; Cuellar, A. A.; Dronov, S.; Gilles, E. D.; Ginkel, M.; Gor, V.; Goryanin, I. I.; Hedley, W. J.; Hodgman, T. C.; Hofmeyr, J-H.; Hunter, P. J.; Juty, N. S.; Kasberger, J. L.; Kremling, A.; Kummer, U.; Le Nov\`e,,re, N.; Loew, L. M.; Lucio, D.; Mendes, P.; Minch, E.; Mjolsness, E. D.; Nakayama, Y.; Nelson, M. R.; Nielsen, P. F.; Sakurada, T.; Schaff, J. C.; Shapiro, B. E.; Shimizu, T. S.; Spence, H. D.; Stelling, J.; Takahashi, K.; Tomita, M.; Wagner, J.; Wang, J. & , S. B. M. L Forum
+%D 2003
+%T The systems biology markup language (SBML): a medium for representation and exchange of biochemical network models.
+%E 
+%B Bioinformatics
+%C 
+%I 
+%V 19
+%6
+%N 4
+%P 524-531
+%& 
+%Y 
+%S 
+%7
+%8 Mar
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Hucka2003.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Hucka2003.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Hucka2003
+%K Database Management Systems; Databases, Factual; Documentation; Gene Expression Regulation, physiology; Hypermedia; Information Storage and Retrieval, methods; Metabolism, physiology; Models, Biological; Models, Chemical; Programming Languages; Software; Software Design; Terminology as Topic; Vocabulary, Controlled
+%X Molecular biotechnology now makes it possible to build elaborate systems models, but the systems biology community needs information standards if models are to be shared, evaluated and developed cooperatively.We summarize the Systems Biology Markup Language (SBML) Level 1, a free, open, XML-based format for representing biochemical reaction networks. SBML is a software-independent language for describing models common to research in many areas of computational biology, including cell signaling pathways, metabolic pathways, gene regulation, and others.The specification of SBML Level 1 is freely available from http://www.sbml.org/
+%Z 
+
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A K\"o,,nig, Matthias; Dr\"a,,ger, Andreas & Holzh\"u,,tter, Hermann-Georg
+%D 2012
+%T CySBML: a Cytoscape plugin for SBML.
+%E 
+%B Bioinformatics
+%C 
+%I 
+%V 28
+%6
+%N 18
+%P 2402-2403
+%& 
+%Y 
+%S 
+%7
+%8 Sep
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Koenig2012.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Koenig2012.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Koenig2012
+%K Models, Biological; Software; Systems Biology
+%X CySBML is a plugin designed to work with Systems Biology Markup Language (SBML) in Cytoscape having the following features: SBML import, support of the SBML layout and qualitative model packages, navigation in network layouts based on SBML structure, access to MIRIAM and SBO-based annotations and SBML validation. CySBML includes an importer for BioModels to load SBML from standard repositories.Freely available for non-commercial purposes through the Cytoscape plugin manager or for download at http://sourceforge.net/projects/cysbml/.cysbml-team@lists.sourceforge.netTutorial, usage guide, installation instructions and additional figures are available for download at http://www.charite.de/sysbio/people/koenig/software/cysbml/.
+%Z 
+%U http://dx.doi.org/10.1093/bioinformatics/bts432
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Kanehisa, Minoru; Goto, Susumu; Furumichi, Miho; Tanabe, Mao & Hirakawa, Mika
+%D 2010
+%T KEGG for representation and analysis of molecular networks involving diseases and drugs.
+%E 
+%B Nucleic Acids Res
+%C 
+%I 
+%V 38
+%6
+%N Database issue
+%P D355-D360
+%& 
+%Y 
+%S 
+%7
+%8 Jan
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Kanehisa2010.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Kanehisa2010.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Kanehisa2010
+%K Algorithms; Computational Biology, methods/trends; Databases, Genetic; Databases, Nucleic Acid; Databases, Protein; Genome, Human; Humans; Information Storage and Retrieval, methods; Internet; Ligands; Pharmaceutical Preparations, chemistry; Protein Interaction Mapping; Protein Structure, Tertiary; Software; Systems Biology
+%X Most human diseases are complex multi-factorial diseases resulting from the combination of various genetic and environmental factors. In the KEGG database resource (http://www.genome.jp/kegg/), diseases are viewed as perturbed states of the molecular system, and drugs as perturbants to the molecular system. Disease information is computerized in two forms: pathway maps and gene/molecule lists. The KEGG PATHWAY database contains pathway maps for the molecular systems in both normal and perturbed states. In the KEGG DISEASE database, each disease is represented by a list of known disease genes, any known environmental factors at the molecular level, diagnostic markers and therapeutic drugs, which may reflect the underlying molecular system. The KEGG DRUG database contains chemical structures and/or chemical components of all drugs in Japan, including crude drugs and TCM (Traditional Chinese Medicine) formulas, and drugs in the USA and Europe. This database also captures knowledge about two types of molecular networks: the interaction network with target molecules, metabolizing enzymes, other drugs, etc. and the chemical structure transformation network in the history of drug development. The new disease/drug information resource named KEGG MEDICUS can be used as a reference knowledge base for computational analysis of molecular networks, especially, by integrating large-scale experimental datasets.
+%Z 
+%U http://dx.doi.org/10.1093/nar/gkp896
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Laibe, Camille & Le Nov\`e,,re, Nicolas
+%D 2007
+%T MIRIAM Resources: tools to generate and resolve robust cross-references in Systems Biology.
+%E 
+%B BMC Syst Biol
+%C 
+%I 
+%V 1
+%6
+%N 
+%P 58
+%& 
+%Y 
+%S 
+%7
+%8 
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Laibe2007.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Laibe2007.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Laibe2007
+%K Abstracting and Indexing as Topic, methods; Documentation, methods; Models, Biological; Software; Systems Biology, methods; Vocabulary, Controlled
+%X The Minimal Information Requested In the Annotation of biochemical Models (MIRIAM) is a set of guidelines for the annotation and curation processes of computational models, in order to facilitate their exchange and reuse. An important part of the standard consists in the controlled annotation of model components, based on Uniform Resource Identifiers. In order to enable interoperability of this annotation, the community has to agree on a set of standard URIs, corresponding to recognised data types. MIRIAM Resources are being developed to support the use of those URIs.MIRIAM Resources are a set of on-line services created to catalogue data types, their URIs and the corresponding physical URLs (or resources), whether data types are controlled vocabularies or primary data resources. MIRIAM Resources are composed of several components: MIRIAM Database stores the information, MIRIAM Web Services allows to programmatically access the database, MIRIAM Library provides an access to the Web Services and MIRIAM Web Application is a way to access the data (human browsing) and also to edit or add entries.The project MIRIAM Resources allows an easy access to MIRIAM URIs and the associated information and is therefore crucial to foster a general use of MIRIAM annotations in computational models of biological processes.
+%Z 
+%U http://dx.doi.org/10.1186/1752-0509-1-58
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Rodriguez, Nicolas; Thomas, Alex; Watanabe, Leandro; Vazirabad, Ibrahim Y.; Kofia, Victor; G\'o,,mez, Harold F.; Mittag, Florian; Matthes, Jakob; Rudolph, Jan; Wrzodek, Finja; Netz, Eugen; Diamantikos, Alexander; Eichner, Johannes; Keller, Roland; Wrzodek, Clemens; Fr\"o,,hlich, Sebastian; Lewis, Nathan E.; Myers, Chris J.; Le Nov\`e,,re, Nicolas; Palsson, Bernhard \O,.; Hucka, Michael & Dr\"a,,ger, Andreas
+%D 2015
+%T JSBML 1.0: providing a smorgasbord of options to encode systems biology models.
+%E 
+%B Bioinformatics
+%C 
+%I 
+%V 31
+%6
+%N 20
+%P 3383-3386
+%& 
+%Y 
+%S 
+%7
+%8 Oct
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Rodriguez2015.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Rodriguez2015.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Rodriguez2015
+%K Computer Simulation; Models, Biological; Programming Languages; Software; Systems Biology
+%X JSBML, the official pure Java programming library for the Systems Biology Markup Language (SBML) format, has evolved with the advent of different modeling formalisms in systems biology and their ability to be exchanged and represented via extensions of SBML. JSBML has matured into a major, active open-source project with contributions from a growing, international team of developers who not only maintain compatibility with SBML, but also drive steady improvements to the Java interface and promote ease-of-use with end users.Source code, binaries and documentation for JSBML can be freely obtained under the terms of the LGPL 2.1 from the website http://sbml.org/Software/JSBML. More information about JSBML can be found in the user guide at http://sbml.org/Software/JSBML/docs/.jsbml-development@googlegroups.com or andraeger@eng.ucsd.eduSupplementary data are available at Bioinformatics online.
+%Z 
+%U http://dx.doi.org/10.1093/bioinformatics/btv341
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Rojas, Isabel; Golebiewski, Martin; Kania, Renate; Krebs, Olga; Mir, Saqib; Weidemann, Andreas & Wittig, Ulrike
+%D 2007
+%T Storing and annotating of kinetic data.
+%E 
+%B In Silico Biol
+%C 
+%I 
+%V 7
+%6
+%N 2 Suppl
+%P S37-S44
+%& 
+%Y 
+%S 
+%7
+%8 
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Rojas2007.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Rojas2007.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Rojas2007
+%K Animals; Databases, Protein; Enzymes, chemistry; Humans; Kinetics; Software; Vocabulary, Controlled
+%X This paper briefly describes the SABIO-RK database model for the storage of reaction kinetics information and the guidelines followed within the SABIO-RK project to annotate the kinetic data. Such annotations support the definition of cross links to other related databases and augment the semantics of the data stored in the database.
+%Z 
+
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Rojas, Isabel; Golebiewski, Martin; Kania, Renate; Krebs, Olga; Mir, Saqib; Weidemann, Andreas & Wittig, Ulrike
+%D 2007
+%T SABIO-RK: a database for biochemical reactions and their kinetics
+%E 
+%B BMC Systems Biology
+%C 
+%I BioMed Central Ltd
+%V 1
+%6
+%N Suppl 1
+%P S6
+%& 
+%Y 
+%S 
+%7
+%8 
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Rojas2007a.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Rojas2007a.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Rojas2007a
+%K 
+%X 
+%Z 
+
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Sayers, Eric W.; Barrett, Tanya; Benson, Dennis A.; Bolton, Evan; Bryant, Stephen H.; Canese, Kathi; Chetvernin, Vyacheslav; Church, Deanna M.; Dicuccio, Michael; Federhen, Scott; Feolo, Michael; Fingerman, Ian M.; Geer, Lewis Y.; Helmberg, Wolfgang; Kapustin, Yuri; Krasnov, Sergey; Landsman, David; Lipman, David J.; Lu, Zhiyong; Madden, Thomas L.; Madej, Tom; Maglott, Donna R.; Marchler-Bauer, Aron; Miller, Vadim; Karsch-Mizrachi, Ilene; Ostell, James; Panchenko, Anna; Phan, Lon; Pruitt, Kim D.; Schuler, Gregory D.; Sequeira, Edwin; Sherry, Stephen T.; Shumway, Martin; Sirotkin, Karl; Slotta, Douglas; Souvorov, Alexandre; Starchenko, Grigory; Tatusova, Tatiana A.; Wagner, Lukas; Wang, Yanli; Wilbur, W John; Yaschenko, Eugene & Ye, Jian
+%D 2012
+%T Database resources of the National Center for Biotechnology Information.
+%E 
+%B Nucleic Acids Res
+%C 
+%I 
+%V 40
+%6
+%N Database issue
+%P D13-D25
+%& 
+%Y 
+%S 
+%7
+%8 Jan
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Sayers2012.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Sayers2012.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Sayers2012
+%K Databases as Topic; Databases, Genetic; Databases, Protein; Gene Expression; Genomics; Internet; Models, Molecular; National Library of Medicine (U.S.); Periodicals as Topic; PubMed; Sequence Alignment; Sequence Analysis, DNA; Sequence Analysis, Protein; Sequence Analysis, RNA; Small Molecule Libraries; United States
+%X In addition to maintaining the GenBank® nucleic acid sequence database, the National Center for Biotechnology Information (NCBI) provides analysis and retrieval resources for the data in GenBank and other biological data made available through the NCBI Website. NCBI resources include Entrez, the Entrez Programming Utilities, MyNCBI, PubMed, PubMed Central (PMC), Gene, the NCBI Taxonomy Browser, BLAST, BLAST Link (BLink), Primer-BLAST, COBALT, Splign, RefSeq, UniGene, HomoloGene, ProtEST, dbMHC, dbSNP, dbVar, Epigenomics, Genome and related tools, the Map Viewer, Model Maker, Evidence Viewer, Trace Archive, Sequence Read Archive, BioProject, BioSample, Retroviral Genotyping Tools, HIV-1/Human Protein Interaction Database, Gene Expression Omnibus (GEO), Probe, Online Mendelian Inheritance in Animals (OMIA), the Molecular Modeling Database (MMDB), the Conserved Domain Database (CDD), the Conserved Domain Architecture Retrieval Tool (CDART), Biosystems, Protein Clusters and the PubChem suite of small molecule databases. Augmenting many of the Web applications are custom implementations of the BLAST program optimized to search specialized data sets. All of these resources can be accessed through the NCBI home page at www.ncbi.nlm.nih.gov.
+%Z 
+%U http://dx.doi.org/10.1093/nar/gkr1184
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Scheer, Maurice; Grote, Andreas; Chang, Antje; Schomburg, Ida; Munaretto, Cornelia; Rother, Michael; S\"o,,hngen, Carola; Stelzer, Michael; Thiele, Juliane & Schomburg, Dietmar
+%D 2011
+%T BRENDA, the enzyme information system in 2011.
+%E 
+%B Nucleic Acids Res
+%C 
+%I 
+%V 39
+%6
+%N Database issue
+%P D670-D676
+%& 
+%Y 
+%S 
+%7
+%8 Jan
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Scheer2011.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Scheer2011.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Scheer2011
+%K Databases, Protein; Enzymes, chemistry/genetics/metabolism; Ligands; Metabolic Networks and Pathways; Protein Conformation; Software
+%X The BRENDA (BRaunschweig ENzyme Database, http://www.brenda-enzymes.org) enzyme information system is the main collection of enzyme functional and property data for the scientific community. The majority of the data are manually extracted from the primary literature. The content covers information on function, structure, occurrence, preparation and application of enzymes as well as properties of mutants and engineered variants. The number of manually annotated references increased by 30\% to more than 100,000, the number of ligand structures by 45\% to almost 100,000. New query, analysis and data management tools were implemented to improve data processing, data presentation, data input and data access. BRENDA now provides new viewing options such as the display of the statistics of functional parameters and the 3D view of protein sequence and structure features. Furthermore a ligand summary shows comprehensive information on the BRENDA ligands. The enzymes are linked to their respective pathways and can be viewed in pathway maps. The disease text mining part is strongly enhanced. It is possible to submit new, not yet classified enzymes to BRENDA, which then are reviewed and classified by the International Union of Biochemistry and Molecular Biology. A new SBML output format of BRENDA kinetic data allows the construction of organism-specific metabolic models.
+%Z 
+%U http://dx.doi.org/10.1093/nar/gkq1089
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Shannon, Paul; Markiel, Andrew; Ozier, Owen; Baliga, Nitin S.; Wang, Jonathan T.; Ramage, Daniel; Amin, Nada; Schwikowski, Benno & Ideker, Trey
+%D 2003
+%T Cytoscape: a software environment for integrated models of biomolecular interaction networks.
+%E 
+%B Genome Res
+%C 
+%I 
+%V 13
+%6
+%N 11
+%P 2498-2504
+%& 
+%Y 
+%S 
+%7
+%8 Nov
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Shannon2003.pdf:PDF
+%1 literature/Shannon2003.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Shannon2003
+%K Algorithms; Archaeal Proteins, chemistry/metabolism; Bacteriophage lambda, physiology; Computational Biology, methods; Halobacterium, chemistry/cytology/physiology; Internet; Models, Biological; Neural Networks (Computer); Phenotype; Software Design; Software, trends; Stochastic Processes
+%X Cytoscape is an open source software project for integrating biomolecular interaction networks with high-throughput expression data and other molecular states into a unified conceptual framework. Although applicable to any system of molecular components and interactions, Cytoscape is most powerful when used in conjunction with large databases of protein-protein, protein-DNA, and genetic interactions that are increasingly available for humans and model organisms. Cytoscape's software Core provides basic functionality to layout and query the network; to visually integrate the network with expression profiles, phenotypes, and other molecular states; and to link the network to databases of functional annotations. The Core is extensible through a straightforward plug-in architecture, allowing rapid development of additional computational analyses and features. Several case studies of Cytoscape plug-ins are surveyed, including a search for interaction pathways correlating with changes in gene expression, a study of protein complexes involved in cellular recovery to DNA damage, inference of a combined physical/functional interaction network for Halobacterium, and an interface to detailed stochastic/kinetic gene regulatory models.
+%Z 
+%U http://dx.doi.org/10.1101/gr.1239303
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A UniProtConsortium
+%D 2011
+%T Ongoing and future developments at the Universal Protein Resource.
+%E 
+%B Nucleic Acids Res
+%C 
+%I 
+%V 39
+%6
+%N Database issue
+%P D214-D219
+%& 
+%Y 
+%S 
+%7
+%8 Jan
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/UniProtConsortium2011.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/UniProtConsortium2011.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F UniProtConsortium2011
+%K Databases, Protein, trends; Proteins, chemistry/genetics; Proteomics; Sequence Analysis, Protein; Systems Integration
+%X The primary mission of Universal Protein Resource (UniProt) is to support biological research by maintaining a stable, comprehensive, fully classified, richly and accurately annotated protein sequence knowledgebase, with extensive cross-references and querying interfaces freely accessible to the scientific community. UniProt is produced by the UniProt Consortium which consists of groups from the European Bioinformatics Institute (EBI), the Swiss Institute of Bioinformatics (SIB) and the Protein Information Resource (PIR). UniProt is comprised of four major components, each optimized for different uses: the UniProt Archive, the UniProt Knowledgebase, the UniProt Reference Clusters and the UniProt Metagenomic and Environmental Sequence Database. UniProt is updated and distributed every 4 weeks and can be accessed online for searches or download at http://www.uniprot.org.
+%Z 
+%U http://dx.doi.org/10.1093/nar/gkq1020
+
+%+
+%^
+
+%0 
+%0 Conference Proceedings
+%A Wittig, Ulrike; Golebiewski, Martin; Kania, Renate; Krebs, Olga; Mir, Saqib; Weidemann, Andreas; Anstein, Stefanie; Saric, Jasmin & Rojas, Isabel
+%D 2006
+%T SABIO-RK: integration and curation of reaction kinetics data
+%E 
+%B Data integration in the life sciences
+%C 
+%I 
+%V 
+%6
+%N 
+%P 94-103
+%& 
+%Y Springer
+%S 
+%7
+%8 
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Wittig2006.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Wittig2006.pdf
+%2 
+%3 inproceedings
+%4 
+%# 
+%$ 
+%F Wittig2006
+%K 
+%X 
+%Z 
+
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Wittig, Ulrike; Kania, Renate; Golebiewski, Martin; Rey, Maja; Shi, Lei; Jong, Lenneke; Algaa, Enkhjargal; Weidemann, Andreas; Sauer-Danzwith, Heidrun; Mir, Saqib; Krebs, Olga; Bittkowski, Meik; Wetsch, Elina; Rojas, Isabel & M\"u,,ller, Wolfgang
+%D 2012
+%T SABIO-RK--database for biochemical reaction kinetics.
+%E 
+%B Nucleic Acids Res
+%C 
+%I 
+%V 40
+%6
+%N Database issue
+%P D790-D796
+%& 
+%Y 
+%S 
+%7
+%8 Jan
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Wittig2012.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Wittig2012.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Wittig2012
+%K Biochemical Processes; Databases, Factual; Enzymes, metabolism; Internet; Kinetics; User-Computer Interface
+%X SABIO-RK (http://sabio.h-its.org/) is a web-accessible database storing comprehensive information about biochemical reactions and their kinetic properties. SABIO-RK offers standardized data manually extracted from the literature and data directly submitted from lab experiments. The database content includes kinetic parameters in relation to biochemical reactions and their biological sources with no restriction on any particular set of organisms. Additionally, kinetic rate laws and corresponding equations as well as experimental conditions are represented. All the data are manually curated and annotated by biological experts, supported by automated consistency checks. SABIO-RK can be accessed via web-based user interfaces or automatically via web services that allow direct data access by other tools. Both interfaces support the export of the data together with its annotations in SBML (Systems Biology Markup Language), e.g. for import in modelling tools.
+%Z 
+%U http://dx.doi.org/10.1093/nar/gkr1046
+
+%+
+%^
+
+%0 
+%0 Journal Article
+%A Wittig, Ulrike; Rey, Maja; Kania, Renate; Bittkowski, Meik; Shi, Lei; Golebiewski, Martin; Weidemann, Andreas; M\"u,,ller, Wolfgang & Rojas, Isabel
+%D 2014
+%T Challenges for an enzymatic reaction kinetics database.
+%E 
+%B FEBS J
+%C 
+%I 
+%V 281
+%6
+%N 2
+%P 572-582
+%& 
+%Y 
+%S 
+%7
+%8 Jan
+%9
+%? 
+%! 
+%Z 
+%@ 
+%(
+%)
+%*
+%L
+%M
+%1 [Formatter not found: ResolvePDF] :literature/Wittig2014.pdf:PDF
+%1 /home/mkoenig/git/cy3sabiork/docs/manuscript/literature/Wittig2014.pdf
+%2 
+%3 article
+%4 
+%# 
+%$ 
+%F Wittig2014
+%K Database Management Systems; Databases, Protein; Enzyme Assays, methods/standards; Enzymes, chemistry; Kinetics; Molecular Sequence Annotation; Reference Standards; Terminology as Topic
+%X The scientific literature contains a tremendous amount of kinetic data describing the dynamic behaviour of biochemical reactions over time. These data are needed for computational modelling to create models of biochemical reaction networks and to obtain a better understanding of the processes in living cells. To extract the knowledge from the literature, biocurators are required to understand a paper and interpret the data. For modellers, as well as experimentalists, this process is very time consuming because the information is distributed across the publication and, in most cases, is insufficiently structured and often described without standard terminology. In recent years, biological databases for different data types have been developed. The advantages of these databases lie in their unified structure, searchability and the potential for augmented analysis by software, which supports the modelling process. We have developed the SABIO-RK database for biochemical reaction kinetics. In the present review, we describe the challenges for database developers and curators, beginning with an analysis of relevant publications up to the export of database information in a standardized format. The aim of the present review is to draw the experimentalist's attention to the problem (from a data integration point of view) of incompletely and imprecisely written publications. We describe how to lower the barrier to curators and improve this situation. At the same time, we are aware that curating experimental data takes time. There is a community concerned with making the task of publishing data with the proper structure and annotation to ontologies much easier. In this respect, we highlight some useful initiatives and tools.
+%Z 
+%U http://dx.doi.org/10.1111/febs.12562
+
+%+
+%^
+

@@ -55,7 +55,12 @@ public class SabioKineticLaw {
     	return reaction.get();
     }
     
-    /* Parses Kinetic Law Ids from given text string. */
+    /**
+	 * Parses Kinetic Law Ids from given text string.
+	 *
+	 * The ids can be separated by different separators, i.e.
+	 * 	'\n', '\t', ' ', ';' or','
+	 */
     public static HashSet<Integer> parseIds(String text){
     	HashSet<Integer> ids = new HashSet<Integer>();
 		
@@ -159,8 +164,10 @@ public class SabioKineticLaw {
 	}
 	
 	/** 
-	 * Parse tissue information from reaction annotation. 
-	 * Currently not encoded in SBML.
+	 * Parse tissue information from reaction annotation.
+	 *
+	 * The information is currently not available in SABIO-RK SBML.
+	 * see https://github.com/matthiaskoenig/cy3sabiork/issues/10
 	 */
 	private static String getTissueFromReaction(Reaction r){
 		String tissue = "-";

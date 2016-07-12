@@ -16,6 +16,9 @@ public abstract class SabioQuery{
 	public static final String PREFIX_LAW = "kineticLaws/";
 	public static final String PREFIX_LAWS = "kineticLaws?kinlawids=";
 	public static final String CONNECTOR_AND = " AND ";
+
+	public static final String STATUS_UP = "UP";
+	public static final String STATUS_DOWN = "DOWN";
 	
 	
 	public abstract SabioQueryResult performQuery(String query);
@@ -28,7 +31,7 @@ public abstract class SabioQuery{
 	 * Performs necessary replacements and sanitation of query, for 
 	 * instance fixing issues with encoding.
 	 */
-	protected static URI uriFromQuery(String query) throws URISyntaxException{
+	public static URI uriFromQuery(String query) throws URISyntaxException{
 		query = query.replace(" ", "%20");
 		query = query.replace("\"", "%22");
 		URI uri = new java.net.URI(SabioQuery.SABIORK_RESTFUL_URL + "/" + query);

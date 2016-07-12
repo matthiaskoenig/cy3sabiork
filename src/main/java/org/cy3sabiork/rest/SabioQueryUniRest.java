@@ -53,7 +53,7 @@ public class SabioQueryUniRest extends SabioQuery{
 
 	@Override
 	public String getSabioStatus() {
-		String status = "Down";
+		String status = SabioQuery.STATUS_DOWN;
 		HttpResponse<InputStream> response = executeQuery("status");
 		if (response != null){
 			status = getStringBody(response);

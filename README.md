@@ -31,6 +31,9 @@ For a manual install
 in the Cytoscape app folder
 `CytoscapeConfiguration/3/apps/installed/`
 
+## How to cite
+**König M.** cy3sabiork: A Cytoscape app for visualizing kinetic data from SABIO-RK [version 1; referees: awaiting peer review]. F1000Research 2016, 5:1736 (doi: [10.12688/f1000research.9211.1](http://dx.doi.org/10.12688/f1000research.9211.1)) 
+
 ## Screenshot
 ![alt tag](docs/images/cy3sabiork-gui.png)  
 **Figure 2**: GUI overview.

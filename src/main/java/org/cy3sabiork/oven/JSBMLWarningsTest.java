@@ -17,7 +17,6 @@ import java.nio.file.Paths;
 
 import javax.xml.stream.XMLStreamException;
 
-import org.cy3sbml.SBMLReaderTask;
 import org.sbml.jsbml.Compartment;
 import org.sbml.jsbml.JSBML;
 import org.sbml.jsbml.Model;

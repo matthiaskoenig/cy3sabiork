@@ -3,6 +3,9 @@ package org.cy3sabiork;
 import java.io.File;
 import java.util.Properties;
 
+import org.cy3sabiork.oven.WebViewPanel;
+import org.cytoscape.application.CyApplicationManager;
+import org.cytoscape.application.swing.CytoPanelComponent;
 import org.osgi.framework.BundleContext;
 import org.cytoscape.application.CyApplicationConfiguration;
 import org.cytoscape.application.swing.CyAction;
@@ -66,9 +69,15 @@ public class CyActivator extends AbstractCyActivator {
 			resourceHandler.extract();
 			logger.info("----------------------------");
 			
-			// JSBMLBugUTF8.testReading();
-			
-			
+			// JavaFx CyPanel
+			CyApplicationManager cyApplicationManager = getService(bc, CyApplicationManager.class);
+
+            // Create
+			WebViewPanel webViewPanel = WebViewPanel.getInstance(cyApplicationManager, cySwingApplication);
+            registerService(bc, webViewPanel, CytoPanelComponent.class, new Properties());
+			webViewPanel.getInstance().activate();
+            logger.info("webViewPanel activated");
+
 		} catch (Throwable e){
 			logger.error("Could not start server!", e);
 			e.printStackTrace();

@@ -3,9 +3,10 @@ package org.cy3sabiork;
 import java.io.File;
 import java.util.Properties;
 
-import org.cy3sabiork.oven.WebViewPanel;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.CytoPanelComponent;
+import org.cytoscape.application.swing.events.CytoPanelComponentSelectedListener;
+import org.cytoscape.application.swing.events.CytoPanelStateChangedListener;
 import org.osgi.framework.BundleContext;
 import org.cytoscape.application.CyApplicationConfiguration;
 import org.cytoscape.application.swing.CyAction;
@@ -15,7 +16,6 @@ import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
 import org.cytoscape.util.swing.OpenBrowser;
 import org.cytoscape.work.TaskManager;
 import org.cy3sbml.BundleInformation;
-import org.cy3sabiork.SabioAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,15 +68,6 @@ public class CyActivator extends AbstractCyActivator {
 			final ResourceExtractor resourceHandler = new ResourceExtractor(bc, appDirectory);
 			resourceHandler.extract();
 			logger.info("----------------------------");
-			
-			// JavaFx CyPanel
-			CyApplicationManager cyApplicationManager = getService(bc, CyApplicationManager.class);
-
-            // Create
-			WebViewPanel webViewPanel = WebViewPanel.getInstance(cyApplicationManager, cySwingApplication);
-            registerService(bc, webViewPanel, CytoPanelComponent.class, new Properties());
-			webViewPanel.getInstance().activate();
-            logger.info("webViewPanel activated");
 
 		} catch (Throwable e){
 			logger.error("Could not start server!", e);

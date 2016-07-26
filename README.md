@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/matthiaskoenig/cy3sabiork.svg?branch=develop)](https://travis-ci.org/matthiaskoenig/cy3sabiork)
 [![codecov](https://codecov.io/gh/matthiaskoenig/cy3sabiork/branch/develop/graph/badge.svg)](https://codecov.io/gh/matthiaskoenig/cy3sabiork)
 [![GitHub version](https://badge.fury.io/gh/matthiaskoenig%2Fcy3sabiork.svg)](https://badge.fury.io/gh/matthiaskoenig%2Fcy3sabiork)
+[![License (GPL version 3)](https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat-square)](http://opensource.org/licenses/GPL-3.0)
 
 **cy3sabiork** is a [Cytoscape 3](http://www.cytoscape.org) app for accessing kinetic information from [SABIO-RK](http://sabio.villa-bosch.de/) via the RESTful web service.
   

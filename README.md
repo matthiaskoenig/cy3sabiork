@@ -2,6 +2,7 @@
 [![DOI](https://zenodo.org/badge/5066/matthiaskoenig/cy3sabiork.svg)](https://zenodo.org/badge/latestdoi/5066/matthiaskoenig/cy3sabiork)
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=RYHNRJFBMWD5N" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-yellow.svg" alt="PayPal donate button" /></a>
 [![Build Status](https://travis-ci.org/matthiaskoenig/cy3sabiork.svg?branch=develop)](https://travis-ci.org/matthiaskoenig/cy3sabiork)
+[![codecov](https://codecov.io/gh/matthiaskoenig/cy3sabiork/branch/develop/graph/badge.svg)](https://codecov.io/gh/matthiaskoenig/cy3sabiork)
 
 **cy3sabiork** is a [Cytoscape 3](http://www.cytoscape.org) app for accessing kinetic information from [SABIO-RK](http://sabio.villa-bosch.de/) via the RESTful web service.
   

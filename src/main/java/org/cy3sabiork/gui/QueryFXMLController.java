@@ -485,8 +485,9 @@ public class QueryFXMLController implements Initializable{
          });
 
 		// WebView Javascript -> Java upcalls using JavaApp
-		// FIXME: currently not working due to netscape.javascript issue
+		// FIXME: currently not working due to netscape.javascript issue. This is a Cytoscape issue.
 		//     see: https://github.com/matthiaskoenig/cy3sabiork/issues/12
+		// 	   see: https://groups.google.com/forum/#!topic/cytoscape-helpdesk/Sl_MwfmLTx0
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener<State>() {
                 @Override

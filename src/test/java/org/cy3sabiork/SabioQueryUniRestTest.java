@@ -42,4 +42,12 @@ public class SabioQueryUniRestTest {
         assertEquals("Test sabio status", SabioQuery.STATUS_UP, status);
     }
 
+    @Test
+    public void escapeTest01() throws Exception {
+        String query = "searchKineticLaws/sbml?q=AnyRole:\" [(1->6)-alpha-d-xylo]-(1->4)-beta-d-glucan glucanohydrolase\"";
+        Integer count = unirest.performCountQuery(query);
+        assertTrue("Testing count query", count>0);
+    }
+
+
 }

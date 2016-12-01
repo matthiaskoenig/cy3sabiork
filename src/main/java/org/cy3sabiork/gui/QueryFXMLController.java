@@ -1,6 +1,8 @@
 package org.cy3sabiork.gui;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
@@ -126,7 +128,7 @@ public class QueryFXMLController implements Initializable{
     		logger.warn("No keyword selected. Select keyword and search term in the Query Builder.");
     		return;
     	}
-    	
+
     	String addition = selectedItem + ":\"" + searchTerm + "\"";
     	String query = queryText.getText();
     	if (searchTerm.length() == 0){

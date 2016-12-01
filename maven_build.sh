@@ -10,7 +10,7 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 ############################
-CY3SBML_VERSION="0.2.2"
+CY3SBML_VERSION="0.3.0"
 ############################
 
 while [[ $# > 1 ]]
@@ -35,7 +35,7 @@ if [ "$BUILD_CY3SBML" == "" ]; then
 	: "${CY3SBML?Need to set CY3SBML}"
 	
 	cd $CY3SBML
-	mvn install
+	mvn install -DskipTests
 
 	# install in local maven repo
 	mvn install:install-file -DgroupId=cy3sbml-dep -DartifactId=cy3sbml -Dversion=$CY3SBML_VERSION -Dfile=$CY3SBML/target/cy3sbml-$CY3SBML_VERSION.jar -Dpackaging=jar -DgeneratePom=true -DlocalRepositoryPath=$DIR/lib -DcreateChecksum=true

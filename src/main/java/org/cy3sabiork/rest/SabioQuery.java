@@ -1,7 +1,9 @@
 package org.cy3sabiork.rest;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.Collection;
 
 
@@ -28,12 +30,18 @@ public abstract class SabioQuery{
 	
 	/** 
 	 * Create URI from query String.
+     *
 	 * Performs necessary replacements and sanitation of query, for 
-	 * instance fixing issues with encoding.
+	 * instance fixing issues with encoding. Handles the url
 	 */
 	public static URI uriFromQuery(String query) throws URISyntaxException{
+
+        // the following is only a bug fix due to the encoding issues with web service
 		query = query.replace(" ", "%20");
-		query = query.replace("\"", "%22");
+        query = query.replace("\"", "%22");
+        query = query.replace(">", "%3E");
+        query = query.replace("<", "%3C");
+
 		URI uri = new java.net.URI(SabioQuery.SABIORK_RESTFUL_URL + "/" + query);
 		return uri;
 	}

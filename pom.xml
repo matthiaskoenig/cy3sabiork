@@ -9,7 +9,7 @@
 		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
 		<osgi.api.version>4.2.0</osgi.api.version>
 		
-		<Cytoscape-App-Dependencies>cy3sbml;0.2.2</Cytoscape-App-Dependencies>
+		<Cytoscape-App-Dependencies>cy3sbml;0.3.0</Cytoscape-App-Dependencies>
 		<org.osgi.framework.system.packages.extra>javafx.animation,javafx.application,javafx.collections,javafx.embed.swing,javafx.geometry,javafx.scene,javafx.scene.layout,javafx.scene.transform,javax.swing,javax.swing.border,javafx.fxml,netscape.javascript,org.osgi.framework</org.osgi.framework.system.packages.extra>
 		<org.osgi.framework.bootdelegation>netscape.javascript</org.osgi.framework.bootdelegation>
 		
@@ -120,7 +120,7 @@
 						<Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>!${bundle.namespace}.*</Export-Package>
-						<Import-Package>org.cy3sbml.*;version="0.2.2";</Import-Package>
+						<Import-Package>org.cy3sbml.*;version="0.3.0";</Import-Package>
 						<Import-Package>netscape.javascript</Import-Package>
 						<Import-Package>*;resolution:=optional</Import-Package>
 

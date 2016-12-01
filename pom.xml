@@ -259,14 +259,6 @@
 			<version>1.7.12</version>
 		</dependency>
 		
-		
-		<!--  Jersey RESTful -->
-		<dependency>
-		    <groupId>org.glassfish.jersey.core</groupId>
-		    <artifactId>jersey-client</artifactId>
-		    <version>2.23.1</version>
-		</dependency>
-		
 		<!--  UniRest -->
 		<dependency>
 		    <groupId>com.mashape.unirest</groupId>

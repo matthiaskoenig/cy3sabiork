@@ -468,6 +468,7 @@ public class QueryFXMLController implements Initializable{
 		// Handle all links by opening external browser
 		// http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/
 		// FIXME: this is a bad hack, should behave similar to HyperLinkListener in JTextPane
+        // see: https://github.com/matthiaskoenig/cy3sabiork/issues/28
 		webEngine.locationProperty().addListener(new ChangeListener<String>(){
              @Override
              public void changed(ObservableValue<? extends String> observable, final String oldValue, final String newValue){
@@ -487,9 +488,7 @@ public class QueryFXMLController implements Initializable{
          });
 
 		// WebView Javascript -> Java upcalls using JavaApp
-		// FIXME: currently not working due to netscape.javascript issue. This is a Cytoscape issue.
-		//     see: https://github.com/matthiaskoenig/cy3sabiork/issues/12
-		// 	   see: https://groups.google.com/forum/#!topic/cytoscape-helpdesk/Sl_MwfmLTx0
+        // see https://groups.google.com/forum/#!topic/cytoscape-helpdesk/Sl_MwfmLTx0
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener<State>() {
                 @Override
@@ -499,7 +498,7 @@ public class QueryFXMLController implements Initializable{
                 			JSObject win = (JSObject) webEngine.executeScript("window");
                             win.setMember("app", new JavaApp());	
                 		} catch(NoClassDefFoundError e){
-                			System.out.println("netscape.javascript not accessible in Cytoscape: see https://groups.google.com/forum/#!topic/cytoscape-helpdesk/Sl_MwfmLTx0");
+                			System.out.println("netscape.javascript not accessible in Cytoscape");
                 		}                        
                 	}
                 }

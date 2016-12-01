@@ -71,7 +71,7 @@ public class WebViewSwing {
 	    	// Scene scene = new Scene(new Browser(appDirectory));
 	        // fxPanel.setScene(scene);
 			
-			// Load FXML GUI scence
+			// Load FXML GUI scene
 			// see : http://blog.admadic.com/2013/03/javafx-fxmlloader-with-osgi.html
 			FXMLLoader.setDefaultClassLoader(WebViewSwing.class.getClassLoader());
 			

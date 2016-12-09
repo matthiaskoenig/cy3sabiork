@@ -10,7 +10,7 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 ############################
-CY3SBML_VERSION="0.3.0"
+CY3SBML_VERSION="0.2.5"
 ############################
 
 while [[ $# > 1 ]]

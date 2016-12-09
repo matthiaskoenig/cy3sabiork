@@ -3,10 +3,6 @@ package org.cy3sabiork;
 import java.io.File;
 import java.util.Properties;
 
-import org.cytoscape.application.CyApplicationManager;
-import org.cytoscape.application.swing.CytoPanelComponent;
-import org.cytoscape.application.swing.events.CytoPanelComponentSelectedListener;
-import org.cytoscape.application.swing.events.CytoPanelStateChangedListener;
 import org.osgi.framework.BundleContext;
 import org.cytoscape.application.CyApplicationConfiguration;
 import org.cytoscape.application.swing.CyAction;
@@ -68,8 +64,8 @@ public class CyActivator extends AbstractCyActivator {
 			final ResourceExtractor resourceHandler = new ResourceExtractor(bc, appDirectory);
 			resourceHandler.extract();
 			logger.info("----------------------------");
-
 		} catch (Throwable e){
+            e.printStackTrace();
 			logger.error("Could not start server!", e);
 			e.printStackTrace();
 		}

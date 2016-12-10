@@ -15,7 +15,8 @@
 
 **App Store**: http://apps.cytoscape.org/apps/cy3sabiork  
 **Support & Forum**: https://groups.google.com/forum/#!forum/cysbml-cyfluxviz  
-**Issue Tracker**: https://github.com/matthiaskoenig/cy3sabiork/issues  
+**Issue Tracker**: https://github.com/matthiaskoenig/cy3sabiork/issues   
+**Tutorial**: [cy3sabiork Tutorial](docs/Tutorial.md) 
 
 ## License
 * Source Code: [GPLv3](http://opensource.org/licenses/GPL-3.0)

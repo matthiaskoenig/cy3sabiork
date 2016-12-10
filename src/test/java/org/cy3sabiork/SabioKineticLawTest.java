@@ -6,6 +6,8 @@ import org.cy3sabiork.rest.SabioQueryUniRest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sbml.jsbml.JSBML;
+import org.sbml.jsbml.SBMLDocument;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -75,7 +77,9 @@ public class SabioKineticLawTest {
                 this.getClass().getResourceAsStream("kineticLaw123.xml"),
                 "UTF-8"
         );
-        ArrayList<SabioKineticLaw> list = SabioKineticLaw.parseKineticLaws(sbml);
+        SBMLDocument doc = JSBML.readSBMLFromString(sbml);
+
+        ArrayList<SabioKineticLaw> list = SabioKineticLaw.parseKineticLaws(doc);
 
         assertNotNull(list);
         assertEquals(1, list.size());

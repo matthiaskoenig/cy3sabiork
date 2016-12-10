@@ -329,8 +329,14 @@ public class QueryFXMLController implements Initializable{
     @FXML protected void handleLoadAction(ActionEvent event) {
     	logger.info("Loading Kinetic Laws in Cytoscape ...");
     	if (WebViewSwing.sbmlReader != null){
-    		String sbml = queryResult.getXML();
-    		if (sbml != null){
+    	    SBMLDocument doc = queryResult.getSBMLDocument();
+            String sbml = null;
+            try {
+                sbml = JSBML.writeSBMLToString(doc);
+            } catch (XMLStreamException e) {
+                e.printStackTrace();
+            }
+            if (sbml != null){
     			logger.info("... loading ...");
     			WebViewSwing.sbmlReader.loadNetworkFromSBML(sbml);
     			logger.info("Networks loaded in Cytoscape. Dialog closed.");
@@ -474,25 +480,18 @@ public class QueryFXMLController implements Initializable{
 		imageSBML.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/logo-sbml.png")));
         imageSBML.setOnMousePressed(me -> {
             logger.info("Open SBML for query");
-            String xml = queryResult.getXML();
-            // Create a temporary file and open in browser
+            SBMLDocument doc = queryResult.getSBMLDocument();
             try {
-                // write to tmp file
+                // write to tmp file and open in browser
                 File temp = File.createTempFile("cy3sabiork", ".xml");
-                try {
-                    SBMLDocument doc = JSBML.readSBMLFromString(xml);
-                    TidySBMLWriter.write(doc, temp.getAbsolutePath(), ' ', (short) 2);
-                    SwingUtilities.invokeLater(new Runnable() {
-                        public void run() {
-                            OpenBrowser.openURL("file://" + temp.getAbsolutePath());
-                        }
-                    });
-                } catch (SBMLException | FileNotFoundException | XMLStreamException e) {
-                    logger.error("SBML opening failed.");
-                    e.printStackTrace();
-                }
-            } catch (IOException e) {
-                logger.error("SBML could not be opened in browser.");
+                TidySBMLWriter.write(doc, temp.getAbsolutePath(), ' ', (short) 2);
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        OpenBrowser.openURL("file://" + temp.getAbsolutePath());
+                    }
+                });
+            } catch (SBMLException | XMLStreamException| IOException e) {
+                logger.error("SBML opening failed.");
                 e.printStackTrace();
             }
         });

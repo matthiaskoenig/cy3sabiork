@@ -93,32 +93,25 @@ public class SabioKineticLaw {
 	 * Information to populate the results panel is parsed here. 
 	 * This uses directly the response string.
 	 */
-	public static ArrayList<SabioKineticLaw> parseKineticLaws(String sbml){
+	public static ArrayList<SabioKineticLaw> parseKineticLaws(SBMLDocument doc){
 		ArrayList<SabioKineticLaw> list = new ArrayList<SabioKineticLaw>();
-		if (sbml == null){
+		if (doc == null){
 			return list;
 		}
-		try {
-			SBMLDocument doc = JSBML.readSBMLFromString(sbml);
 
-			// necessary to read information from annotations
-			Model model = doc.getModel();
-			Integer count = 1;
-			for (Reaction r : model.getListOfReactions()){
+		// necessary to read information from annotations
+		Model model = doc.getModel();
+		Integer count = 1;
+		for (Reaction r : model.getListOfReactions()){
+			Integer kid = getKineticLawIdFromReaction(r);
+			String organism = getOrganismFromReaction(r);
+			String tissue = getTissueFromReaction(r);
+			String reaction = getDescriptionFromReaction(r);
 
-				Integer kid = getKineticLawIdFromReaction(r);
-				String organism = getOrganismFromReaction(r);
-				String tissue = getTissueFromReaction(r);
-				String reaction = getDescriptionFromReaction(r);
-				
-				list.add(new SabioKineticLaw(count, kid, organism, tissue, reaction));
-				count++;
-			}
-	    	
-		} catch (XMLStreamException e1) {
-			e1.printStackTrace();
-			return list;
+			list.add(new SabioKineticLaw(count, kid, organism, tissue, reaction));
+			count++;
 		}
+
 		return list;
 	}
 	

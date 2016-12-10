@@ -217,18 +217,27 @@ public class QuerySuggestions implements Serializable {
 	
 	/** 
 	 * Retrieve suggestions and serialize to file resource.
+	 *
+	 * To update the resources set the target directory and change
+	 * the mode to save mode. The retrieval of all keywords takes
+	 * 1-2 minutes.
+	 * To test the serialized file switch to load mode.
 	 */
 	public static void main(String[] args){
-    	File appDirectory = new File("src/main/resources");
+
+		/////////////////////////////////////////////////////////////////////////
+		// Change mode for loading or saving
+		// Mode mode = Mode.SAVE;
+		Mode mode = Mode.LOAD;
+		String target = "/home/mkoenig/git/cy3sabiork/src/main/resources";
+		/////////////////////////////////////////////////////////////////////////
+
+		File appDirectory = new File("src/main/resources");
     	ResourceExtractor.setAppDirectory(appDirectory);
     	
     	String fileURI = ResourceExtractor.fileURIforResource(RESOURCE);
     	System.out.println(fileURI);
-		
-		// Change mode for loading or saving
-		//Mode mode = Mode.SAVE;
-		Mode mode = Mode.LOAD;
-		
+
 		System.out.println("-------------------------------------------------");
 		System.out.println(mode);
 		System.out.println("-------------------------------------------------");
@@ -236,7 +245,7 @@ public class QuerySuggestions implements Serializable {
 		if (mode == Mode.SAVE){
 			// get current values and store in RESOURCE
 			suggestions = new QuerySuggestions();
-			suggestions.saveToFile("/home/mkoenig/git/cy3sabiork/src/main/resources" + RESOURCE);			
+			suggestions.saveToFile(target + RESOURCE);
 		} else if (mode == Mode.LOAD){
 			suggestions = QuerySuggestions.loadFromResource(fileURI);	
 		}

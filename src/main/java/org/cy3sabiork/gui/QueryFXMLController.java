@@ -1,5 +1,8 @@
 package org.cy3sabiork.gui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -7,6 +10,7 @@ import java.util.TreeSet;
 
 import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
+import javax.xml.stream.XMLStreamException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,6 +54,11 @@ import org.cy3sabiork.SabioQueryResult;
 import org.cy3sabiork.rest.QuerySuggestions;
 import org.cy3sabiork.rest.SabioQuery;
 import org.cy3sabiork.rest.SabioQueryUniRest;
+import org.cy3sbml.util.OpenBrowser;
+import org.sbml.jsbml.JSBML;
+import org.sbml.jsbml.SBMLDocument;
+import org.sbml.jsbml.SBMLException;
+import org.sbml.jsbml.TidySBMLWriter;
 
 
 /** 
@@ -305,9 +314,8 @@ public class QueryFXMLController implements Initializable{
         if (queryThread != null){
             if(queryThread.getState() != Thread.State.TERMINATED){
                 // thread exists and is still running
-                // FIXME: this is inherently unsafe
+                // FIXME: this is inherently unsafe, but works for now
                 queryThread.stop();
-                // TODO: update the GUI accordingly
                 String abortedQuery = queryText.getText();
                 handleResetAction(null);
                 queryText.setText(abortedQuery);
@@ -465,7 +473,28 @@ public class QueryFXMLController implements Initializable{
 
 		imageSBML.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/logo-sbml.png")));
         imageSBML.setOnMousePressed(me -> {
-            logger.info("open SBML");
+            logger.info("Open SBML for query");
+            String xml = queryResult.getXML();
+            // Create a temporary file and open in browser
+            try {
+                // write to tmp file
+                File temp = File.createTempFile("cy3sabiork", ".xml");
+                try {
+                    SBMLDocument doc = JSBML.readSBMLFromString(xml);
+                    TidySBMLWriter.write(doc, temp.getAbsolutePath(), ' ', (short) 2);
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            OpenBrowser.openURL("file://" + temp.getAbsolutePath());
+                        }
+                    });
+                } catch (SBMLException | FileNotFoundException | XMLStreamException e) {
+                    logger.error("SBML opening failed.");
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                logger.error("SBML could not be opened in browser.");
+                e.printStackTrace();
+            }
         });
 
 		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/search-sabiork.png")));
@@ -633,7 +662,6 @@ public class QueryFXMLController implements Initializable{
 		// SabioStatus
 		//-----------------------
 		showQueryStatus(false);
-
         handleResetAction(null);
 	}
 	

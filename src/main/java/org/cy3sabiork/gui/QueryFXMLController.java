@@ -239,8 +239,9 @@ public class QueryFXMLController implements Initializable{
                 			if (! data.isEmpty()){
                 				entryTable.setItems(data);
                 				entryTable.setDisable(false);
-                    	    	loadButton.setDisable(false);	
-                			}
+                    	    	loadButton.setDisable(false);
+                                entryTable.getSelectionModel().select(0);
+                            }
                 		}
                 		time.setText(duration + " [ms]");    	
                         queryButton.setDisable(false);

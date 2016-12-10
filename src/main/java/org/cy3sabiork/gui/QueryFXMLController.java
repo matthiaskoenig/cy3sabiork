@@ -1,8 +1,6 @@
 package org.cy3sabiork.gui;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
@@ -73,6 +71,7 @@ public class QueryFXMLController implements Initializable{
 	@FXML private ImageView imageSabioLogo;
 	@FXML private ImageView imageSabioSearch;
 	@FXML private ImageView imageHelp;
+	@FXML private ImageView imageSBML;
 	@FXML private WebView webView;
 	
 	// -- Log --
@@ -95,7 +94,9 @@ public class QueryFXMLController implements Initializable{
     // -- REST Query --
     @FXML private TextArea queryText;
     @FXML private Button queryButton;
-    @FXML private Button clearButton;
+	@FXML private Button cancelButton;
+    @FXML private Button resetButton;
+
     // @FXML private TextField history;
     
     @FXML private ProgressIndicator progressIndicator;
@@ -190,6 +191,7 @@ public class QueryFXMLController implements Initializable{
                     @Override
                     public void run() {
                         queryButton.setDisable(true);
+                        cancelButton.setDisable(false);
                         statusCode.setStyle("-fx-fill: black;");
                 		progressIndicator.setStyle("-fx-progress-color: dodgerblue;");
                     }
@@ -241,10 +243,12 @@ public class QueryFXMLController implements Initializable{
                 				entryTable.setDisable(false);
                     	    	loadButton.setDisable(false);
                                 entryTable.getSelectionModel().select(0);
+                                imageSBML.setVisible(true);
                             }
                 		}
                 		time.setText(duration + " [ms]");    	
                         queryButton.setDisable(false);
+                        cancelButton.setDisable(true);
                         
                         // add query to history
                         // TODO: implement
@@ -252,13 +256,14 @@ public class QueryFXMLController implements Initializable{
                         // logger.info("query added to history: <" + queryString +">");
                     }
                 });
-        		setProgress(1);    	
+        		setProgress(1);
+
             }
         };
         queryThread.start();
     }
     
-    /*
+    /**
      * Reset GUI to original state.
      */
     @FXML protected void handleResetAction(ActionEvent event) {
@@ -275,10 +280,39 @@ public class QueryFXMLController implements Initializable{
     	entryTable.setItems(FXCollections.observableArrayList());
     	entryTable.setDisable(true);
     	loadButton.setDisable(true);
+    	cancelButton.setDisable(true);
+        queryButton.setDisable(false);
+    	imageSBML.setVisible(false);
     	keywordList.getSelectionModel().clearSelection();
-    	
-    	setEntryCount(null);
+
+        setProgress(-1);
+        String status = new SabioQueryUniRest().getSabioStatus();
+        if (status.equals("UP")){
+            setProgress(1.0);
+        }
+
+        setEntryCount(null);
     	setHelp();
+    }
+
+    /**
+     * Cancel webservice request.
+     *
+     * @param event
+     */
+    @FXML protected void handleCancelAction(ActionEvent event) {
+        logger.info("Cancel request thread");
+        if (queryThread != null){
+            if(queryThread.getState() != Thread.State.TERMINATED){
+                // thread exists and is still running
+                // FIXME: this is inherently unsafe
+                queryThread.stop();
+                // TODO: update the GUI accordingly
+                String abortedQuery = queryText.getText();
+                handleResetAction(null);
+                queryText.setText(abortedQuery);
+            }
+		}
     }
     
     /**
@@ -309,7 +343,7 @@ public class QueryFXMLController implements Initializable{
     	
     	public void setQuery() {
             logger.info("<Upcall WebView> : "+ query);
-            clearButton.fire();
+            resetButton.fire();
             queryText.setText(query);
         }
     }
@@ -326,7 +360,7 @@ public class QueryFXMLController implements Initializable{
     /** Get information for KineticLaw in WebView. */
 	private void setInfoForKineticLaw(Integer kid){
 		String lawURI = SabioQuery.PREFIX_KINETIC_LAW_INFO + kid.toString();
-		logger.info("Load information for Kinetic Law <" + kid + ">");
+		logger.info("Load information for KineticLaw<" + kid + ">");
 		webView.getEngine().load(lawURI);
 	}
     
@@ -428,7 +462,12 @@ public class QueryFXMLController implements Initializable{
 		imageHelp.setOnMousePressed(me -> {
             setHelp();
 	    });
-		
+
+		imageSBML.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/logo-sbml.png")));
+        imageSBML.setOnMousePressed(me -> {
+            logger.info("open SBML");
+        });
+
 		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/search-sabiork.png")));
 
 		// ---------------------------
@@ -595,11 +634,7 @@ public class QueryFXMLController implements Initializable{
 		//-----------------------
 		showQueryStatus(false);
 
-		setProgress(-1);
-		String status = new SabioQueryUniRest().getSabioStatus();
-		if (status.equals("UP")){
-			setProgress(1.0);
-		}	
+        handleResetAction(null);
 	}
 	
 }

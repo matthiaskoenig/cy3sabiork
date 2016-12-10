@@ -474,6 +474,10 @@ public class QueryFXMLController implements Initializable{
 			System.out.println(WebViews.hyperlinkEventToString(event));
 
 			URL url = event.getURL();
+			if (url == null){
+			    // for instance if netscape javascript is not available
+			    return true;
+            }
 			if (isExternalLink(url.toString())) {
 				openURLinExternalBrowser(url.toString());
 				return true;

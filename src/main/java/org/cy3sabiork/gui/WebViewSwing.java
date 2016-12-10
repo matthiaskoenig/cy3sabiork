@@ -17,8 +17,7 @@ import javafx.scene.control.ScrollPane;
 
 import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioSBMLReader;
-import org.cy3sabiork.gui.QueryFXMLController;
-import org.cy3sabiork.oven.SabioQueryHistory;
+import org.cy3sabiork.SabioQueryHistory;
 import org.cytoscape.util.swing.OpenBrowser;
 
 
@@ -26,7 +25,6 @@ import org.cytoscape.util.swing.OpenBrowser;
 public class WebViewSwing {
 	public static OpenBrowser openBrowser;
 	public static SabioSBMLReader sbmlReader;
-	public static SabioQueryHistory queryHistory;
 	
 	/* Single reused instance of dialog */
 	public static JDialog dialog;
@@ -118,7 +116,7 @@ public class WebViewSwing {
      * in the OSGI bundles. 
      */
     public static void main(String[] args) {
-    	// It is ecessary to provide access to file resources in a consistent
+    	// It is necessary to provide access to file resources in a consistent
     	// way in bundle and non-bundle context.
     	// The solution is the use of the ResourceExtractor to use local files.
     	

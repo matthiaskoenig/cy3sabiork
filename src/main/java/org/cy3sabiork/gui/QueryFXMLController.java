@@ -50,6 +50,7 @@ import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioKineticLaw;
+import org.cy3sabiork.SabioQueryHistory;
 import org.cy3sabiork.SabioQueryResult;
 import org.cy3sabiork.rest.QuerySuggestions;
 import org.cy3sabiork.rest.SabioQuery;
@@ -99,7 +100,10 @@ public class QueryFXMLController implements Initializable{
     // --- Kinetic Law entries ---
     @FXML private TextArea entry;
     @FXML private Button addEntryButton;
-    
+
+    // --- Query History ---
+    @FXML private ListView<String> historyList;
+
     // -- REST Query --
     @FXML private TextArea queryText;
     @FXML private Button queryButton;
@@ -124,7 +128,8 @@ public class QueryFXMLController implements Initializable{
     @FXML private TableColumn tissueCol;
     @FXML private TableColumn reactionCol;
     @FXML private Button loadButton;
-    
+
+    private static SabioQueryHistory queryHistory;
     private SabioQueryResult queryResult;
     Thread queryThread = null;
     
@@ -260,9 +265,11 @@ public class QueryFXMLController implements Initializable{
                         cancelButton.setDisable(true);
                         
                         // add query to history
-                        // TODO: implement
-                        // WebViewSwing.queryHistory.add(queryString);
-                        // logger.info("query added to history: <" + queryString +">");
+                        queryHistory.add(queryString);
+                        // update the history view
+
+                        logger.info("query added to history: <" + queryString +">");
+                        queryHistory.print();
                     }
                 });
         		setProgress(1);
@@ -306,7 +313,6 @@ public class QueryFXMLController implements Initializable{
 
     /**
      * Cancel webservice request.
-     *
      * @param event
      */
     @FXML protected void handleCancelAction(ActionEvent event) {
@@ -463,6 +469,7 @@ public class QueryFXMLController implements Initializable{
 		
 		String fileURI = ResourceExtractor.fileURIforResource(QuerySuggestions.RESOURCE);
 		suggestions = QuerySuggestions.loadFromResource(fileURI);
+		queryHistory = new SabioQueryHistory();
 		
 		// ---------------------------
 		// Images
@@ -643,7 +650,24 @@ public class QueryFXMLController implements Initializable{
 				addKeywordButton.fire();
 			}
         });
-		
+
+        // ---------------------------
+        // History (List)
+        // ---------------------------
+        historyList.setItems(queryHistory.getAll());
+
+        // on selection update the query term
+        historyList.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<String>() {
+                    public void changed(ObservableValue<? extends String> ov,
+                                        String oldValue, String newValue) {
+                        logger.info("History query <" + newValue + "> selected.");
+                        // set keyword in field
+                        queryText.setText(newValue);
+                    }
+                }
+        );
+
 		// ---------------------------
 		// Logging
 		// ---------------------------

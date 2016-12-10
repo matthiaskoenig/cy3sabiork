@@ -92,6 +92,20 @@
                               <Tooltip text="Retrieve Kinetic Law Entries via their IDs from SABIO-RK." />
                            </tooltip>
                       </Tab>
+                  <Tab text="Query History">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="historyList" layoutX="29.0" layoutY="41.0" prefHeight="229.0" prefWidth="505.0" />
+                              <Text layoutX="31.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recent Queries">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
                     </tabs>
                   </TabPane>
                   <Button fx:id="queryButton" layoutX="441.0" layoutY="433.0" mnemonicParsing="false" onAction="#handleQueryAction" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Run">

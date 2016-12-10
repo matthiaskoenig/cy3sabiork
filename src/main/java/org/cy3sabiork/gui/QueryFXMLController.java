@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import javax.swing.SwingUtilities;
+import javax.swing.event.HyperlinkEvent;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,6 +42,8 @@ import javafx.application.Platform;
 
 import netscape.javascript.JSObject;
 
+import org.codefx.libfx.control.webview.WebViewHyperlinkListener;
+import org.codefx.libfx.control.webview.WebViews;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import org.cy3sabiork.ResourceExtractor;
@@ -376,24 +379,24 @@ public class QueryFXMLController implements Initializable{
     /** Open url in external browser. */
     private void openURLinExternalBrowser(String url){
     	if (WebViewSwing.openBrowser != null){
-	    	logger.info("Open in external browser <" + url +">");    		  
+	    	logger.info("Open in external browser <" + url +">");
     		SwingUtilities.invokeLater(new Runnable() {
     		     public void run() {
-    		    	 WebViewSwing.openBrowser.openURL(url);    	 
+    		    	 WebViewSwing.openBrowser.openURL(url);
     		     }
-    		});	 
+    		});
         } else {
        	 	logger.error("No external browser available.");
         }
     }
-    
-    /* 
+
+    /*
 	 * Check if given link is an external link.
 	 * File links, and links to kineticLawInformation are opened in the WebView.
 	 */
 	private Boolean isExternalLink(String link){
 		Boolean external = true;
-		
+
 		if (link.startsWith("http://sabiork.h-its.org/kineticLawEntry.jsp")){
 			external = false;
 		} else if (link.startsWith("file:///")){
@@ -464,28 +467,20 @@ public class QueryFXMLController implements Initializable{
 		WebEngine webEngine = webView.getEngine();
 		setHelp();
 		webView.setZoom(1.0);
-		
-		// Handle all links by opening external browser
-		// http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/
-		// FIXME: this is a bad hack, should behave similar to HyperLinkListener in JTextPane
-        // see: https://github.com/matthiaskoenig/cy3sabiork/issues/28
-		webEngine.locationProperty().addListener(new ChangeListener<String>(){
-             @Override
-             public void changed(ObservableValue<? extends String> observable, final String oldValue, final String newValue){
-        	 	 // Links to open in external browser
-                 if (isExternalLink(newValue)){
-                     Platform.runLater(new Runnable(){
-                         @Override
-                         public void run(){
-                        	 // reload old page
-                             webView.getEngine().load(oldValue);
-                         }
-                     });
-                     // open url
-                     openURLinExternalBrowser(newValue);
-                 }
-             }
-         });
+
+		// Listening to hyperlink events
+		WebViewHyperlinkListener eventProcessingListener = event -> {
+			System.out.println(WebViews.hyperlinkEventToString(event));
+
+			URL url = event.getURL();
+			if (isExternalLink(url.toString())) {
+				openURLinExternalBrowser(url.toString());
+				return true;
+			}
+			// This is a link we should load, do not cancel.
+			return false;
+		};
+		WebViews.addHyperlinkListener(webView, eventProcessingListener, HyperlinkEvent.EventType.ACTIVATED);
 
 		// WebView Javascript -> Java upcalls using JavaApp
         // see https://groups.google.com/forum/#!topic/cytoscape-helpdesk/Sl_MwfmLTx0

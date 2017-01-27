@@ -32,7 +32,23 @@ public class SabioQueryUniRest extends SabioQuery{
 		return null;
 	}
 
-	
+	/**
+	 * Performs query and returns the XML string.
+	 *
+	 * Returns null if problem.
+	 * @param query
+	 * @return
+	 */
+	public String performQueryXML(String query){
+		HttpResponse<InputStream> response = executeQuery(query);
+		if (response != null){
+			if (response.getStatus() == 200){
+				return getStringBody(response);
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public Integer performCountQuery(String query) {
 		query = convertToCountQuery(query);

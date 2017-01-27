@@ -48,6 +48,40 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:core-task-api:3.4.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:layout-api:3.4.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:property-api:3.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.codefx.libfx:LibFX:0.3.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: cy3sbml-dep:cy3sbml:0.2.5" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml:jsbml:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml:jsbml-core:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-arrays:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-comp:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-distrib:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-dyn:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-fbc:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-groups:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-layout:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-multi:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-qual:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-render:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-req:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.ext:jsbml-spatial:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml.jsbml.modules:jsbml-tidy:1.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:model-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:event-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:swing-application-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:application-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:swing-util-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:viewmodel-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:io-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:presentation-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:filter-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:work-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:work-swing-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:service-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:session-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:vizmap-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:core-task-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:layout-api:3.4.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.cytoscape:property-api:3.4.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.osgi:org.osgi.core:4.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.21" level="project" />

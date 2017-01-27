@@ -175,19 +175,19 @@ public class QuerySuggestions implements Serializable {
 	}
 	
 	private TreeSet<String> retrieveKeywords(){
-		SabioQueryResult result = new SabioQueryUniRest().performQuery("searchKineticLaws");
-		return parseXMLFields(result.getXML(), "field");
+		String xml = new SabioQueryUniRest().performQueryXML("searchKineticLaws");
+		return parseXMLFields(xml, "field");
 	}
 	
 	private TreeSet<String> retrieveSuggestionFields(){
-		SabioQueryResult result = new SabioQueryUniRest().performQuery("suggestions");
-		return parseXMLFields(result.getXML(), "field");
+		String xml = new SabioQueryUniRest().performQueryXML("suggestions");
+		return parseXMLFields(xml, "field");
 	}
 	
 	private TreeSet<String> retrieveSuggestionsForField(String field){	
-		SabioQueryResult result = new SabioQueryUniRest().performQuery("suggestions/" + field);
+		String xml = new SabioQueryUniRest().performQueryXML("suggestions/" + field);
 		String tagName = field.substring(0, (field.length()-1));
-		return parseXMLFields(result.getXML(), tagName);
+		return parseXMLFields(xml, tagName);
 	}
 	
 	/** Parse entries for given tag name. */
@@ -224,6 +224,7 @@ public class QuerySuggestions implements Serializable {
 	 * To test the serialized file switch to load mode.
 	 */
 	public static void main(String[] args){
+		// FIXME: make this independent of home directory
 
 		/////////////////////////////////////////////////////////////////////////
 		// Change mode for loading or saving

@@ -1,11 +1,16 @@
 package org.cy3sabiork.gui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import javax.swing.SwingUtilities;
+import javax.swing.event.HyperlinkEvent;
+import javax.xml.stream.XMLStreamException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,14 +44,22 @@ import javafx.application.Platform;
 
 import netscape.javascript.JSObject;
 
+import org.codefx.libfx.control.webview.WebViewHyperlinkListener;
+import org.codefx.libfx.control.webview.WebViews;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioKineticLaw;
+import org.cy3sabiork.SabioQueryHistory;
 import org.cy3sabiork.SabioQueryResult;
 import org.cy3sabiork.rest.QuerySuggestions;
 import org.cy3sabiork.rest.SabioQuery;
 import org.cy3sabiork.rest.SabioQueryUniRest;
+import org.cy3sbml.util.OpenBrowser;
+import org.sbml.jsbml.JSBML;
+import org.sbml.jsbml.SBMLDocument;
+import org.sbml.jsbml.SBMLException;
+import org.sbml.jsbml.TidySBMLWriter;
 
 
 /** 
@@ -68,6 +81,7 @@ public class QueryFXMLController implements Initializable{
 	@FXML private ImageView imageSabioLogo;
 	@FXML private ImageView imageSabioSearch;
 	@FXML private ImageView imageHelp;
+	@FXML private ImageView imageSBML;
 	@FXML private WebView webView;
 	
 	// -- Log --
@@ -86,11 +100,16 @@ public class QueryFXMLController implements Initializable{
     // --- Kinetic Law entries ---
     @FXML private TextArea entry;
     @FXML private Button addEntryButton;
-    
+
+    // --- Query History ---
+    @FXML private ListView<String> historyList;
+
     // -- REST Query --
     @FXML private TextArea queryText;
     @FXML private Button queryButton;
-    @FXML private Button clearButton;
+	@FXML private Button cancelButton;
+    @FXML private Button resetButton;
+
     // @FXML private TextField history;
     
     @FXML private ProgressIndicator progressIndicator;
@@ -109,7 +128,8 @@ public class QueryFXMLController implements Initializable{
     @FXML private TableColumn tissueCol;
     @FXML private TableColumn reactionCol;
     @FXML private Button loadButton;
-    
+
+    private static SabioQueryHistory queryHistory;
     private SabioQueryResult queryResult;
     Thread queryThread = null;
     
@@ -126,7 +146,7 @@ public class QueryFXMLController implements Initializable{
     		logger.warn("No keyword selected. Select keyword and search term in the Query Builder.");
     		return;
     	}
-    	
+
     	String addition = selectedItem + ":\"" + searchTerm + "\"";
     	String query = queryText.getText();
     	if (searchTerm.length() == 0){
@@ -185,6 +205,7 @@ public class QueryFXMLController implements Initializable{
                     @Override
                     public void run() {
                         queryButton.setDisable(true);
+                        cancelButton.setDisable(false);
                         statusCode.setStyle("-fx-fill: black;");
                 		progressIndicator.setStyle("-fx-progress-color: dodgerblue;");
                     }
@@ -234,25 +255,31 @@ public class QueryFXMLController implements Initializable{
                 			if (! data.isEmpty()){
                 				entryTable.setItems(data);
                 				entryTable.setDisable(false);
-                    	    	loadButton.setDisable(false);	
-                			}
+                    	    	loadButton.setDisable(false);
+                                entryTable.getSelectionModel().select(0);
+                                imageSBML.setVisible(true);
+                            }
                 		}
                 		time.setText(duration + " [ms]");    	
                         queryButton.setDisable(false);
+                        cancelButton.setDisable(true);
                         
                         // add query to history
-                        // TODO: implement
-                        // WebViewSwing.queryHistory.add(queryString);
-                        // logger.info("query added to history: <" + queryString +">");
+                        queryHistory.add(queryString);
+                        // update the history view
+
+                        logger.info("query added to history: <" + queryString +">");
+                        queryHistory.print();
                     }
                 });
-        		setProgress(1);    	
+        		setProgress(1);
+
             }
         };
         queryThread.start();
     }
     
-    /*
+    /**
      * Reset GUI to original state.
      */
     @FXML protected void handleResetAction(ActionEvent event) {
@@ -269,10 +296,37 @@ public class QueryFXMLController implements Initializable{
     	entryTable.setItems(FXCollections.observableArrayList());
     	entryTable.setDisable(true);
     	loadButton.setDisable(true);
+    	cancelButton.setDisable(true);
+        queryButton.setDisable(false);
+    	imageSBML.setVisible(false);
     	keywordList.getSelectionModel().clearSelection();
-    	
-    	setEntryCount(null);
+
+        setProgress(-1);
+        String status = new SabioQueryUniRest().getSabioStatus();
+        if (status.equals("UP")){
+            setProgress(1.0);
+        }
+
+        setEntryCount(null);
     	setHelp();
+    }
+
+    /**
+     * Cancel webservice request.
+     * @param event
+     */
+    @FXML protected void handleCancelAction(ActionEvent event) {
+        logger.info("Cancel request thread");
+        if (queryThread != null){
+            if(queryThread.getState() != Thread.State.TERMINATED){
+                // thread exists and is still running
+                // FIXME: this is inherently unsafe, but works for now
+                queryThread.stop();
+                String abortedQuery = queryText.getText();
+                handleResetAction(null);
+                queryText.setText(abortedQuery);
+            }
+		}
     }
     
     /**
@@ -281,8 +335,14 @@ public class QueryFXMLController implements Initializable{
     @FXML protected void handleLoadAction(ActionEvent event) {
     	logger.info("Loading Kinetic Laws in Cytoscape ...");
     	if (WebViewSwing.sbmlReader != null){
-    		String sbml = queryResult.getXML();
-    		if (sbml != null){
+    	    SBMLDocument doc = queryResult.getSBMLDocument();
+            String sbml = null;
+            try {
+                sbml = JSBML.writeSBMLToString(doc);
+            } catch (XMLStreamException e) {
+                e.printStackTrace();
+            }
+            if (sbml != null){
     			logger.info("... loading ...");
     			WebViewSwing.sbmlReader.loadNetworkFromSBML(sbml);
     			logger.info("Networks loaded in Cytoscape. Dialog closed.");
@@ -303,7 +363,7 @@ public class QueryFXMLController implements Initializable{
     	
     	public void setQuery() {
             logger.info("<Upcall WebView> : "+ query);
-            clearButton.fire();
+            resetButton.fire();
             queryText.setText(query);
         }
     }
@@ -320,7 +380,7 @@ public class QueryFXMLController implements Initializable{
     /** Get information for KineticLaw in WebView. */
 	private void setInfoForKineticLaw(Integer kid){
 		String lawURI = SabioQuery.PREFIX_KINETIC_LAW_INFO + kid.toString();
-		logger.info("Load information for Kinetic Law <" + kid + ">");
+		logger.info("Load information for KineticLaw<" + kid + ">");
 		webView.getEngine().load(lawURI);
 	}
     
@@ -374,24 +434,24 @@ public class QueryFXMLController implements Initializable{
     /** Open url in external browser. */
     private void openURLinExternalBrowser(String url){
     	if (WebViewSwing.openBrowser != null){
-	    	logger.info("Open in external browser <" + url +">");    		  
+	    	logger.info("Open in external browser <" + url +">");
     		SwingUtilities.invokeLater(new Runnable() {
     		     public void run() {
-    		    	 WebViewSwing.openBrowser.openURL(url);    	 
+    		    	 WebViewSwing.openBrowser.openURL(url);
     		     }
-    		});	 
+    		});
         } else {
        	 	logger.error("No external browser available.");
         }
     }
-    
-    /* 
+
+    /*
 	 * Check if given link is an external link.
 	 * File links, and links to kineticLawInformation are opened in the WebView.
 	 */
 	private Boolean isExternalLink(String link){
 		Boolean external = true;
-		
+
 		if (link.startsWith("http://sabiork.h-its.org/kineticLawEntry.jsp")){
 			external = false;
 		} else if (link.startsWith("file:///")){
@@ -409,6 +469,7 @@ public class QueryFXMLController implements Initializable{
 		
 		String fileURI = ResourceExtractor.fileURIforResource(QuerySuggestions.RESOURCE);
 		suggestions = QuerySuggestions.loadFromResource(fileURI);
+		queryHistory = new SabioQueryHistory();
 		
 		// ---------------------------
 		// Images
@@ -422,7 +483,26 @@ public class QueryFXMLController implements Initializable{
 		imageHelp.setOnMousePressed(me -> {
             setHelp();
 	    });
-		
+
+		imageSBML.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/logo-sbml.png")));
+        imageSBML.setOnMousePressed(me -> {
+            logger.info("Open SBML for query");
+            SBMLDocument doc = queryResult.getSBMLDocument();
+            try {
+                // write to tmp file and open in browser
+                File temp = File.createTempFile("cy3sabiork", ".xml");
+                TidySBMLWriter.write(doc, temp.getAbsolutePath(), ' ', (short) 2);
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        OpenBrowser.openURL("file://" + temp.getAbsolutePath());
+                    }
+                });
+            } catch (SBMLException | XMLStreamException| IOException e) {
+                logger.error("SBML opening failed.");
+                e.printStackTrace();
+            }
+        });
+
 		imageSabioSearch.setImage(new Image(ResourceExtractor.fileURIforResource("/gui/images/search-sabiork.png")));
 
 		// ---------------------------
@@ -462,31 +542,27 @@ public class QueryFXMLController implements Initializable{
 		WebEngine webEngine = webView.getEngine();
 		setHelp();
 		webView.setZoom(1.0);
-		
-		// Handle all links by opening external browser
-		// http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/
-		// FIXME: this is a bad hack, should behave similar to HyperLinkListener in JTextPane
-		webEngine.locationProperty().addListener(new ChangeListener<String>(){
-             @Override
-             public void changed(ObservableValue<? extends String> observable, final String oldValue, final String newValue){
-        	 	 // Links to open in external browser
-                 if (isExternalLink(newValue)){
-                     Platform.runLater(new Runnable(){
-                         @Override
-                         public void run(){
-                        	 // reload old page
-                             webView.getEngine().load(oldValue);
-                         }
-                     });
-                     // open url
-                     openURLinExternalBrowser(newValue);
-                 }
-             }
-         });
+
+		// Listening to hyperlink events
+		WebViewHyperlinkListener eventProcessingListener = event -> {
+			System.out.println(WebViews.hyperlinkEventToString(event));
+
+			URL url = event.getURL();
+			if (url == null){
+			    // for instance if netscape javascript is not available
+			    return true;
+            }
+			if (isExternalLink(url.toString())) {
+				openURLinExternalBrowser(url.toString());
+				return true;
+			}
+			// This is a link we should load, do not cancel.
+			return false;
+		};
+		WebViews.addHyperlinkListener(webView, eventProcessingListener, HyperlinkEvent.EventType.ACTIVATED);
 
 		// WebView Javascript -> Java upcalls using JavaApp
-		// FIXME: currently not working due to netscape.javascript issue
-		//     see: https://github.com/matthiaskoenig/cy3sabiork/issues/12
+        // see https://groups.google.com/forum/#!topic/cytoscape-helpdesk/Sl_MwfmLTx0
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener<State>() {
                 @Override
@@ -496,7 +572,7 @@ public class QueryFXMLController implements Initializable{
                 			JSObject win = (JSObject) webEngine.executeScript("window");
                             win.setMember("app", new JavaApp());	
                 		} catch(NoClassDefFoundError e){
-                			System.out.println("netscape.javascript not accessible in Cytoscape: see https://groups.google.com/forum/#!topic/cytoscape-helpdesk/Sl_MwfmLTx0");
+                			System.out.println("netscape.javascript not accessible in Cytoscape");
                 		}                        
                 	}
                 }
@@ -574,7 +650,24 @@ public class QueryFXMLController implements Initializable{
 				addKeywordButton.fire();
 			}
         });
-		
+
+        // ---------------------------
+        // History (List)
+        // ---------------------------
+        historyList.setItems(queryHistory.getAll());
+
+        // on selection update the query term
+        historyList.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<String>() {
+                    public void changed(ObservableValue<? extends String> ov,
+                                        String oldValue, String newValue) {
+                        logger.info("History query <" + newValue + "> selected.");
+                        // set keyword in field
+                        queryText.setText(newValue);
+                    }
+                }
+        );
+
 		// ---------------------------
 		// Logging
 		// ---------------------------
@@ -592,12 +685,7 @@ public class QueryFXMLController implements Initializable{
 		// SabioStatus
 		//-----------------------
 		showQueryStatus(false);
-
-		setProgress(-1);
-		String status = new SabioQueryUniRest().getSabioStatus();
-		if (status.equals("UP")){
-			setProgress(1.0);
-		}	
+        handleResetAction(null);
 	}
 	
 }

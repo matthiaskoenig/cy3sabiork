@@ -82,7 +82,7 @@
     </p>
 
     <p>An overview of the available kinetic information for a single SABIO-RK Kinetic Law is given below. The
-        entry 14792 for galactokinase (EC:2.7.1.6, UniProtKB:P51570) was hereby retrieved via the web service query <code>kineticLaws/14792</code>
+        entry 14792 for galactokinase (EC:2.7.1.6, UniProtKB:P51570) was retrieved via the web service query <code><a class="query">kineticLaws/14792</a></code>
         (<a href="http://sabiork.h-its.org/sabioRestWebServices/kineticLaws/14792">http://sabiork.h-its.org/sabioRestWebServices/kineticLaws/14792</a>).
     </p>
     <p>
@@ -106,8 +106,8 @@
         Entries for given Kinetic Law Ids can be retrieved via the Kinetic Law Entries tab. Copy and paste or type kinetic law ids in the text box and click add to add them to the query. Click run to run the query and load to load the entries in Cytoscape.
     </p>
     <p>For instance retrieving a single entry via
-        <code>kineticLaws/14792</code> or multiple entries via
-        <code>kineticLaws?kinlawids=48020,49160,44091,48027</code>.
+        <code><a class="query">kineticLaws/14792</a></code> or multiple entries via
+        <code><a class="query">kineticLaws?kinlawids=48020,49160,44091,48027</a></code>.
     </p>
 
     <h2>Query Builder</span></h2>
@@ -116,7 +116,7 @@
         operator to form complex queries. After creating the query it is executed by clicking run. The resulting entries
         are loaded in Cytoscape by clicking load.
     </p>
-    <p>For instance find all Kinetic Law Entries for spleen in Homo sapiens: <code><a class="query">Tissue:"spleen" AND
+    <p>For instance find all Kinetic Law Entries for spleen in Homo sapiens: <code><a class="query">searchKineticLaws/sbml?q=Tissue:"spleen" AND
         Organism:"Homo sapiens"</a></code>
     </p>
 
@@ -137,7 +137,7 @@
             </tr>
             <tr>
                 <td><code>EntryID</code></td>
-                <td>SABIO-RK entry ID (e.g. <code>EntryID:"123"</code>)</td>
+                <td>SABIO-RK entry ID (e.g. <code><a class="query">searchKineticLaws/sbml?q=EntryID:"123"</a></code>)</td>
             </tr>
             <tr>
                 <td><strong>Reaction/Pathway </strong></td>
@@ -145,15 +145,15 @@
             </tr>
             <tr>
                 <td><code>Pathway</code></td>
-                <td>The name of the reaction pathway (e.g. <code>Pathway:"urea cycle"</code>)</td>
+                <td>The name of the reaction pathway (e.g. <code><a class="query">searchKineticLaws/sbml?q=Pathway:"urea cycle"</a></code>)</td>
             </tr>
             <tr>
                 <td><code>KeggReactionID</code></td>
-                <td>KEGG ID for the reaction (e.g. <code>KeggReactionID:"R00782"</code>)</td>
+                <td>KEGG ID for the reaction (e.g. <code><a class="query">searchKineticLaws/sbml?q=KeggReactionID:"R00782"</a></code>)</td>
             </tr>
             <tr>
                 <td><code>SabioReactionID</code></td>
-                <td>SABIO-RK ID for the reaction (e.g. <code>SabioReactionID:"14"</code>)</td>
+                <td>SABIO-RK ID for the reaction (e.g. <code><a class="query">searchKineticLaws/sbml?q=SabioReactionID:"14"</a></code>)</td>
             </tr>
             <tr>
                 <td><strong>Compound</strong></td>
@@ -161,11 +161,11 @@
             </tr>
             <tr>
                 <td><code>AnyRole</code></td>
-                <td>Compound found in any role in a reaction (e.g. <code>AnyRole:"oxygen"</code>)</td>
+                <td>Compound found in any role in a reaction (e.g. <code><a class="query">searchKineticLaws/sbml?q=AnyRole:"oxygen"</a></code>)</td>
             </tr>
             <tr>
                 <td><code>Substrate</code></td>
-                <td>Compound acting as a substrate in a reaction (e.g. <code>Substrate:"ATP"</code>)</td>
+                <td>Compound acting as a substrate in a reaction (e.g. <code><a class="query">searchKineticLaws/sbml?q=Substrate:"ATP"</a></code>)</td>
             </tr>
             <tr>
                 <td><code>Product</code></td>
@@ -214,18 +214,18 @@
             <tr>
                 <td><code>Enzymename</code></td>
                 <td>An enzyme may included in the search parameters by name (e.g.
-                    <code>Enzymename:"galactokinase"</code>)
+                    <code><a class="query">searchKineticLaws/sbml?q=Enzymename:"galactokinase"</a></code>)
                 </td>
             </tr>
             <tr>
                 <td><code>ECNumber</code></td>
                 <td>An enzyme may included in the search parameters by EC Class number (e.g.
-                    <code>ECNumber:"1.1.1.2"</code>)
+                    <code><a class="query">searchKineticLaws/sbml?q=ECNumber:"1.1.1.2"</a></code>)
                 </td>
             </tr>
             <tr>
                 <td><code>UniProtKB_AC</code></td>
-                <td>Protein as listed in UniProtKB (e.g. <code>UniProtKB_AC:"A1VCV2"</code>)</td>
+                <td>Protein as listed in UniProtKB (e.g. <code><a class="query">searchKineticLaws/sbml?q=UniProtKB_AC:"A1VCV2"</a></code>)</td>
             </tr>
             <tr>
                 <td><code>EnzymeType</code></td>
@@ -326,7 +326,6 @@
             </tr>
             </tbody>
         </table>
-
 </div>
 
 
@@ -334,14 +333,11 @@
 <script>
     window.onload = function () {
 
-        // Register onclick function for elements of class 'query'. The
-        // link content is processed and send to java
+        // Register onclick function for elements of class 'query'.
+        // The textContent is processed and send to java.
 
-        // FIXME: problem with scope, all functions init with last item (hoisting?)
-
-        // the elements to handle with this function
+        // cy3sabiork example queries defined in class query
         var items = document.getElementsByClassName("query");
-        var i
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
 
@@ -349,19 +345,17 @@
             item.onclick = function fun() {
 
                 // get the text from a element
-                var text = item.innerText || item.textContent;
+                var text = this.innerText || this.textContent;
 
                 // escape '"'
                 // var text = text.replace(/"/g, '&quot;');
-
                 // attach the q-prefix
-                var query = 'searchKineticLaws/sbml?q=' + text;
-
+                // var text = 'searchKineticLaws/sbml?q=' + text;
                 // debug
-                // alert(query);
+                // alert(text);
 
                 // call Java code
-                app.query = query;
+                app.query = text;
                 app.setQuery();
             };
         }

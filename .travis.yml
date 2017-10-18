@@ -1,0 +1,13 @@
+language: java
+
+sudo: false
+
+jdk:
+  - oraclejdk8
+
+branches:
+  only:
+    - develop
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

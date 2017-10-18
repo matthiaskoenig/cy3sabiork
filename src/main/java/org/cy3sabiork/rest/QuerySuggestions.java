@@ -175,19 +175,19 @@ public class QuerySuggestions implements Serializable {
 	}
 	
 	private TreeSet<String> retrieveKeywords(){
-		SabioQueryResult result = new SabioQueryUniRest().performQuery("searchKineticLaws");
-		return parseXMLFields(result.getXML(), "field");
+		String xml = new SabioQueryUniRest().performQueryXML("searchKineticLaws");
+		return parseXMLFields(xml, "field");
 	}
 	
 	private TreeSet<String> retrieveSuggestionFields(){
-		SabioQueryResult result = new SabioQueryUniRest().performQuery("suggestions");
-		return parseXMLFields(result.getXML(), "field");
+		String xml = new SabioQueryUniRest().performQueryXML("suggestions");
+		return parseXMLFields(xml, "field");
 	}
 	
 	private TreeSet<String> retrieveSuggestionsForField(String field){	
-		SabioQueryResult result = new SabioQueryUniRest().performQuery("suggestions/" + field);
+		String xml = new SabioQueryUniRest().performQueryXML("suggestions/" + field);
 		String tagName = field.substring(0, (field.length()-1));
-		return parseXMLFields(result.getXML(), tagName);
+		return parseXMLFields(xml, tagName);
 	}
 	
 	/** Parse entries for given tag name. */
@@ -217,18 +217,28 @@ public class QuerySuggestions implements Serializable {
 	
 	/** 
 	 * Retrieve suggestions and serialize to file resource.
+	 *
+	 * To update the resources set the target directory and change
+	 * the mode to save mode. The retrieval of all keywords takes
+	 * 1-2 minutes.
+	 * To test the serialized file switch to load mode.
 	 */
 	public static void main(String[] args){
-    	File appDirectory = new File("src/main/resources");
+		// FIXME: make this independent of home directory
+
+		/////////////////////////////////////////////////////////////////////////
+		// Change mode for loading or saving
+		// Mode mode = Mode.SAVE;
+		Mode mode = Mode.LOAD;
+		String target = "/home/mkoenig/git/cy3sabiork/src/main/resources";
+		/////////////////////////////////////////////////////////////////////////
+
+		File appDirectory = new File("src/main/resources");
     	ResourceExtractor.setAppDirectory(appDirectory);
     	
     	String fileURI = ResourceExtractor.fileURIforResource(RESOURCE);
     	System.out.println(fileURI);
-		
-		// Change mode for loading or saving
-		//Mode mode = Mode.SAVE;
-		Mode mode = Mode.LOAD;
-		
+
 		System.out.println("-------------------------------------------------");
 		System.out.println(mode);
 		System.out.println("-------------------------------------------------");
@@ -236,7 +246,7 @@ public class QuerySuggestions implements Serializable {
 		if (mode == Mode.SAVE){
 			// get current values and store in RESOURCE
 			suggestions = new QuerySuggestions();
-			suggestions.saveToFile("/home/mkoenig/git/cy3sabiork/src/main/resources" + RESOURCE);			
+			suggestions.saveToFile(target + RESOURCE);
 		} else if (mode == Mode.LOAD){
 			suggestions = QuerySuggestions.loadFromResource(fileURI);	
 		}

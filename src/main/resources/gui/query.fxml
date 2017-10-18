@@ -92,6 +92,20 @@
                               <Tooltip text="Retrieve Kinetic Law Entries via their IDs from SABIO-RK." />
                            </tooltip>
                       </Tab>
+                  <Tab text="Query History">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="historyList" layoutX="29.0" layoutY="41.0" prefHeight="229.0" prefWidth="505.0" />
+                              <Text layoutX="31.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recent Queries">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
                     </tabs>
                   </TabPane>
                   <Button fx:id="queryButton" layoutX="441.0" layoutY="433.0" mnemonicParsing="false" onAction="#handleQueryAction" prefWidth="70.0" style="-fx-background-color: #0181d8;" text="Run">
@@ -99,13 +113,13 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                      <tooltip>
-                        <Tooltip text="Run given query." />
+                        <Tooltip text="Execute web service query." />
                      </tooltip>
                   </Button>
                   <ImageView fx:id="imageSabioLogo" fitHeight="40.0" fitWidth="315.0" layoutX="36.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="clearButton" layoutX="441.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleResetAction" prefWidth="70.0" text="Reset">
+                  <Button fx:id="cancelButton" cancelButton="true" disable="true" layoutX="441.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="70.0" text="Cancel">
                      <tooltip>
-                        <Tooltip text="Reset query and clear all information." />
+                        <Tooltip text="Cancel web service query." />
                      </tooltip>
                   </Button>
                   <Text fill="#0181D8" layoutX="30.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REST Query">
@@ -113,23 +127,23 @@
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Text>
-                  <Text fx:id="statusCodeLabel" layoutX="441.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
-                  <Text fx:id="statusCode" layoutX="491.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
+                  <Text fx:id="statusCodeLabel" layoutX="441.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
+                  <Text fx:id="statusCode" layoutX="491.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
                   <ProgressIndicator fx:id="progressIndicator" layoutX="535.0" layoutY="438.0" progress="0.0">
                      <tooltip>
                         <Tooltip text="Status of query: Queries with many SABIO-RK entries can take seconds to minutes." />
                      </tooltip>
                   </ProgressIndicator>
-                  <Text fx:id="timeLabel" layoutX="441.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
+                  <Text fx:id="timeLabel" layoutX="441.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
                   <TextArea fx:id="queryText" focusTraversable="false" layoutX="32.0" layoutY="433.0" prefHeight="115.0" prefWidth="391.0" wrapText="true">
                      <font>
                         <Font name="Courier New Bold" size="13.0" />
                      </font>
                <tooltip>
-                  <Tooltip text="Preview of web service query." />
+                  <Tooltip text="Web service query." />
                </tooltip>
                   </TextArea>
-                  <Text fx:id="time" layoutX="491.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
+                  <Text fx:id="time" layoutX="491.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
             <TextArea fx:id="log" editable="false" layoutX="30.0" layoutY="785.0" prefHeight="157.0" prefWidth="568.0" wrapText="true">
                <font>
                   <Font name="Courier New" size="13.0" />
@@ -165,6 +179,12 @@
             </Button>
             <WebView fx:id="webView" layoutX="609.0" layoutY="24.0" prefHeight="919.0" prefWidth="779.0" />
             <ImageView fx:id="imageHelp" fitHeight="40.0" fitWidth="42.0" layoutX="552.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="resetButton" layoutX="441.0" layoutY="498.0" mnemonicParsing="false" onAction="#handleResetAction" prefWidth="70.0" text="Reset">
+               <tooltip>
+                  <Tooltip text="Reset query and clear all information." />
+               </tooltip>
+            </Button>
+            <ImageView fx:id="imageSBML" fitHeight="26.0" fitWidth="84.0" layoutX="277.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
    </content>

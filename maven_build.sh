@@ -2,13 +2,20 @@
 ################################################################################
 # maven build script
 #
-# Rebuilds cy3sbml and registers in local maven repository. 
+# Rebuilds cy3sbml and registers in local maven repository.
+# Necessary to get the correct tag to build against.
+#   cd ~/git/cy3sbml
+#   git fetch --all --tags --prune
+#   git checkout tags/v0.2.6
 #
 # To install the dependencies without rebuilding cy3sbml use
 # 	./maven_build.sh --cy3sbml no
 ################################################################################
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-CY3SBML_VERSION="0.2.1"
+
+############################
+CY3SBML_VERSION="0.2.6"
+############################
 
 while [[ $# > 1 ]]
 do
@@ -37,6 +44,7 @@ if [ "$BUILD_CY3SBML" == "" ]; then
 	# install in local maven repo
 	mvn install:install-file -DgroupId=cy3sbml-dep -DartifactId=cy3sbml -Dversion=$CY3SBML_VERSION -Dfile=$CY3SBML/target/cy3sbml-$CY3SBML_VERSION.jar -Dpackaging=jar -DgeneratePom=true -DlocalRepositoryPath=$DIR/lib -DcreateChecksum=true
 fi
+
 
 cd $DIR
 mvn clean install 

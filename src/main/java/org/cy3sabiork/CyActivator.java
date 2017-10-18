@@ -12,7 +12,6 @@ import org.cytoscape.task.read.LoadNetworkFileTaskFactory;
 import org.cytoscape.util.swing.OpenBrowser;
 import org.cytoscape.work.TaskManager;
 import org.cy3sbml.BundleInformation;
-import org.cy3sabiork.SabioAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,11 +64,8 @@ public class CyActivator extends AbstractCyActivator {
 			final ResourceExtractor resourceHandler = new ResourceExtractor(bc, appDirectory);
 			resourceHandler.extract();
 			logger.info("----------------------------");
-			
-			// JSBMLBugUTF8.testReading();
-			
-			
 		} catch (Throwable e){
+            e.printStackTrace();
 			logger.error("Could not start server!", e);
 			e.printStackTrace();
 		}

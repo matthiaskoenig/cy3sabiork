@@ -55,7 +55,12 @@ public class SabioKineticLaw {
     	return reaction.get();
     }
     
-    /* Parses Kinetic Law Ids from given text string. */
+    /**
+	 * Parses Kinetic Law Ids from given text string.
+	 *
+	 * The ids can be separated by different separators, i.e.
+	 * 	'\n', '\t', ' ', ';' or','
+	 */
     public static HashSet<Integer> parseIds(String text){
     	HashSet<Integer> ids = new HashSet<Integer>();
 		
@@ -88,32 +93,25 @@ public class SabioKineticLaw {
 	 * Information to populate the results panel is parsed here. 
 	 * This uses directly the response string.
 	 */
-	public static ArrayList<SabioKineticLaw> parseKineticLaws(String sbml){
+	public static ArrayList<SabioKineticLaw> parseKineticLaws(SBMLDocument doc){
 		ArrayList<SabioKineticLaw> list = new ArrayList<SabioKineticLaw>();
-		if (sbml == null){
+		if (doc == null){
 			return list;
 		}
-		try {
-			SBMLDocument doc = JSBML.readSBMLFromString(sbml);
 
-			// necessary to read information from annotations
-			Model model = doc.getModel();
-			Integer count = 1;
-			for (Reaction r : model.getListOfReactions()){
+		// necessary to read information from annotations
+		Model model = doc.getModel();
+		Integer count = 1;
+		for (Reaction r : model.getListOfReactions()){
+			Integer kid = getKineticLawIdFromReaction(r);
+			String organism = getOrganismFromReaction(r);
+			String tissue = getTissueFromReaction(r);
+			String reaction = getDescriptionFromReaction(r);
 
-				Integer kid = getKineticLawIdFromReaction(r);
-				String organism = getOrganismFromReaction(r);
-				String tissue = getTissueFromReaction(r);
-				String reaction = getDescriptionFromReaction(r);
-				
-				list.add(new SabioKineticLaw(count, kid, organism, tissue, reaction));
-				count++;
-			}
-	    	
-		} catch (XMLStreamException e1) {
-			e1.printStackTrace();
-			return list;
+			list.add(new SabioKineticLaw(count, kid, organism, tissue, reaction));
+			count++;
 		}
+
 		return list;
 	}
 	
@@ -159,8 +157,10 @@ public class SabioKineticLaw {
 	}
 	
 	/** 
-	 * Parse tissue information from reaction annotation. 
-	 * Currently not encoded in SBML.
+	 * Parse tissue information from reaction annotation.
+	 *
+	 * The information is currently not available in SABIO-RK SBML.
+	 * see https://github.com/matthiaskoenig/cy3sabiork/issues/10
 	 */
 	private static String getTissueFromReaction(Reaction r){
 		String tissue = "-";

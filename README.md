@@ -68,9 +68,9 @@ This work was supported by the Federal Ministry of Education and Research (BMBF,
 <a href="http://sabio.villa-bosch.de/"><img src="docs/images/logo-sabiork.png" height="40"/></a>&nbsp;&nbsp;
 <a href="http://network.virtual-liver.de/en/"><img src="docs/images/logo-lisym.png" height="40"/></a>&nbsp;&nbsp;
 <a href="http://network.virtual-liver.de/en/"><img src="docs/images/logo-vln.png" height="40"/></a>&nbsp;&nbsp;
-<a href="http://www.cytoscape.org/"><img src="docs/images/logo-cytoscape.png" height="40""/></a>&nbsp;&nbsp;
-<a href="http://sbml.org/Main_Page"><img src="docs/images/logo-sbml.png" height="40""/></a>&nbsp;&nbsp;
-<a href="http://www.bmbf.de/"><img src="docs/images/logo-bmbf.png" height="80""/></a>&nbsp;&nbsp;
+<a href="http://www.cytoscape.org/"><img src="docs/images/logo-cytoscape.png" height="40"/></a>&nbsp;&nbsp;
+<a href="http://sbml.org/Main_Page"><img src="docs/images/logo-sbml.png" height="40"/></a>&nbsp;&nbsp;
+<a href="http://www.bmbf.de/"><img src="docs/images/logo-bmbf.png" height="80"/></a>&nbsp;&nbsp;
 
 We thank the SABIO-RK team for their support. We thank the SBML and Cytoscape community for their support and help.
 

@@ -24,15 +24,15 @@
 
 ## Install
 **cy3sabiork** is available via the [Cytoscape App Store](http://apps.cytoscape.org/apps/cy3sabiork).
-* install [Cytoscape v3.4.0](http://www.cytoscape.org/download.html) or higher
+* install [Cytoscape v3.5.1](http://www.cytoscape.org/download.html) or higher
 * install cy3sbml and cy3sabiork via the app store  
 `Apps -> App Manager`
 
 For a manual install
-* download latest versions of [cy3sbml](https://github.com/matthiaskoenig/cy3sbml/releases/latest) and [cy3sabiork](https://github.com/matthiaskoenig/cy3sabiork/releases/latest) and move the downloaded jar files  
+* download latest versions of [cy3sbml](https://github.com/matthiaskoenig/cy3sbml/releases/latest) and [cy3sabiork](https://github.com/matthiaskoenig/cy3sabiork/releases/latest)  
 `cy3sbml-vx.x.x.jar`  
 `cy3sabiork-vx.x.x.jar`  
-in the Cytoscape app folder
+and move the downloaded jar files in the Cytoscape app folder
 `CytoscapeConfiguration/3/apps/installed/`
 
 ## How to cite
@@ -75,7 +75,10 @@ This work was supported by the Federal Ministry of Education and Research (BMBF,
 We thank the SABIO-RK team for their support. We thank the SBML and Cytoscape community for their support and help.
 
 ## Change Log
-**v0.3.4** [?]
+**v0.3.5** [2017-10-18]
+
+- update of library dependencies
+- bugfixes & cy3sbml update
 
 **v0.3.3** [2016-07-11]
 

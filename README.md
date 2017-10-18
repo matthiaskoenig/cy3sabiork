@@ -75,6 +75,9 @@ This work was supported by the Federal Ministry of Education and Research (BMBF,
 We thank the SABIO-RK team for their support. We thank the SBML and Cytoscape community for their support and help.
 
 ## Change Log
+**v0.4.0** [?]
+
+
 **v0.3.5** [2017-10-18]
 
 - update of library dependencies

@@ -4,10 +4,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 
-
+import org.cy3sabiork.ResourceExtractor;
 import org.cy3sabiork.SabioQueryResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class SabioQuery{
+	private static Logger logger = LoggerFactory.getLogger(SabioQuery.class);
 	public static final String SABIORK_RESTFUL_URL = "http://sabiork.h-its.org/sabioRestWebServices";
 	
 	public static final String PREFIX_KINETIC_LAW_INFO = "http://sabiork.h-its.org/kineticLawEntry.jsp?viewData=true&kinlawid=";

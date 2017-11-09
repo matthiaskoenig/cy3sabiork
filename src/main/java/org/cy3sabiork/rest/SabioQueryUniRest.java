@@ -11,11 +11,14 @@ import org.cy3sabiork.SabioQueryResult;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * UniRest based Sabio Queries.
  */
 public class SabioQueryUniRest extends SabioQuery{
+	private static Logger logger = LoggerFactory.getLogger(SabioQueryUniRest.class);
 
 	@Override
 	public SabioQueryResult performQuery(String query){
@@ -80,6 +83,7 @@ public class SabioQueryUniRest extends SabioQuery{
 	private HttpResponse<InputStream> executeQuery(String query){
 		try {
 			URI uri = uriFromQuery(query);
+			logger.info(uri.toString());
 			// HttpResponse<String> response = Unirest.get(uri.toString())
 			//									   .asString();
 			

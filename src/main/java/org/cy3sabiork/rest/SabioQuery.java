@@ -35,6 +35,7 @@ public abstract class SabioQuery{
 	public static URI uriFromQuery(String query) throws URISyntaxException{
 
         // the following is only a bug fix due to the encoding issues with web service
+		query = query.replace(":", "%3A");
 		query = query.replace(" ", "%20");
         query = query.replace("\"", "%22");
         query = query.replace(">", "%3E");

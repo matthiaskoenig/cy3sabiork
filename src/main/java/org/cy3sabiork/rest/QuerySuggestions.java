@@ -222,6 +222,82 @@ public class QuerySuggestions implements Serializable {
 	 * the mode to save mode. The retrieval of all keywords takes
 	 * 1-2 minutes.
 	 * To test the serialized file switch to load mode.
+	 *
+	 -------------------------------------------------
+	 Updated suggestions: 2017-11-09
+	 -------------------------------------------------
+	 Activator
+	 AnyRole
+	 AssociatedSpecies
+	 Author
+	 Catalyst
+	 CellularLocation
+	 ChebiID
+	 Cofactor
+	 DataIdentifier
+	 DateSubmitted
+	 ECNumber
+	 EntryID
+	 Enzymename
+	 ExperimentID
+	 GO-Term
+	 InChI
+	 Inhibitor
+	 KeggCompoundID
+	 KeggID
+	 KeggReactionID
+	 KineticMechanismType
+	 Organism
+	 Organization
+	 OtherModifier
+	 Parametertype
+	 Pathway
+	 Product
+	 PubChemID
+	 PubMedID
+	 SBO-Term
+	 SabioCompoundID
+	 SabioReactionID
+	 Signalling Event
+	 Signalling Modification
+	 Substrate
+	 TemperatureRange
+	 Tissue
+	 Title
+	 UniProtKB_AC
+	 Year
+	 pHValueRange
+	 -------------------------------------------------
+	 Activator : 25154
+	 AnyRole : 25154
+	 CHEBICompoundID : 3676
+	 Catalyst : 25154
+	 ChebiID : 3676
+	 Cofactor : 25154
+	 Compound : 25154
+	 Enzyme : 1609
+	 Enzymename : 1609
+	 Inhibitor : 25154
+	 KEGGCompoundID : 3104
+	 KEGGReactionID : 1534
+	 KeggCompoundID : 3104
+	 KeggReactionID : 1534
+	 Organism : 934
+	 OtherModifier : 25154
+	 PUBCHEMCompoundID : 2754
+	 Pathway : 138
+	 Product : 25154
+	 PubChemID : 2754
+	 PubMedID : 5560
+	 PubmedID : 5560
+	 SABIOCompoundID : 9881
+	 SABIOReactionID : 7329
+	 SabioCompoundID : 9881
+	 SabioReactionID : 7329
+	 Substrate : 25154
+	 Tissue : 336
+	 UniProtKB_AC : 4399
+	 -------------------------------------------------
 	 */
 	public static void main(String[] args){
 		// FIXME: make this independent of home directory

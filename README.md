@@ -77,6 +77,9 @@ We thank the SABIO-RK team for their support. We thank the SBML and Cytoscape co
 ## Change Log
 **v0.4.0** [?]
 
+**bug fixes**  
+- [#41](https://github.com/matthiaskoenig/cy3sabiork/issues/41) icon bug Cy36 
+
 
 **v0.3.5** [2017-10-18]
 

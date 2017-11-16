@@ -34,7 +34,7 @@ public class SabioAction extends AbstractCyAction{
 		this.openBrowser = openBrowser;
 		this.sbmlReader = sbmlReader;
 		
-		ImageIcon icon = new ImageIcon(getClass().getResource("/gui/images/logo-sabiork-compact.png"));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/gui/images/icon-cy3sabiork.png"));
 		putValue(LARGE_ICON_KEY, icon);
 		
 		this.putValue(SHORT_DESCRIPTION, "SABIO-RK web services");
